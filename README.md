@@ -88,9 +88,39 @@ access to cloud
 **Then** I can select items from my previous list
 
 ## Class Diagram
-
+![ClassDiagram](https://user-images.githubusercontent.com/64596547/106208442-6229f080-6191-11eb-8ae0-6560272eb416.png)
 ## Class Diagram Description
+**MainActivity:** Landing page where the user adds products to their cart. 
 
+**MarketsActivity:** Displays a list of all markets sorted in descending order based on the total cart price. 
+
+**CartsActivity:** Displays a list of all previous carts that the user has created or stored. 
+
+**MainViewModel, MarketsViewModel, CartsViewModel:** Responsible for the logic for, and provide data to their corresponding activity. 
+
+**RetrofitClientInstance:** Used to easily manage HTTP requests and responses. 
+
+**ContextAwareViewModel:** Will be set to provide the app with the user's location information. 
+
+**User:** An instance of this class will represent a user. 
+
+**Product:** An instance of this class will represent a product. 
+
+**Cart:** An instance of this class will represent a cart. 
+
+**Market:** An instance of this class will represent a market. 
+
+**IProductDAO:** An implementation of this interface will be used to get a connection to, query, and managed the data stored in the Product table in the database. 
+
+**IUserDAO:** An implementation of this interface will be used to get a connection to, query, and managed the data stored in the User table in the database. 
+
+**ICartDAO:** An implementation of this interface will be used to get a connection to, query, and managed the data stored in the Cart table in the database. 
+
+**IMarketDAO:** An implementation of this interface will be used to manage the connection to and the state of the Market table in the database. 
+
+**RoomDatabase:** A provided class representing the local Room database. 
+
+**AppDatabase:** A subclass of RoomDatabase used to connect to, query, and manage the data stored in the local Room database. 
 ## Scrum Roles
 
 -	DevOps/Product Owner/Scrum Master: Natalie Forbes
