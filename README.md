@@ -19,6 +19,10 @@ Shopping sidekick is an app that saves you time and money by helping you figure 
 
 Shopping sidekick searches your chosen stores for your items, then checks stock availability and prices to let you know your best options. 
 ## Storyboard
+[Shopping Sidekick](https://projects.invisionapp.com/prototype/ckkhhheid002wmg01p4rl98gv/play)
+
+![ShoppingSidekickPreview](https://user-images.githubusercontent.com/64596547/106222273-2c930080-61ad-11eb-9c5a-90e546288892.png)
+
 ## Functional Requirements
 
 ### Requirement 1: Search Grocery Items by Price
