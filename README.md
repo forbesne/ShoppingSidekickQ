@@ -44,11 +44,6 @@ Store price lists are available and accessible.
 **When** I search for a list containing “apples”  
 **Then** I should get a list of stores and prices for grocery lists containing apples
 
-###### 1.3
-**Given** a feed of grocery items data  
-**When** I search for “aldskfjiafmnlfjv;aigfj;fj”  
-**Then** I should get a message saying “no results found”
-
 ### Requirement 2: Search Grocery Items by Stock Availability
 #### SCENARIO
 As a user that buys groceries,
@@ -67,11 +62,6 @@ Store stock lists are available and accessible.
 **Given** a feed of grocery items data for specific stores  
 **When** I search for a list containing “apples”  
 **Then** I should get a list of stores where apples are in stock
-
-###### 2.3
-**Given** a feed of grocery items data for specific stores  
-**When** I search for “aldskfjiafmnlfjv;aigfj;fj”  
-**Then** I should get a message saying “no results found”
 
 ### Requirement 3: Save Shopping List
 #### SCENARIO
