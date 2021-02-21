@@ -10,6 +10,7 @@ import org.junit.Test
 import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.rules.TestRule
+import java.lang.Thread.sleep
 
 //I used the professor's code from his github - https://github.com/discospiff/MyPlantDiaryQ
 // as the base for this code
@@ -47,12 +48,13 @@ class ProductDataIntegrationTest {
     }
 
     private fun thenResultIsNotEmpty() {
+        //should makes sure thread is used only after enough time for response to be back
+        sleep(4000)
         mvm.products.observeForever {
             assertNotNull(it)
             assertTrue(it.size > 0)
-
-            // NOT WORKING - should fail
-            assertTrue(it.size == 2)
+            //does work
+            //assertTrue(it.size == 25)
         }
     }
 }
