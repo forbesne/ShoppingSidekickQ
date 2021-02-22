@@ -1,3 +1,6 @@
+//I copied the professor's code from his github - https://github.com/discospiff/MyPlantDiaryQ
+// to add dependencies
+
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
@@ -44,4 +47,9 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    testImplementation 'androidx.arch.core:core-testing:2.0.0'
+    androidTestImplementation 'androidx.arch.core:core-testing:2.0.0'
+    testImplementation "io.mockk:mockk:1.9"
+    implementation 'com.squareup.retrofit2:retrofit:2.7.1'
+    implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
 }
