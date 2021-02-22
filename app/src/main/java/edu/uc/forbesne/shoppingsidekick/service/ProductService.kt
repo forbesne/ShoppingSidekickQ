@@ -18,6 +18,10 @@ import retrofit2.Response
 
 class ProductService {
 
+    fun fetchProductsByName(productName: String) : MutableLiveData<ArrayList<Product>> {
+        return MutableLiveData<ArrayList<Product>>()
+    }
+
     fun fetchAllProductsFromOneStore() : MutableLiveData<ArrayList<Product>> {
         var _products = MutableLiveData<ArrayList<Product>>()
         val service = RetrofitClientInstance.retrofitInstance?.create(IProductDAO::class.java)
