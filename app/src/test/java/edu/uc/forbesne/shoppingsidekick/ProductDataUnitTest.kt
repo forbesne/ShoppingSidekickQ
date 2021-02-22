@@ -56,7 +56,6 @@ class ProductDataUnitTest {
     private fun createMockData() {
         var allProductsLiveData = MutableLiveData<ArrayList<Product>>()
         var allProducts = ArrayList<Product>()
-        //create and add plants to our collection.
         var apple = Product(1, "Apple", 2.5f, "Item", "Granny Smith", "Fruit","100000001","appleImageURL")
         allProducts.add(apple)
         var banana = Product(1, "Banana", 1.5f, "Item", "Nuleaf", "Fruit","100000002","bananaImageURL")
@@ -76,7 +75,6 @@ class ProductDataUnitTest {
     private fun thenResultContainsApple() {
         var appleFound = false;
         mvm.products.observeForever {
-            // here is where we do the observing
             assertNotNull(it)
             assertTrue(it.size > 0)
             it.forEach {
