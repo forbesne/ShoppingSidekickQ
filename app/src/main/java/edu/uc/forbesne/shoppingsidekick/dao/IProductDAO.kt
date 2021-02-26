@@ -16,6 +16,12 @@ interface IProductDAO {
     @GET("shop_1.php")
     fun getAllProductsFromOneStore(): Call<ArrayList<Product>>
 
+    @GET("shop_2.php")
+    fun getAllProductsFromTwoStore(): Call<ArrayList<Product>>
+
+    @GET("shop_3.php")
+    fun getAllProductsFromThreeStore(): Call<ArrayList<Product>>
+
 /*    @GET()
     fun getProductsFromOneStore(@Query(")) : Call<ArrayList<Product>>*/
 }
