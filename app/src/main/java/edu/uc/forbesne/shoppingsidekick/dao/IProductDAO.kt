@@ -11,6 +11,7 @@ import retrofit2.http.Query
 /**
  * Used by Retrofit instance to get make http requests
  *
+ * The Product DAO interface to store methods
  */
 interface IProductDAO {
     @GET("shop_1.php")

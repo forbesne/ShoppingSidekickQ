@@ -14,11 +14,17 @@ import retrofit2.Response
 /**
  * Makes calls to APIs to get product data
  *
+ * Contains the following methods:
+ *
+ * fetchProductsByDescription, which fetches a specific product by its given description
+ * fetchAllProductsFromOneStore, which fetches all product from a particular store
+ * fetchAllProductsFromTwoStore, which fetches all the product sold by two different stores
+ * fetchAllProductsFromThreeStore, which fetches all the product sold by three different stores
+ *
  */
-
 class ProductService {
 
-    fun fetchProductsByName(productName: String) : MutableLiveData<ArrayList<Product>> {
+    fun fetchProductsByDescription(productName: String) : MutableLiveData<ArrayList<Product>> {
         return MutableLiveData<ArrayList<Product>>()
     }
 
