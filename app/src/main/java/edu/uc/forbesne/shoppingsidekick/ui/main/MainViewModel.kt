@@ -25,7 +25,7 @@ class MainViewModel : ViewModel() {
         products = productService.fetchAllProductsFromOneStore()
     }
 
-    fun fetchProductsByName(productName: String) {
-        products = productService.fetchProductsByName(productName)
+    fun fetchProductsByDescription(productName: String) {
+        products = productService.fetchProductsByDescription(productName)
     }
 }
