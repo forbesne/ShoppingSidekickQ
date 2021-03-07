@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "599554318064",
+    "project_id": "shopping-sidekick-q",
+    "storage_bucket": "shopping-sidekick-q.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:599554318064:android:8fd8c8b9603673d1516c35",
+        "android_client_info": {
+          "package_name": "edu.uc.forbesne.shoppingsidekick"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "599554318064-8hn7vqp31qj5utppea47q6j28bucac8u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYP56z6toJBiRo2l7i1yKKRV2zZNASjQs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "599554318064-8hn7vqp31qj5utppea47q6j28bucac8u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
