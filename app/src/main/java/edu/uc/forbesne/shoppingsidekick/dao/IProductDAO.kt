@@ -5,7 +5,8 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-//I used the professor's code from his github - https://github.com/discospiff/MyPlantDiaryQ
+// Spaces after all comments
+// I used the professor's code from his github - https://github.com/discospiff/MyPlantDiaryQ
 // as the base for this code
 
 /**
