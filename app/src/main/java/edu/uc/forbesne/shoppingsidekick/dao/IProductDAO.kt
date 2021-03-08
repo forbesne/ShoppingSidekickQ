@@ -10,7 +10,7 @@ import retrofit2.http.Query
 
 /**
  * Used by Retrofit instance to get make http requests
- * Product DAO stores methods
+ *
  */
 interface IProductDAO {
     @GET("shop_1.php")
