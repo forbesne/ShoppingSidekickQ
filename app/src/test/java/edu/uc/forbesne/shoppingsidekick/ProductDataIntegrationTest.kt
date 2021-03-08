@@ -48,7 +48,7 @@ class ProductDataIntegrationTest {
     }
 
     private fun thenResultIsNotEmpty() {
-        //should makes sure thread is used only after enough time for response to be back
+        //should make sure thread is used only after enough time for response to be back
         sleep(4000)
         mvm.products.observeForever {
             assertNotNull(it)

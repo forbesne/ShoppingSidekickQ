@@ -43,8 +43,8 @@ class ProductDataUnitTest {
     }
 
     private fun thenVerifyFunctionsInvoked() {
-        verify {productService.fetchProductsByName("Apple")}
-        verify(exactly = 0) {productService.fetchProductsByName("Orange")}
+        verify {productService.fetchProductsByDescription("Apple")}
+        verify(exactly = 0) {productService.fetchProductsByDescription("Orange")}
         confirmVerified(productService)
     }
 
@@ -62,14 +62,14 @@ class ProductDataUnitTest {
         allProducts.add(banana)
 
         allProductsLiveData.postValue(allProducts)
-        every { productService.fetchProductsByName(or("Apple", "Banana")) } returns allProductsLiveData
-        every { productService.fetchProductsByName(not(or("Apple", "Banana"))) } returns MutableLiveData<ArrayList<Product>>()
+        every { productService.fetchProductsByDescription(or("Apple", "Banana")) } returns allProductsLiveData
+        every { productService.fetchProductsByDescription(not(or("Apple", "Banana"))) } returns MutableLiveData<ArrayList<Product>>()
         mvm.productService = productService
 
     }
 
     private fun whenSearchForApple() {
-        mvm.fetchProductsByName("Apple")
+        mvm.fetchProductsByDescription("Apple")
     }
 
     private fun thenResultContainsApple() {
@@ -94,7 +94,7 @@ class ProductDataUnitTest {
     }
 
     private fun whenISearchForGarbage() {
-        mvm.fetchProductsByName("alkdfjaioefnadfvka")
+        mvm.fetchProductsByDescription("alkdfjaioefnadfvka")
     }
 
     private fun thenIGetZeroResults() {
