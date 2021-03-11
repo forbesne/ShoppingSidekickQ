@@ -37,8 +37,10 @@ class MainFragment : Fragment() {
             productBrand = lblProductBrand.text.toString()
             measurementUnit = lblUnitValue.text.toString()
             quantity = etnQuantity.text.toString()
+            cartId = 0
+            quantity = 1
         }
-
+        viewModel.save(cartItem)
     }
 
 }
