@@ -1,4 +1,5 @@
 package edu.uc.forbesne.shoppingsidekick.dto
+// code is based on professor's github - https://github.com/discospiff/MyPlantDiaryQ
 
 
 data class CartItem (var cartId:Int = 0,  var UPC : String, var quantity: Int = 0, var imageURL : String, var description : String,
