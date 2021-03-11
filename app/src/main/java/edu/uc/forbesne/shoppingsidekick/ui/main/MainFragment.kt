@@ -12,7 +12,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.uc.forbesne.shoppingsidekick.R
+import edu.uc.forbesne.shoppingsidekick.dto.CartItem
 import kotlinx.android.synthetic.main.main_fragment.*
+import edu.uc.forbesne.shoppingsidekick.dto.CartItem
 
 class MainFragment : Fragment() {
 
@@ -30,6 +32,11 @@ class MainFragment : Fragment() {
         var recyclerView = view!!.findViewById<RecyclerView>(R.id.recLstProducts)
         recyclerView.layoutManager =  GridLayoutManager(this.context, 3)
 
+        // TODO: Use the ViewModel
+        btnAddProduct.setOnClickListener {
+            addCartItem()
+        }
+
         viewModel.fetchAllProducts()
         viewModel.products.observe(this, Observer {
            products ->
@@ -45,6 +52,30 @@ class MainFragment : Fragment() {
             )
             recyclerView.adapter = adapter
         })
+        // TODO: Use the ViewModel
+        btnAddProduct.setOnClickListener {
+            addCartItem()
+        }
+    }
+
+    private fun addCartItem() {
+        var cartItem = CartItem().apply{
+            productName = lblProductName.text.toString()
+            productBrand = lblProductBrand.text.toString()
+            measurementUnit = lblUnitValue.text.toString()
+            quantity = etnQuantity.text.toString()
+        }
+
+    }
+
+    private fun addCartItem() {
+        var cartItem = CartItem().apply{
+            productName = lblProductName.text.toString()
+            productBrand = lblProductBrand.text.toString()
+            measurementUnit = lblUnitValue.text.toString()
+            quantity = etnQuantity.text.toString()
+        }
+
     }
 
     companion object {
