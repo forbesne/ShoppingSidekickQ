@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import edu.uc.forbesne.shoppingsidekick.R
+import edu.uc.forbesne.shoppingsidekick.dto.CartItem
 
 class MainFragment : Fragment() {
 
@@ -25,6 +26,19 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         // TODO: Use the ViewModel
+        btnAddProduct.setOnClickListener {
+            addCartItem()
+        }
+    }
+
+    private fun addCartItem() {
+        var cartItem = CartItem().apply{
+            productName = lblProductName.text.toString()
+            productBrand = lblProductBrand.text.toString()
+            measurementUnit = lblUnitValue.text.toString()
+            quantity = etnQuantity.text.toString()
+        }
+
     }
 
 }
