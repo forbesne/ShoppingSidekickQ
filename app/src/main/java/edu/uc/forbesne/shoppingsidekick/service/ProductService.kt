@@ -8,14 +8,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-//I used the professor's code from his github - https://github.com/discospiff/MyPlantDiaryQ
-// as the base for this code
+// code is based on professor's github - https://github.com/discospiff/MyPlantDiaryQ
 
 /**
  * Makes calls to APIs to get product data
  *
  */
-
 class ProductService {
 
     fun fetchProductsByName(productName: String) : MutableLiveData<ArrayList<Product>> {
