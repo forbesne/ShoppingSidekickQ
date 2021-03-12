@@ -1,4 +1,5 @@
 package edu.uc.forbesne.shoppingsidekick.ui.main
+// code is based on professor's github - https://github.com/discospiff/MyPlantDiaryQ
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -11,9 +12,7 @@ import edu.uc.forbesne.shoppingsidekick.dto.CartItem
 import edu.uc.forbesne.shoppingsidekick.dto.Product
 import edu.uc.forbesne.shoppingsidekick.dto.SearchItem
 import edu.uc.forbesne.shoppingsidekick.service.ProductService
-import edu.uc.forbesne.shoppingsidekick.dto.*
 
-// code is based on professor's github - https://github.com/discospiff/MyPlantDiaryQ
 
 /**
  *  Gets data from Firebase and APIs, makes adjustments, provides live data to activities
@@ -35,14 +34,30 @@ class MainViewModel : ViewModel() {
     var productPricesByShopMap: HashMap<String,ProductPriceList> = HashMap<String, ProductPriceList>()
 
     init {
-        firestore = FirebaseFirestore.getInstance()
-        firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
+        createFirebaseInstance()
         fetchSop1Products()
         fetchSop2Products()
         fetchSop3Products()
         assignProducts()
         populateInitialProductPriceList()
         createObservableShopsPricesMap()
+    }
+
+     fun createFirebaseInstance(){
+        firestore = FirebaseFirestore.getInstance()
+        firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
+    }
+
+    fun save(cartItem: CartItem) {
+        firestore.collection("cartItems")
+            .document()
+            .set(cartItem)
+            .addOnSuccessListener {
+                Log.d("Firebase", "document saved")
+            }
+            .addOnFailureListener{
+                Log.d("Firebase", "Save Failed")
+            }
     }
 
     private fun populateInitialProductPriceList() {
@@ -191,17 +206,5 @@ class MainViewModel : ViewModel() {
     private fun deleteSearchItemList() {
         //find function..
         searchItemList = ArrayList<SearchItem>()
-    }
-
-    fun save(cartItem: CartItem) {
-        firestore.collection("cartItems")
-                .document()
-                .set(cartItem)
-                .addOnSuccessListener {
-                    Log.d("Firebase", "document saved")
-                }
-                .addOnFailureListener{
-                    Log.d("Firebase", "Save Failed")
-                }
     }
 }
