@@ -12,12 +12,10 @@ import edu.uc.forbesne.shoppingsidekick.dto.Product
 import edu.uc.forbesne.shoppingsidekick.dto.SearchItem
 import edu.uc.forbesne.shoppingsidekick.service.ProductService
 
-//I used the professor's code from his github - https://github.com/discospiff/MyPlantDiaryQ
-// as the base for this code
+// code is based on professor's github - https://github.com/discospiff/MyPlantDiaryQe
 
 /**
- *  Gets data from server, makes adjustments, provides live data to activities
- *
+ *  Gets data from Firebase and APIs, makes adjustments, provides live data to activities
  */
 class MainViewModel : ViewModel() {
     var productService: ProductService = ProductService()
