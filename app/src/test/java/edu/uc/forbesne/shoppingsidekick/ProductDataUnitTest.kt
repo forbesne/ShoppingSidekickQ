@@ -24,9 +24,12 @@ class ProductDataUnitTest {
 
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
-    lateinit var mvm: MainViewModel
+    //lateinit var mvm: MainViewModel
 
     var productService = mockk<ProductService>()
+    var mvm = mockk<MainViewModel>()
+    val x: Unit = Unit
+
 
     @Test
     fun confirmApple_outputsApple () {
@@ -49,7 +52,7 @@ class ProductDataUnitTest {
     }
 
     private fun givenAFeedOfMockedProductDataAreAvailable() {
-        mvm = MainViewModel()
+        //mvm = MainViewModel()
         createMockData()
     }
 
@@ -64,6 +67,9 @@ class ProductDataUnitTest {
         allProductsLiveData.postValue(allProducts)
         every { productService.fetchProductsByName(or("Apple", "Banana")) } returns allProductsLiveData
         every { productService.fetchProductsByName(not(or("Apple", "Banana"))) } returns MutableLiveData<ArrayList<Product>>()
+        every { mvm.createFirebaseInstance() } returns x
+        every {(mvm.fetchProductsByName("Apple"))} 
+
         mvm.productService = productService
 
     }
