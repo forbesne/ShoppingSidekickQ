@@ -16,7 +16,7 @@ import edu.uc.forbesne.shoppingsidekick.dto.*
  *  Gets data from Firebase and APIs, makes adjustments, provides live data to activities
  */
 class MainViewModel : ViewModel() {
-    private lateinit var firestore : FirebaseFirestore
+     lateinit var firestore : FirebaseFirestore
     var productService: ProductService = ProductService()
     var products: MutableLiveData<ArrayList<Product>> = MutableLiveData<ArrayList<Product>>()
     var productsFromShop1: MutableLiveData<ArrayList<Product>> = MutableLiveData<ArrayList<Product>>()
@@ -32,14 +32,18 @@ class MainViewModel : ViewModel() {
     var productPricesByShopMap: HashMap<String,ProductPriceList> = HashMap<String, ProductPriceList>()
 
     init {
-        firestore = FirebaseFirestore.getInstance()
-        firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
+        createFirebaseInstance()
         fetchSop1Products()
         fetchSop2Products()
         fetchSop3Products()
         assignProducts()
         populateInitialProductPriceList()
         createObservableShopsPricesMap()
+    }
+
+     fun createFirebaseInstance(){
+        firestore = FirebaseFirestore.getInstance()
+        firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
     }
 
     fun save(cartItem: CartItem) {
