@@ -45,6 +45,32 @@ class MainFragment : Fragment() {
             )
             recyclerView.adapter = adapter
         })
+
+        // => Commented out Until btn is available
+        /*btnAddProduct.setOnClickListener {
+            addCartItem()
+        }*/
+    }
+
+
+    // This will get called when the user clicks on the pop-up window.
+    private fun addCartItem() {
+        // The cart item logic should mostly be in the view model and cart item is not created by the user.
+        // Instead we need only the quantity and a way to identify a product - for all shops - done by UPC
+        // => Commented out until view has these fields
+        /*var quantity = etnQuantity.text.toString()
+        var upc = upc.text.toString() //perhaps this should be stored in a hidden label
+        viewModel.addCartItem(cartItem)*/
+
+
+
+        /*var cartItem = CartItem().apply{
+            productName = lblProductName.text.toString()
+            productBrand = lblProductBrand.text.toString()
+            measurementUnit = lblUnitValue.text.toString()
+            cartId = 0
+            quantity = 1
+        }*/
     }
 
     companion object {
