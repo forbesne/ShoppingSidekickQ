@@ -43,7 +43,6 @@ class MainFragment : Fragment() {
 
 
 
-
         /*var cartItem = CartItem().apply{
             productName = lblProductName.text.toString()
             productBrand = lblProductBrand.text.toString()
