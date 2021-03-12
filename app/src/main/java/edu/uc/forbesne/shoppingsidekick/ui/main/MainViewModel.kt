@@ -11,6 +11,7 @@ import edu.uc.forbesne.shoppingsidekick.dto.CartItem
 import edu.uc.forbesne.shoppingsidekick.dto.Product
 import edu.uc.forbesne.shoppingsidekick.dto.SearchItem
 import edu.uc.forbesne.shoppingsidekick.service.ProductService
+import edu.uc.forbesne.shoppingsidekick.dto.*
 
 // code is based on professor's github - https://github.com/discospiff/MyPlantDiaryQ
 
@@ -18,6 +19,7 @@ import edu.uc.forbesne.shoppingsidekick.service.ProductService
  *  Gets data from Firebase and APIs, makes adjustments, provides live data to activities
  */
 class MainViewModel : ViewModel() {
+    private lateinit var firestore : FirebaseFirestore
     var productService: ProductService = ProductService()
     var products: MutableLiveData<ArrayList<Product>> = MutableLiveData<ArrayList<Product>>()
     var productsFromShop1: MutableLiveData<ArrayList<Product>> = MutableLiveData<ArrayList<Product>>()
@@ -26,7 +28,6 @@ class MainViewModel : ViewModel() {
     var cart: Cart = Cart(ArrayList<CartItem>())
 
     var searchItemList: ArrayList<SearchItem> = ArrayList<SearchItem>()
-    private lateinit var firestore : FirebaseFirestore
 
     // A list of object{shopName, ProductUPC, shopsPrice}
     var initialProductPriceList :ProductPriceList = ProductPriceList(3)
@@ -102,6 +103,7 @@ class MainViewModel : ViewModel() {
                         productPricesByShopMap.put(product.UPC, arr1)
                     }
                 }
+
             }
         }
 
@@ -201,6 +203,5 @@ class MainViewModel : ViewModel() {
                 .addOnFailureListener{
                     Log.d("Firebase", "Save Failed")
                 }
-
     }
 }
