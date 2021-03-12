@@ -1,9 +1,14 @@
 package edu.uc.forbesne.shoppingsidekick.ui.main
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import edu.uc.forbesne.shoppingsidekick.dto.*
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreSettings
+import edu.uc.forbesne.shoppingsidekick.dto.CartItem
+import edu.uc.forbesne.shoppingsidekick.dto.Product
 import edu.uc.forbesne.shoppingsidekick.service.ProductService
+import edu.uc.forbesne.shoppingsidekick.dto.*
 
 // code is based on professor's github - https://github.com/discospiff/MyPlantDiaryQ
 
@@ -11,6 +16,7 @@ import edu.uc.forbesne.shoppingsidekick.service.ProductService
  *  Gets data from Firebase and APIs, makes adjustments, provides live data to activities
  */
 class MainViewModel : ViewModel() {
+    private lateinit var firestore : FirebaseFirestore
     var productService: ProductService = ProductService()
     var products: MutableLiveData<ArrayList<Product>> = MutableLiveData<ArrayList<Product>>()
     var productsFromShop1: MutableLiveData<ArrayList<Product>> = MutableLiveData<ArrayList<Product>>()
@@ -26,12 +32,27 @@ class MainViewModel : ViewModel() {
     var productPricesByShopMap: HashMap<String,ProductPriceList> = HashMap<String, ProductPriceList>()
 
     init {
+        firestore = FirebaseFirestore.getInstance()
+        firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
         fetchSop1Products()
         fetchSop2Products()
         fetchSop3Products()
         assignProducts()
         populateInitialProductPriceList()
         createObservableShopsPricesMap()
+    }
+
+    fun save(cartItem: CartItem) {
+        firestore.collection("cartItems")
+            .document()
+            .set(cartItem)
+            .addOnSuccessListener {
+                Log.d("Firebase", "document saved")
+            }
+            .addOnFailureListener{
+                Log.d("Firebase", "Save Failed")
+            }
+
     }
 
     private fun populateInitialProductPriceList() {
