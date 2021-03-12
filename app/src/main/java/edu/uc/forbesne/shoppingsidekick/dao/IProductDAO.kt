@@ -5,8 +5,7 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-//I used the professor's code from his github - https://github.com/discospiff/MyPlantDiaryQ
-// as the base for this code
+// code is based on professor's github - https://github.com/discospiff/MyPlantDiaryQ
 
 /**
  * Used by Retrofit instance to get make http requests
