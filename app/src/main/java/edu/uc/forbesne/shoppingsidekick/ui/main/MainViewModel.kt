@@ -12,7 +12,7 @@ import edu.uc.forbesne.shoppingsidekick.dto.Product
 import edu.uc.forbesne.shoppingsidekick.dto.SearchItem
 import edu.uc.forbesne.shoppingsidekick.service.ProductService
 
-// code is based on professor's github - https://github.com/discospiff/MyPlantDiaryQe
+// code is based on professor's github - https://github.com/discospiff/MyPlantDiaryQ
 
 /**
  *  Gets data from Firebase and APIs, makes adjustments, provides live data to activities
