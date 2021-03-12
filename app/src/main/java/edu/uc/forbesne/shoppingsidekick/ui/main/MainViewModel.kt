@@ -22,24 +22,24 @@ class MainViewModel : ViewModel() {
 
     var searchItemList: ArrayList<SearchItem> = ArrayList<SearchItem>()
 
-    // A list of object{shopName, shopsPrice}
-    var shops1ProductPriceList :Shops1ProductPriceList = Shops1ProductPriceList(3)
-    // A map/table containing all key value pairs where key = productUPC, value =object{shopName, shopPrice}
-    var productPricesByShopMap: HashMap<String,Shops1ProductPriceList> = HashMap<String, Shops1ProductPriceList>()
+    // A list of object{shopName, ProductUPC, shopsPrice}
+    var initialProductPriceList :ProductPriceList = ProductPriceList(3)
+    // A map/table containing all key value pairs where key = productUPC, value = list of objects {shopName, ProductUPC,shopPrice}
+    var productPricesByShopMap: HashMap<String,ProductPriceList> = HashMap<String, ProductPriceList>()
 
     init {
         fetchSop1Products()
         fetchSop2Products()
         fetchSop3Products()
         assignProducts()
-        populateShops1ProductPriceList()
+        populateInitialProductPriceList()
         createObservableShopsPricesMap()
     }
 
-    private fun populateShops1ProductPriceList() {
-        shops1ProductPriceList.list[0].shopName = "Shop1"
-        shops1ProductPriceList.list[1].shopName = "Shop2"
-        shops1ProductPriceList.list[2].shopName = "Shop3"
+    private fun populateInitialProductPriceList() {
+        initialProductPriceList.list[0].shopName = "Shop1"
+        initialProductPriceList.list[1].shopName = "Shop2"
+        initialProductPriceList.list[2].shopName = "Shop3"
     }
 
     private fun fetchSop1Products() {
@@ -69,8 +69,14 @@ class MainViewModel : ViewModel() {
             it.forEach {
                 product-> {
                     var arr0 = productPricesByShopMap.get(product.UPC)
-                    arr0!!.list[0].price = product.price
-                    productPricesByShopMap.put(product.UPC, arr0)
+                    if(arr0 ==null){
+                        var productPriceList = initialProductPriceList
+                        productPriceList.list[0].price = product.price
+                        productPricesByShopMap.put(product.UPC, productPriceList)
+                    }else{
+                        arr0!!.list[0].price = product.price
+                        productPricesByShopMap.put(product.UPC, arr0)
+                    }
                 }
             }
         }
@@ -79,9 +85,16 @@ class MainViewModel : ViewModel() {
             it.forEach {
                 product-> {
                     var arr1 = productPricesByShopMap.get(product.UPC)
-                    arr1!!.list[1].price = product.price
-                    productPricesByShopMap.put(product.UPC, arr1)
+                    if(arr1 ==null){
+                        var productPriceList = initialProductPriceList
+                        productPriceList.list[1].price = product.price
+                        productPricesByShopMap.put(product.UPC, productPriceList)
+                    }else{
+                        arr1!!.list[1].price = product.price
+                        productPricesByShopMap.put(product.UPC, arr1)
+                    }
                 }
+
             }
         }
 
@@ -89,8 +102,14 @@ class MainViewModel : ViewModel() {
             it.forEach {
                 product-> {
                     var arr2 = productPricesByShopMap.get(product.UPC)
-                    arr2!!.list[1].price = product.price
-                    productPricesByShopMap.put(product.UPC, arr2)
+                    if(arr2 ==null){
+                        var productPriceList = initialProductPriceList
+                        productPriceList.list[2].price = product.price
+                        productPricesByShopMap.put(product.UPC, productPriceList)
+                    }else{
+                        arr2!!.list[1].price = product.price
+                        productPricesByShopMap.put(product.UPC, arr2)
+                    }
                 }
             }
         }
@@ -100,19 +119,41 @@ class MainViewModel : ViewModel() {
         productsFromShop1 = productService.fetchProductsByName(productName)
     }
 
-    fun findCheapestMarket() {
-        var cart1Price = 0f
-        var cart2Price = 0f
-        var cart3Price = 0f
+    // For now returns a string like: shop 1 is cheapest
+    fun findCheapestMarket(): String {
+        var cart1Total = 0f
+        var cart2Total = 0f
+        var cart3Total = 0f
+        var cheapestMarket = " is the cheapest market!!"
+
         var itemAmount = 0
         var itemUPC = ""
-
+        var productPricesList = ProductPriceList(3)
 
         cart.itemList.forEach{
             itemAmount = it.amount
             itemUPC = it.UPC
+            productPricesList = productPricesByShopMap.get(itemUPC)!!
+            cart1Total += productPricesList.list[0].price * itemAmount
+            cart2Total += productPricesList.list[1].price * itemAmount
+            cart3Total += productPricesList.list[2].price * itemAmount
 
         }
+        if (cart1Total < cart2Total){
+            if (cart1Total < cart3Total) {
+                cheapestMarket = "Market 1$cheapestMarket"
+            }
+            else {
+                cheapestMarket = "Market 3$cheapestMarket"
+            }
+        } else if (cart2Total < cart3Total) {
+            cheapestMarket = "Market 2$cheapestMarket"
+        }
+        else {
+            cheapestMarket = "Market 3$cheapestMarket"
+        }
+
+        return cheapestMarket
     }
 
     fun addToCart(product: Product, amount: Int){
