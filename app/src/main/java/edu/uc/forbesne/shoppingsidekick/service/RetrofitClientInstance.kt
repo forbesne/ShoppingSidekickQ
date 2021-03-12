@@ -3,8 +3,7 @@ package edu.uc.forbesne.shoppingsidekick.service
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-//I used the professor's code from his github - https://github.com/discospiff/MyPlantDiaryQ
-// as the base for this code
+// code is based on professor's github - https://github.com/discospiff/MyPlantDiaryQ
 
 /**
  * Manages http requests

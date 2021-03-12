@@ -12,8 +12,7 @@ import org.junit.Rule
 import org.junit.rules.TestRule
 import java.lang.Thread.sleep
 
-//I used the professor's code from his github - https://github.com/discospiff/MyPlantDiaryQ
-// as the base for this code
+// code is based on professor's github - https://github.com/discospiff/MyPlantDiaryQ
 
 /**
  * Integration test, verifies MainViewModel fetchAllProducts successful
