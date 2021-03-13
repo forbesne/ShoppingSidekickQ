@@ -1,5 +1,6 @@
 package edu.uc.forbesne.shoppingsidekick.ui.main
-// code is based on top ten group project adapter class
+
+// based code on Top Ten project https://github.com/IsaiahDicristoforo/Top-Ten
 
 import android.net.Uri
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.Product
 
@@ -27,7 +29,7 @@ class ProductListAdapter( private val productList: ArrayList<Product>):RecyclerV
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.img.setImageURI(productList[position].imageURL as Uri)
+        Picasso.get().load(productList[position].imageURL).into(holder.img);
         holder.upc.text = productList[position].UPC
 
         holder.card.setOnClickListener(){
