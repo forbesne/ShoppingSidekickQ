@@ -1,8 +1,6 @@
 package edu.uc.forbesne.shoppingsidekick.ui.main
-
 // based code on Top Ten project https://github.com/IsaiahDicristoforo/Top-Ten
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

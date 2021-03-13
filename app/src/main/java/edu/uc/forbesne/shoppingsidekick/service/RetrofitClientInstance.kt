@@ -1,9 +1,8 @@
 package edu.uc.forbesne.shoppingsidekick.service
+// based onp professor's code - https://github.com/discospiff/MyPlantDiaryQ
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
-// based onp professor's code - https://github.com/discospiff/MyPlantDiaryQ
 
 /**
  * Manages http requests
@@ -12,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitClientInstance {
 
     private var retrofit: Retrofit? = null;
-    private val BASE_URL = "http://benjamingomori.com/shopping_side_kick/api/"
+    private const val BASE_URL = "http://benjamingomori.com/shopping_side_kick/api/"
 
     val retrofitInstance : Retrofit?
         get() {

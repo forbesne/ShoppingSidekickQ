@@ -1,5 +1,5 @@
 package edu.uc.forbesne.shoppingsidekick.service
-
+// based onp professor's code - https://github.com/discospiff/MyPlantDiaryQ
 
 import androidx.lifecycle.MutableLiveData
 import edu.uc.forbesne.shoppingsidekick.dao.IProductDAO
@@ -7,8 +7,6 @@ import edu.uc.forbesne.shoppingsidekick.dto.Product
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
-// based onp professor's code - https://github.com/discospiff/MyPlantDiaryQ
 
 /**
  * Makes calls to APIs to get product data

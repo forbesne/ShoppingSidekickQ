@@ -1,4 +1,5 @@
 package edu.uc.forbesne.shoppingsidekick.ui.main
+// based code on Top Ten project https://github.com/IsaiahDicristoforo/Top-Ten
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,8 +13,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.uc.forbesne.shoppingsidekick.R
 import kotlinx.android.synthetic.main.main_fragment.*
-
-// based code on Top Ten project https://github.com/IsaiahDicristoforo/Top-Ten
 
 class MainFragment : Fragment() {
 
