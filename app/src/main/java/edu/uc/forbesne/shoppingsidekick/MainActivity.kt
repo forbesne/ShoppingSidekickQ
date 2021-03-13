@@ -11,18 +11,18 @@ import edu.uc.forbesne.shoppingsidekick.ui.main.MainViewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: MainFragment
+    private lateinit var mainFragment: MainFragment
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
-        viewModel = MainFragment.newInstance()
+        mainFragment = MainFragment.newInstance()
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, viewModel)
+                .replace(R.id.container, mainFragment)
                 .commitNow()
         }
     }
@@ -37,18 +37,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-
-
         when (item.itemId) {
             R.id.item2 -> Toast.makeText(this,"cart Selected", Toast.LENGTH_SHORT).show()
             R.id.item3 -> Toast.makeText(this,"item3 Selected", Toast.LENGTH_SHORT).show()
             R.id.item4 -> Toast.makeText(this,"item4 Selected", Toast.LENGTH_SHORT).show()
             R.id.item5 -> Toast.makeText(this,"item5 Selected", Toast.LENGTH_SHORT).show()
-
         }
 
         return super.onOptionsItemSelected(item)
     }
-
 }
