@@ -24,11 +24,13 @@ class ProductListAdapter( private val productList: ArrayList<Product>):RecyclerV
         val card = view
         val img: ImageView = view.findViewById(R.id.imgProduct)
         val upc: TextView = view.findViewById(R.id.txtUpc)
+        val descreption: TextView = view.findViewById(R.id.txtDesc)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Picasso.get().load(productList[position].imageURL).into(holder.img);
         holder.upc.text = productList[position].UPC
+        holder.descreption.text = productList[position].description
 
         holder.card.setOnClickListener(){
             holder.card.isClickable = false
