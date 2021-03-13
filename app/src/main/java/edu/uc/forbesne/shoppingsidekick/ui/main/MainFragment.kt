@@ -8,16 +8,17 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.uc.forbesne.shoppingsidekick.R
 import kotlinx.android.synthetic.main.main_fragment.*
+
+// based code on Top Ten project https://github.com/IsaiahDicristoforo/Top-Ten
 
 class MainFragment : Fragment() {
 
     private lateinit var viewModel: MainViewModel
     private lateinit var adapter : ProductListAdapter
-
-    //private var _events = ArrayList<UsageEvents.Event>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -28,6 +29,7 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         var recyclerView = view!!.findViewById<RecyclerView>(R.id.recLstProducts)
+        recyclerView.layoutManager =  GridLayoutManager(this.context, 3)
 
         viewModel.fetchAllProducts()
         viewModel.products.observe(this, Observer {
