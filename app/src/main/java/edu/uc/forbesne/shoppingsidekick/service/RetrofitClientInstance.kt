@@ -5,12 +5,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 //I used the professor's code from his github - https://github.com/discospiff/MyPlantDiaryQ
 // as the base for this code
-
 /**
  * Manages http requests
  *
  */
-
 object RetrofitClientInstance {
 
     private var retrofit: Retrofit? = null;
