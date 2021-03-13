@@ -47,12 +47,15 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/lstProducts"
-        android:layout_width="620dp"
-        android:layout_height="792dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/recLstProducts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="103dp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+
+         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
