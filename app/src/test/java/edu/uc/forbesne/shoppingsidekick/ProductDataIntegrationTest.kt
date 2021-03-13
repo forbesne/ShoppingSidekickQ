@@ -1,4 +1,5 @@
 package edu.uc.forbesne.shoppingsidekick
+// based onp professor's code - https://github.com/discospiff/MyPlantDiaryQ
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import edu.uc.forbesne.shoppingsidekick.dto.Product
@@ -11,8 +12,6 @@ import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.rules.TestRule
 import java.lang.Thread.sleep
-
-// based onp professor's code - https://github.com/discospiff/MyPlantDiaryQ
 
 /**
  * Integration test, verifies MainViewModel fetchAllProducts successful
