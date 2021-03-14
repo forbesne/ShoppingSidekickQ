@@ -1,9 +1,5 @@
 package edu.uc.forbesne.shoppingsidekick.dto
-
-//I used the professor's code from his github - https://github.com/discospiff/MyPlantDiaryQ
-// as the base for this code
-
-
+// based onp professor's code - https://github.com/discospiff/MyPlantDiaryQ
 
 data class Product (var id: Int, var description : String, var price :Float, var price_type:String = "",
                     var brand : String, var category : String, var UPC : String, var imageURL : String) {
