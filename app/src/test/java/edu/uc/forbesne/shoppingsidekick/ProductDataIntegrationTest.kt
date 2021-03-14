@@ -19,7 +19,7 @@ import java.lang.Thread.sleep
  */
 class ProductDataIntegrationTest {
 
-    @get:Rule
+    /*@get:Rule
     var rule: TestRule =  InstantTaskExecutorRule()
     lateinit var mvm: MainViewModel
 
@@ -53,5 +53,5 @@ class ProductDataIntegrationTest {
             //does work
             //assertTrue(it.size == 25)
         }
-    }
+    }*/
 }
