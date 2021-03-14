@@ -12,9 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.uc.forbesne.shoppingsidekick.R
-import edu.uc.forbesne.shoppingsidekick.dto.CartItem
 import kotlinx.android.synthetic.main.main_fragment.*
-import edu.uc.forbesne.shoppingsidekick.dto.CartItem
 
 class MainFragment : Fragment() {
     private lateinit var viewModel: MainViewModel
@@ -63,7 +61,6 @@ class MainFragment : Fragment() {
 
 
 
-
             /*var cartItem = CartItem().apply{
                 productName = lblProductName.text.toString()
                 productBrand = lblProductBrand.text.toString()
@@ -72,7 +69,6 @@ class MainFragment : Fragment() {
                 quantity = 1
             }*/
         }
-
 
     companion object {
         fun newInstance() = MainFragment()
