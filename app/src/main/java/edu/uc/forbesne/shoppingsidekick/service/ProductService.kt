@@ -1,5 +1,5 @@
 package edu.uc.forbesne.shoppingsidekick.service
-
+// based onp professor's code - https://github.com/discospiff/MyPlantDiaryQ
 
 import androidx.lifecycle.MutableLiveData
 import edu.uc.forbesne.shoppingsidekick.dao.IProductDAO
@@ -8,14 +8,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-//I used the professor's code from his github - https://github.com/discospiff/MyPlantDiaryQ
-// as the base for this code
-
 /**
  * Makes calls to APIs to get product data
  *
  */
-
 class ProductService {
 
     fun fetchProductsByName(productName: String) : MutableLiveData<ArrayList<Product>> {

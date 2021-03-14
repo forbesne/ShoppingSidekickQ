@@ -12,8 +12,8 @@ import edu.uc.forbesne.shoppingsidekick.service.ProductService
  *  Gets data from server, makes adjustments, provides live data to activities
  *
  */
-
 class MainViewModel : ViewModel() {
+
     var products: MutableLiveData<ArrayList<Product>> = MutableLiveData<ArrayList<Product>>()
     var productService: ProductService = ProductService()
 

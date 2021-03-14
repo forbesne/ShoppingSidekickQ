@@ -1,12 +1,10 @@
 package edu.uc.forbesne.shoppingsidekick.dao
+// based onp professor's code - https://github.com/discospiff/MyPlantDiaryQ
 
 import edu.uc.forbesne.shoppingsidekick.dto.Product
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
-
-//I used the professor's code from his github - https://github.com/discospiff/MyPlantDiaryQ
-// as the base for this code
 
 /**
  * Used by Retrofit instance to get make http requests
