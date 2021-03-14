@@ -90,7 +90,7 @@ class MainViewModel : ViewModel() {
 
         productsFromShop1.observeForever {
             it.forEach {
-                product-> {
+                product->
                     var arr0 = productPricesByShopMap.get(product.UPC)
                     if(arr0 ==null){
                         var productPriceList = initialProductPriceList
@@ -100,13 +100,13 @@ class MainViewModel : ViewModel() {
                         arr0!!.list[0].price = product.price
                         productPricesByShopMap.put(product.UPC, arr0)
                     }
-                }
+
             }
         }
 
         productsFromShop2.observeForever {
             it.forEach {
-                product-> {
+                product->
                     var arr1 = productPricesByShopMap.get(product.UPC)
                     if(arr1 ==null){
                         var productPriceList = initialProductPriceList
@@ -116,14 +116,12 @@ class MainViewModel : ViewModel() {
                         arr1!!.list[1].price = product.price
                         productPricesByShopMap.put(product.UPC, arr1)
                     }
-                }
-
             }
         }
 
         productsFromShop3.observeForever {
             it.forEach {
-                product-> {
+                product->
                     var arr2 = productPricesByShopMap.get(product.UPC)
                     if(arr2 ==null){
                         var productPriceList = initialProductPriceList
@@ -133,7 +131,6 @@ class MainViewModel : ViewModel() {
                         arr2!!.list[1].price = product.price
                         productPricesByShopMap.put(product.UPC, arr2)
                     }
-                }
             }
         }
     }
