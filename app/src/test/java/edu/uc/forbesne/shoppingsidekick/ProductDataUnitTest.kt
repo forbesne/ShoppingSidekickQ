@@ -20,6 +20,7 @@ import org.junit.rules.TestRule
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
+
 class ProductDataUnitTest {
 
     /*@get:Rule
@@ -102,6 +103,7 @@ class ProductDataUnitTest {
             assertEquals(0, it.size)
         }
     }
+
 */
 
 }
