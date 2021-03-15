@@ -23,7 +23,7 @@ import org.junit.rules.TestRule
 
 class ProductDataUnitTest {
 
-    @get:Rule
+    /*@get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
     lateinit var mvm: MainViewModel
 
@@ -103,4 +103,7 @@ class ProductDataUnitTest {
             assertEquals(0, it.size)
         }
     }
+
+*/
+
 }
