@@ -101,7 +101,6 @@ class MainViewModel : ViewModel() {
                         arr0!!.list[0].price = product.price
                         productPricesByShopMap.put(product.UPC, arr0)
                     }
-
             }
         }
 
@@ -179,7 +178,7 @@ class MainViewModel : ViewModel() {
 
     fun addToCart(product: Product, amount: Int){
         if(amount == 0) return
-        var cartItem = CartItem(product.description, product.UPC, amount, product.imageURL)
+        var cartItem = CartItem(product.UPC, amount, product.imageURL, product.description)
         cart.addItem(cartItem)
     }
 
