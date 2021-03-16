@@ -1,8 +1,9 @@
 package edu.uc.forbesne.shoppingsidekick.dto
+// code is based on professor's github - https://github.com/discospiff/MyPlantDiaryQ
 
 
-data class CartItem (var cartId:Int = 0,  var UPC : String, var quantity: Int = 0, var imageURL : String, var description : String,
-                      var productBrand: String = "", var measurementUnit: String = "") {
+data class CartItem (var UPC : String, var quantity: Int = 0, var imageURL : String, var description : String,
+                      var productBrand: String = "", var measurementUnit: String = "",var cartId:Int = 0 ) {
 
     fun add(quantity: Int){
         this.quantity += quantity
