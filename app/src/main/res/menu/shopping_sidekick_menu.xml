@@ -36,7 +36,11 @@
         android:id="@+id/item5"
         android:title="More"
         android:icon="@drawable/ic_baseline_menu_24"
-        app:showAsAction="never"/>
+        app:showAsAction="never" >
+
+
+    </item>
+
 
 
 </menu>

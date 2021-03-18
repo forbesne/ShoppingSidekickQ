@@ -31,7 +31,10 @@ class MainActivity : AppCompatActivity() {
         val inflater = menuInflater;
         inflater.inflate(R.menu.shopping_sidekick_menu,menu);
 
-        return super.onCreateOptionsMenu(menu)
+
+        return true
+
+        //return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
