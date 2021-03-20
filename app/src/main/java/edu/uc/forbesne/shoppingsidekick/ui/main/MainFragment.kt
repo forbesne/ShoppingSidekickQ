@@ -12,11 +12,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.uc.forbesne.shoppingsidekick.R
+import edu.uc.forbesne.shoppingsidekick.dto.CartItem
 import kotlinx.android.synthetic.main.main_fragment.*
+import kotlinx.android.synthetic.main.product_popup.*
 
 class MainFragment : Fragment() {
     private lateinit var viewModel: MainViewModel
     private lateinit var adapter : ProductListAdapter
+    private lateinit var cartItem : CartItem
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -33,6 +37,18 @@ class MainFragment : Fragment() {
         /*btnAddProduct.setOnClickListener {
             addCartItem()
         }*/
+
+        btnIncrease.setOnClickListener{
+            val qty = cartItem.quantity + 1
+            cartItem.add(qty)
+            etnQuantity.text = qty.toString()
+        }
+
+        btnDecrease.setOnClickListener{
+            val qty = cartItem.quantity - 1
+            cartItem.reduce(qty)
+            etnQuantity.text = qty.toString()
+        }
 
         viewModel.fetchAllProducts()
         viewModel.products.observe(this, Observer { products ->
@@ -55,9 +71,9 @@ class MainFragment : Fragment() {
         // The cart item logic should mostly be in the view model and cart item is not created by the user.
         // Instead we need only the quantity and a way to identify a product - for all shops - done by UPC
         // => Commented out until view has these fields
-        /*var quantity = etnQuantity.text.toString()
+       /* var quantity = etnQuantity.text.toString()
         var upc = upc.text.toString() //perhaps this should be stored in a hidden label
-        viewModel.addCartItem(cartItem)*/
+        viewModel.addCartItem(cartItem) */
     }
 
     companion object {
