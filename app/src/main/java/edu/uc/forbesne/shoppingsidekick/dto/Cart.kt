@@ -15,12 +15,17 @@ data class Cart (var itemList : ArrayList<CartItem>) {
     }
 
     fun addItem(item:CartItem){
-        var existingItemInCart = itemQuantityMap.get(item.UPC)
-        if(existingItemInCart ==null){
+        val existingItemInCart = itemQuantityMap.get(item.UPC)
+
+        if(existingItemInCart == null){
             itemQuantityMap.put(item.UPC, item)
         }else{
-            existingItemInCart.add(item.quantity)
-            itemQuantityMap.put(item.UPC, existingItemInCart)
+
+            var adjustedCartItem = CartItem(existingItemInCart!!.UPC, existingItemInCart!!.quantity)
+            adjustedCartItem.id = existingItemInCart.id //this will change one line up
+
+            adjustedCartItem.add(item.quantity)
+            itemQuantityMap.put(item.UPC, adjustedCartItem)
         }
     }
 
