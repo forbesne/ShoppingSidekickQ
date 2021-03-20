@@ -1,6 +1,7 @@
 package edu.uc.forbesne.shoppingsidekick.ui.main
 // code is based on professor's github - https://github.com/discospiff/MyPlantDiaryQ
 
+import android.content.ContentValues
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,7 +25,7 @@ class MainViewModel : ViewModel() {
     var productsFromShop1: MutableLiveData<ArrayList<Product>> = MutableLiveData<ArrayList<Product>>()
     var productsFromShop2: MutableLiveData<ArrayList<Product>> = MutableLiveData<ArrayList<Product>>()
     var productsFromShop3: MutableLiveData<ArrayList<Product>> = MutableLiveData<ArrayList<Product>>()
-    var cart: Cart = Cart(ArrayList<CartItem>())
+    val cart: Cart = Cart()
 
     var searchItemList: ArrayList<SearchItem> = ArrayList<SearchItem>()
 
@@ -42,6 +43,8 @@ class MainViewModel : ViewModel() {
         assignProducts()
         //populateInitialProductPriceList()
         createObservableShopsPricesMap()
+        getCartFromFirebase()
+
     }
 
      fun createFirebaseInstance(){
@@ -134,8 +137,33 @@ class MainViewModel : ViewModel() {
         productsFromShop1 = productService.fetchProductsByName(productName)
     }
 
+    private fun getCartFromFirebase(){
+        firestore.collection("cart").addSnapshotListener {
+            snapshot, e ->
+            // if there is an exception we want to skip.
+            if (e != null) {
+                Log.w(ContentValues.TAG, "Listen Failed", e)
+                return@addSnapshotListener
+            }
+
+            // if we are here, we did not encounter an exception
+            if (snapshot != null) {
+                val firebaseCartItems = ArrayList<CartItem>()
+                val documents = snapshot.documents
+                documents.forEach {
+
+                    val cartItem = it.toObject(CartItem::class.java)
+                    if (cartItem != null) {
+                        cartItem.id = it.id
+                        cart.addItem(cartItem)
+                    }
+                }
+            }
+        }
+    }
+
     fun addToCart(product: Product, quantity: Int) {
-        if (quantity == 0) return
+        if (quantity <= 0) return
         var cartItem = CartItem(product.UPC, quantity, product.imageURL, product.description)
 
         if (cart.doesHaveItem(product.UPC)) {
@@ -146,13 +174,14 @@ class MainViewModel : ViewModel() {
             cartItem.id = newCartItemId
         }
 
-        cart.addItem(cartItem)
+        //this should be updated by firebase
+        //cart.addItem(cartItem)
 
     }
 
     fun addCartItemToFirebase(cartItem: CartItem):String {
         val document =
-            firestore.collection("Cart")
+            firestore.collection("cart")
                     .document()
 
         val cartItemId =document.id
@@ -173,7 +202,7 @@ class MainViewModel : ViewModel() {
         adjustedCartItem.id= existingCartItem.id
         adjustedCartItem.quantity += quantityToAdd
 
-        firestore.collection("Cart")
+        firestore.collection("cart")
                 .document(adjustedCartItem.id)
                 .set(adjustedCartItem)
                 .addOnSuccessListener {
@@ -189,8 +218,9 @@ class MainViewModel : ViewModel() {
     }
 
     fun deleteCart(){
-        //find function..
-        cart = Cart(ArrayList<CartItem>())
+        cart.emptyCart()
+        //add remove from database..
+
     }
 
 
