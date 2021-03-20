@@ -14,8 +14,9 @@ import com.squareup.picasso.Picasso
 import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.Product
 
-class ProductListAdapter( private val productList: ArrayList<Product>):RecyclerView.Adapter<ProductListAdapter.ViewHolder>() {
-     lateinit var mContext: Context
+class ProductListAdapter( private val productList: ArrayList<Product>, mainViewModel: MainViewModel):RecyclerView.Adapter<ProductListAdapter.ViewHolder>() {
+    lateinit var mContext: Context
+    var mvm = mainViewModel
 
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
@@ -48,8 +49,8 @@ class ProductListAdapter( private val productList: ArrayList<Product>):RecyclerV
         holder.productCard.setOnClickListener(){
             //holder.productCard.isClickable = false
             //open pop-up for product
-            openProductPopUp(holder.upc.text as String, holder.description.text as String,
-                    holder.imgURL.text as String,holder.brand.text as String,holder.unitValue.text as String)
+            openProductPopUp(holder.upc.text.toString(), holder.description.text.toString(),
+                    holder.imgURL.text.toString(),holder.brand.text.toString(),holder.unitValue.text.toString())
         }
     }
 
@@ -68,6 +69,9 @@ class ProductListAdapter( private val productList: ArrayList<Product>):RecyclerV
         val prodUnitValue: TextView = view_popup.findViewById(R.id.lblUnitValue)
         val prodImg: ImageView = view_popup.findViewById(R.id.productImage)
         val btnAddProductToCart: Button = view_popup.findViewById(R.id.btnAddProduct)
+        val btnDecrease: ImageButton = view_popup.findViewById(R.id.btnDecrease)
+        val btnIncrease: ImageButton = view_popup.findViewById(R.id.btnIncrease)
+        val lblQuantity: TextView = view_popup.findViewById(R.id.etnQuantity)
 
         Picasso.get().load(imgURL).into(prodImg);
         prodName.text = description
@@ -119,7 +123,32 @@ class ProductListAdapter( private val productList: ArrayList<Product>):RecyclerV
         )
 
         btnAddProductToCart.setOnClickListener{
+            var upc = prodUPC.text.toString()
+            var strQuantity = lblQuantity.text.toString()
+            var quantity = strQuantity.toInt()
+
+            var prod = Product(upc)
+
             //call add to cart on viewModel
+            mvm.addToCart(prod,quantity )
+
+            popupWindow.dismiss()
+            backdropWindow.dismiss()
+        }
+
+        btnDecrease.setOnClickListener{
+            var strQuantity = lblQuantity.text.toString()
+            var quantity = strQuantity.toInt()
+            if (quantity > 1)  quantity -= 1
+            else quantity = 1
+
+            lblQuantity.text = quantity.toString()
+        }
+
+        btnIncrease.setOnClickListener{
+            var strQuantity = lblQuantity.text.toString()
+            var quantity = strQuantity.toInt() + 1
+            lblQuantity.text = quantity.toString()
         }
     }
 
