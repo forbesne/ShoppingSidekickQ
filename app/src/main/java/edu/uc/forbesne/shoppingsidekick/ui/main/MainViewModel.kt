@@ -141,7 +141,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun removeFromCart(cartItem: CartItem){
-        cart.removeItem(cartItem)
+        cart.removeItemFromCart(cartItem)
     }
 
     fun deleteCart(){
@@ -161,7 +161,8 @@ class MainViewModel : ViewModel() {
                 }
     }
 
-    private fun addSearchItem(upc: String, quantity:Int) {
+    //I think I was thinking of using this before the concept of a map - basically no need for this.
+/*    private fun addSearchItem(upc: String, quantity:Int) {
         searchItemList.add(SearchItem(upc, quantity))
     }
 
@@ -172,7 +173,7 @@ class MainViewModel : ViewModel() {
     private fun deleteSearchItemList() {
         //find function..
         searchItemList = ArrayList<SearchItem>()
-    }
+    }*/
 
     // For now returns a string like: shop 1 is cheapest
     fun findCheapestMarket(): String {
@@ -185,9 +186,10 @@ class MainViewModel : ViewModel() {
         var itemUPC = ""
         var productPricesList = ProductPriceList(3)
 
-        cart.itemList.forEach{
-            itemQuantity = it.quantity
-            itemUPC = it.UPC
+        cart.itemQuantityMap.forEach{
+            itemUPC = it.key
+            itemQuantity = it.value.quantity
+
             productPricesList = productPricesByShopMap.get(itemUPC)!!
             cart1Total += productPricesList.list[0].price * itemQuantity
             cart2Total += productPricesList.list[1].price * itemQuantity
