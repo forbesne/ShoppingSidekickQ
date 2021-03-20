@@ -139,9 +139,10 @@ class MainViewModel : ViewModel() {
         var cartItem = CartItem(product.UPC, quantity, product.imageURL, product.description)
 
         if (cart.doesHaveItem(product.UPC)) {
-            adjustCartItemQuantityInFirebase(cart.getCartItem(product.UPC))
+            adjustCartItemQuantityInFirebase(cart.getCartItem(product.UPC), cartItem.quantity)
         }else{
             val newCartItemId = addCartItemToFirebase(cartItem)
+            //adjust local cartItem to have the id of the new firebase cartItem
             cartItem.id = newCartItemId
         }
 
@@ -164,16 +165,16 @@ class MainViewModel : ViewModel() {
                         Log.d("Firebase", "Save Failed")
                     }
 
-        //adjust local cartItem to have the id of the newly firebase cartItem created
         return cartItemId
     }
 
-    private fun adjustCartItemQuantityInFirebase(cartItem: CartItem) {
-        var adjustedCartItem = cart.getCartItem(cartItem.UPC)
-        adjustedCartItem.quantity += cartItem.quantity
+    private fun adjustCartItemQuantityInFirebase(existingCartItem: CartItem, quantityToAdd: Int) {
+        var adjustedCartItem = CartItem(existingCartItem.UPC, existingCartItem.quantity)
+        adjustedCartItem.id= existingCartItem.id
+        adjustedCartItem.quantity += quantityToAdd
 
         firestore.collection("Cart")
-                .document(cartItem.id)
+                .document(adjustedCartItem.id)
                 .set(adjustedCartItem)
                 .addOnSuccessListener {
                     Log.d("Firebase", "document saved")
