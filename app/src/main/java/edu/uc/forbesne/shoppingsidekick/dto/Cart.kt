@@ -15,24 +15,42 @@ data class Cart (var itemList : ArrayList<CartItem>) {
     }
 
     fun addItem(item:CartItem){
-        var exsitingItemInCart = itemQuantityMap.get(item.UPC)
-        if(exsitingItemInCart ==null){
+        var existingItemInCart = itemQuantityMap.get(item.UPC)
+        if(existingItemInCart ==null){
             itemQuantityMap.put(item.UPC, item)
         }else{
-            exsitingItemInCart.add(item.quantity)
-            itemQuantityMap.put(item.UPC, exsitingItemInCart)
+            existingItemInCart.add(item.quantity)
+            itemQuantityMap.put(item.UPC, existingItemInCart)
         }
     }
 
     fun removeItemFromCart(item:CartItem){
-        var exsitingItemInCart = itemQuantityMap.get(item.UPC)
-        if(exsitingItemInCart != null){
-            exsitingItemInCart.remove()
-            itemQuantityMap.put(item.UPC, exsitingItemInCart)
+        var existingItemInCart = itemQuantityMap.get(item.UPC)
+        if(existingItemInCart != null){
+            existingItemInCart.remove()
+            itemQuantityMap.put(item.UPC, existingItemInCart)
         }
     }
 
     fun deleteCart(amount: Int){
         itemQuantityMap.clear()
+    }
+
+    fun doesHaveItem(upc:String):Boolean{
+        var existingItemInCart  = itemQuantityMap.get(upc)
+        if(existingItemInCart == null) return false
+        return true
+    }
+
+    fun getCartItem(upc:String):CartItem {
+        var existingItemInCart = itemQuantityMap.get(upc)
+        if (existingItemInCart == null) return CartItem()
+        return existingItemInCart
+    }
+
+    fun getCartItemQuantity(upc:String):Int {
+        var existingItemInCart = itemQuantityMap.get(upc)
+        if (existingItemInCart == null) return 0
+        return existingItemInCart.quantity
     }
 }
