@@ -1,32 +1,41 @@
 package edu.uc.forbesne.shoppingsidekick.dto
 
 //itemList is the initial cart data coming in when created
-data class Cart (var itemList : ArrayList<CartItem>) {
+data class Cart (var size :Int =0) {
 
     //map of all items currently in cart - more efficient than using an array list, as searching for upc is needed
     //key = upc, value = cartItem
     var itemQuantityMap: HashMap<String,CartItem> = HashMap<String, CartItem>()
 
     //makes sure that map includes all initial items when created
-    init {
+//    init {
+//        itemList.forEach {
+//            itemQuantityMap.put(it.UPC, it)
+//        }
+//    }
+
+
+    fun addItems(itemList : ArrayList<CartItem>) {
         itemList.forEach {
-            itemQuantityMap.put(it.UPC, it)
-        }
+            addItem(it)
+       }
     }
 
     fun addItem(item:CartItem){
         val existingItemInCart = itemQuantityMap.get(item.UPC)
 
         if(existingItemInCart == null){
-            itemQuantityMap.put(item.UPC, item)
-        }else{
-
-            var adjustedCartItem = CartItem(existingItemInCart!!.UPC, existingItemInCart!!.quantity)
-            adjustedCartItem.id = existingItemInCart.id //this will change one line up
-
-            adjustedCartItem.add(item.quantity)
-            itemQuantityMap.put(item.UPC, adjustedCartItem)
+            //itemQuantityMap.put(item.UPC, item)
+            size++
         }
+
+            //var adjustedCartItem = CartItem(existingItemInCart!!.UPC, existingItemInCart!!.quantity)
+            //adjustedCartItem.id = existingItemInCart.id //this will change one line up
+            //adjustedCartItem.add(item.quantity)
+
+        itemQuantityMap.put(item.UPC, item)
+
+
     }
 
     fun removeItemFromCart(item:CartItem){
@@ -57,5 +66,9 @@ data class Cart (var itemList : ArrayList<CartItem>) {
         var existingItemInCart = itemQuantityMap.get(upc)
         if (existingItemInCart == null) return 0
         return existingItemInCart.quantity
+    }
+
+    fun emptyCart(){
+        itemQuantityMap.clear()
     }
 }
