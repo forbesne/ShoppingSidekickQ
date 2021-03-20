@@ -134,10 +134,53 @@ class MainViewModel : ViewModel() {
         productsFromShop1 = productService.fetchProductsByName(productName)
     }
 
-    fun addToCart(product: Product, quantity: Int){
-        if(quantity == 0) return
+    fun addToCart(product: Product, quantity: Int) {
+        if (quantity == 0) return
         var cartItem = CartItem(product.UPC, quantity, product.imageURL, product.description)
+
+        if (cart.doesHaveItem(product.UPC)) {
+            adjustCartItemQuantityInFirebase(cart.getCartItem(product.UPC))
+        }else{
+            val newCartItemId = addCartItemToFirebase(cartItem)
+            cartItem.id = newCartItemId
+        }
+
         cart.addItem(cartItem)
+
+    }
+
+    fun addCartItemToFirebase(cartItem: CartItem):String {
+        val document =
+            firestore.collection("Cart")
+                    .document()
+
+        val cartItemId =document.id
+
+        document.set(cartItem)
+                    .addOnSuccessListener {
+                        Log.d("Firebase", "document saved")
+                    }
+                    .addOnFailureListener{
+                        Log.d("Firebase", "Save Failed")
+                    }
+
+        //adjust local cartItem to have the id of the newly firebase cartItem created
+        return cartItemId
+    }
+
+    private fun adjustCartItemQuantityInFirebase(cartItem: CartItem) {
+        var adjustedCartItem = cart.getCartItem(cartItem.UPC)
+        adjustedCartItem.quantity += cartItem.quantity
+
+        firestore.collection("Cart")
+                .document(cartItem.id)
+                .set(adjustedCartItem)
+                .addOnSuccessListener {
+                    Log.d("Firebase", "document saved")
+                }
+                .addOnFailureListener{
+                    Log.d("Firebase", "Save Failed")
+                }
     }
 
     fun removeFromCart(cartItem: CartItem){
@@ -149,17 +192,7 @@ class MainViewModel : ViewModel() {
         cart = Cart(ArrayList<CartItem>())
     }
 
-    fun save(cartItem: CartItem) {
-        firestore.collection("cartItems")
-                .document()
-                .set(cartItem)
-                .addOnSuccessListener {
-                    Log.d("Firebase", "document saved")
-                }
-                .addOnFailureListener{
-                    Log.d("Firebase", "Save Failed")
-                }
-    }
+
 
     //I think I was thinking of using this before the concept of a map - basically no need for this.
 /*    private fun addSearchItem(upc: String, quantity:Int) {
