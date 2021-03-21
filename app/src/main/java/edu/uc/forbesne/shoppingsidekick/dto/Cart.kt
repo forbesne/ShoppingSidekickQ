@@ -7,20 +7,15 @@ data class Cart (var size :Int =0) {
     //key = upc, value = cartItem
     var itemQuantityMap: HashMap<String,CartItem> = HashMap<String, CartItem>()
 
-    //makes sure that map includes all initial items when created
-//    init {
-//        itemList.forEach {
-//            itemQuantityMap.put(it.UPC, it)
-//        }
-//    }
-
-
+    //Currently not being used
     fun addItems(itemList : ArrayList<CartItem>) {
         itemList.forEach {
             addItem(it)
        }
     }
 
+    // gets called from MianViewModel from the getCartFromFirebase()
+    // and is updated automatically using the addSnapshotListener
     fun addItem(item:CartItem){
         val existingItemInCart = itemQuantityMap.get(item.UPC)
 
@@ -29,15 +24,11 @@ data class Cart (var size :Int =0) {
             size++
         }
 
-            //var adjustedCartItem = CartItem(existingItemInCart!!.UPC, existingItemInCart!!.quantity)
-            //adjustedCartItem.id = existingItemInCart.id //this will change one line up
-            //adjustedCartItem.add(item.quantity)
-
         itemQuantityMap.put(item.UPC, item)
-
-
     }
 
+    // This is still not implemented in the application
+    // once it will we need to change this to use firebase
     fun removeItemFromCart(item:CartItem){
         var existingItemInCart = itemQuantityMap.get(item.UPC)
         if(existingItemInCart != null){
@@ -46,6 +37,8 @@ data class Cart (var size :Int =0) {
         }
     }
 
+    // This is still not implemented in the application
+    // once it will we need to change this to use firebase
     fun deleteCart(amount: Int){
         itemQuantityMap.clear()
     }
@@ -68,6 +61,8 @@ data class Cart (var size :Int =0) {
         return existingItemInCart.quantity
     }
 
+    // This is still not implemented in the application
+    // once it will we need to change this to use firebase
     fun emptyCart(){
         itemQuantityMap.clear()
     }
