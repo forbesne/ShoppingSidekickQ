@@ -11,9 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestoreSettings
 import edu.uc.forbesne.shoppingsidekick.dto.Cart
 import edu.uc.forbesne.shoppingsidekick.dto.CartItem
 import edu.uc.forbesne.shoppingsidekick.dto.Product
-import edu.uc.forbesne.shoppingsidekick.dto.SearchItem
 import edu.uc.forbesne.shoppingsidekick.service.ProductService
-
 
 /**
  *  Gets data from Firebase and APIs, makes adjustments, provides live data to activities
@@ -26,11 +24,6 @@ class MainViewModel : ViewModel() {
     var productsFromShop2: MutableLiveData<ArrayList<Product>> = MutableLiveData<ArrayList<Product>>()
     var productsFromShop3: MutableLiveData<ArrayList<Product>> = MutableLiveData<ArrayList<Product>>()
     val cart: Cart = Cart()
-
-    var searchItemList: ArrayList<SearchItem> = ArrayList<SearchItem>()
-
-    // A list of objects of type {shopName, ProductUPC, shopsPrice}
-    //var initialProductPriceList :ProductPriceList = ProductPriceList(3)
 
     // A map/table containing all key value pairs where key = productUPC, value = array with 3 objects of type {shopName, ProductUPC,shopPrice}
     var productPricesByShopMap: HashMap<String,ProductPriceList> = HashMap<String, ProductPriceList>()
@@ -173,10 +166,6 @@ class MainViewModel : ViewModel() {
             //adjust local cartItem to have the id of the new firebase cartItem
             cartItem.id = newCartItemId
         }
-
-        //this should be updated by firebase
-        //cart.addItem(cartItem)
-
     }
 
     fun addCartItemToFirebase(cartItem: CartItem):String {
@@ -218,26 +207,8 @@ class MainViewModel : ViewModel() {
     }
 
     fun deleteCart(){
-        cart.emptyCart()
         //add remove from database..
-
     }
-
-
-
-    //I think I was thinking of using this before the concept of a map - basically no need for this.
-/*    private fun addSearchItem(upc: String, quantity:Int) {
-        searchItemList.add(SearchItem(upc, quantity))
-    }
-
-    private fun removeSearchItem(searchItem: SearchItem) {
-        searchItemList.remove(searchItem)
-    }
-
-    private fun deleteSearchItemList() {
-        //find function..
-        searchItemList = ArrayList<SearchItem>()
-    }*/
 
     // For now returns a string like: shop 1 is cheapest
     fun findCheapestMarket(): String {
