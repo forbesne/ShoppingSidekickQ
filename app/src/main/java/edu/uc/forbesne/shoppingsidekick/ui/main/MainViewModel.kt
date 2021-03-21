@@ -34,10 +34,8 @@ class MainViewModel : ViewModel() {
         fetchSop2Products()
         fetchSop3Products()
         assignProducts()
-        //populateInitialProductPriceList()
         createObservableShopsPricesMap()
         getCartFromFirebase()
-
     }
 
      fun createFirebaseInstance(){
@@ -199,7 +197,7 @@ class MainViewModel : ViewModel() {
                 }
                 .addOnFailureListener{
                     Log.d("Firebase", "Save Failed")
-                }
+        }
     }
 
     fun removeFromCart(cartItem: CartItem){
