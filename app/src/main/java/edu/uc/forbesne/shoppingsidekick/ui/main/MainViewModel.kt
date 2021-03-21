@@ -1,6 +1,7 @@
 package edu.uc.forbesne.shoppingsidekick.ui.main
 // code is based on professor's github - https://github.com/discospiff/MyPlantDiaryQ
 
+import android.content.ContentValues
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,9 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestoreSettings
 import edu.uc.forbesne.shoppingsidekick.dto.Cart
 import edu.uc.forbesne.shoppingsidekick.dto.CartItem
 import edu.uc.forbesne.shoppingsidekick.dto.Product
-import edu.uc.forbesne.shoppingsidekick.dto.SearchItem
 import edu.uc.forbesne.shoppingsidekick.service.ProductService
-
 
 /**
  *  Gets data from Firebase and APIs, makes adjustments, provides live data to activities
@@ -24,13 +23,9 @@ class MainViewModel : ViewModel() {
     var productsFromShop1: MutableLiveData<ArrayList<Product>> = MutableLiveData<ArrayList<Product>>()
     var productsFromShop2: MutableLiveData<ArrayList<Product>> = MutableLiveData<ArrayList<Product>>()
     var productsFromShop3: MutableLiveData<ArrayList<Product>> = MutableLiveData<ArrayList<Product>>()
-    var cart: Cart = Cart(ArrayList<CartItem>())
+    val cart: Cart = Cart()
 
-    var searchItemList: ArrayList<SearchItem> = ArrayList<SearchItem>()
-
-    // A list of object{shopName, ProductUPC, shopsPrice}
-    var initialProductPriceList :ProductPriceList = ProductPriceList(3)
-    // A map/table containing all key value pairs where key = productUPC, value = list of objects {shopName, ProductUPC,shopPrice}
+    // A map/table containing all key value pairs where key = productUPC, value = array with 3 objects of type {shopName, ProductUPC,shopPrice}
     var productPricesByShopMap: HashMap<String,ProductPriceList> = HashMap<String, ProductPriceList>()
 
     init {
@@ -39,8 +34,8 @@ class MainViewModel : ViewModel() {
         fetchSop2Products()
         fetchSop3Products()
         assignProducts()
-        populateInitialProductPriceList()
         createObservableShopsPricesMap()
+        getCartFromFirebase()
     }
 
      fun createFirebaseInstance(){
@@ -48,22 +43,13 @@ class MainViewModel : ViewModel() {
         firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
     }
 
-    fun save(cartItem: CartItem) {
-        firestore.collection("cartItems")
-            .document()
-            .set(cartItem)
-            .addOnSuccessListener {
-                Log.d("Firebase", "document saved")
-            }
-            .addOnFailureListener{
-                Log.d("Firebase", "Save Failed")
-            }
-    }
 
-    private fun populateInitialProductPriceList() {
+    private fun createInitialProductPriceList():ProductPriceList {
+        var initialProductPriceList :ProductPriceList = ProductPriceList(3)
         initialProductPriceList.list[0].shopName = "Shop1"
         initialProductPriceList.list[1].shopName = "Shop2"
         initialProductPriceList.list[2].shopName = "Shop3"
+        return initialProductPriceList
     }
 
     private fun fetchSop1Products() {
@@ -94,7 +80,8 @@ class MainViewModel : ViewModel() {
                 product->
                     var arr0 = productPricesByShopMap.get(product.UPC)
                     if(arr0 ==null){
-                        var productPriceList = initialProductPriceList
+                        //var productPriceList = initialProductPriceList
+                        var productPriceList = createInitialProductPriceList()
                         productPriceList.list[0].price = product.price
                         productPricesByShopMap.put(product.UPC, productPriceList)
                     }else{
@@ -109,7 +96,8 @@ class MainViewModel : ViewModel() {
                 product->
                     var arr1 = productPricesByShopMap.get(product.UPC)
                     if(arr1 ==null){
-                        var productPriceList = initialProductPriceList
+                        //var productPriceList = initialProductPriceList
+                        var productPriceList = createInitialProductPriceList()
                         productPriceList.list[1].price = product.price
                         productPricesByShopMap.put(product.UPC, productPriceList)
                     }else{
@@ -124,11 +112,12 @@ class MainViewModel : ViewModel() {
                 product->
                     var arr2 = productPricesByShopMap.get(product.UPC)
                     if(arr2 ==null){
-                        var productPriceList = initialProductPriceList
+                        //var productPriceList = initialProductPriceList
+                        var productPriceList = createInitialProductPriceList()
                         productPriceList.list[2].price = product.price
                         productPricesByShopMap.put(product.UPC, productPriceList)
                     }else{
-                        arr2!!.list[1].price = product.price
+                        arr2!!.list[2].price = product.price
                         productPricesByShopMap.put(product.UPC, arr2)
                     }
             }
@@ -139,6 +128,86 @@ class MainViewModel : ViewModel() {
         productsFromShop1 = productService.fetchProductsByName(productName)
     }
 
+    private fun getCartFromFirebase(){
+        firestore.collection("cart").addSnapshotListener {
+            snapshot, e ->
+            // if there is an exception we want to skip.
+            if (e != null) {
+                Log.w(ContentValues.TAG, "Listen Failed", e)
+                return@addSnapshotListener
+            }
+
+            // if we are here, we did not encounter an exception
+            if (snapshot != null) {
+                val firebaseCartItems = ArrayList<CartItem>()
+                val documents = snapshot.documents
+                documents.forEach {
+
+                    val cartItem = it.toObject(CartItem::class.java)
+                    if (cartItem != null) {
+                        cartItem.id = it.id
+                        cart.addItem(cartItem)
+                    }
+                }
+            }
+        }
+    }
+
+    fun addToCart(product: Product, quantity: Int) {
+        if (quantity <= 0) return
+        var cartItem = CartItem(product.UPC, quantity, product.imageURL, product.description)
+
+        if (cart.doesHaveItem(product.UPC)) {
+            adjustCartItemQuantityInFirebase(cart.getCartItem(product.UPC), cartItem.quantity)
+        }else{
+            val newCartItemId = addCartItemToFirebase(cartItem)
+            //adjust local cartItem to have the id of the new firebase cartItem
+            cartItem.id = newCartItemId
+        }
+    }
+
+    fun addCartItemToFirebase(cartItem: CartItem):String {
+        val document =
+            firestore.collection("cart")
+                    .document()
+
+        val cartItemId =document.id
+
+        document.set(cartItem)
+                    .addOnSuccessListener {
+                        Log.d("Firebase", "document saved")
+                    }
+                    .addOnFailureListener{
+                        Log.d("Firebase", "Save Failed")
+                    }
+
+        return cartItemId
+    }
+
+    private fun adjustCartItemQuantityInFirebase(existingCartItem: CartItem, quantityToAdd: Int) {
+        var adjustedCartItem = CartItem(existingCartItem.UPC, existingCartItem.quantity)
+        adjustedCartItem.id= existingCartItem.id
+        adjustedCartItem.quantity += quantityToAdd
+
+        firestore.collection("cart")
+                .document(adjustedCartItem.id)
+                .set(adjustedCartItem)
+                .addOnSuccessListener {
+                    Log.d("Firebase", "document saved")
+                }
+                .addOnFailureListener{
+                    Log.d("Firebase", "Save Failed")
+        }
+    }
+
+    fun removeFromCart(cartItem: CartItem){
+        cart.removeItemFromCart(cartItem)
+    }
+
+    fun deleteCart(){
+        //add remove from database..
+    }
+
     // For now returns a string like: shop 1 is cheapest
     fun findCheapestMarket(): String {
         var cart1Total = 0f
@@ -146,17 +215,18 @@ class MainViewModel : ViewModel() {
         var cart3Total = 0f
         var cheapestMarket = " is the cheapest market!!"
 
-        var itemAmount = 0
+        var itemQuantity = 0
         var itemUPC = ""
         var productPricesList = ProductPriceList(3)
 
-        cart.itemList.forEach{
-            itemAmount = it.quantity
-            itemUPC = it.UPC
+        cart.itemQuantityMap.forEach{
+            itemUPC = it.key
+            itemQuantity = it.value.quantity
+
             productPricesList = productPricesByShopMap.get(itemUPC)!!
-            cart1Total += productPricesList.list[0].price * itemAmount
-            cart2Total += productPricesList.list[1].price * itemAmount
-            cart3Total += productPricesList.list[2].price * itemAmount
+            cart1Total += productPricesList.list[0].price * itemQuantity
+            cart2Total += productPricesList.list[1].price * itemQuantity
+            cart3Total += productPricesList.list[2].price * itemQuantity
 
         }
         if (cart1Total < cart2Total){
@@ -174,33 +244,5 @@ class MainViewModel : ViewModel() {
         }
 
         return cheapestMarket
-    }
-
-    fun addToCart(product: Product, amount: Int){
-        if(amount == 0) return
-        var cartItem = CartItem(product.UPC, amount, product.imageURL, product.description)
-        cart.addItem(cartItem)
-    }
-
-    fun removeFromCart(cartItem: CartItem){
-        cart.removeItem(cartItem)
-    }
-
-    fun deleteCart(){
-        //find function..
-        cart = Cart(ArrayList<CartItem>())
-    }
-
-    private fun addSearchItem(upc: String, amount:Int) {
-        searchItemList.add(SearchItem(upc, amount))
-    }
-
-    private fun removeSearchItem(searchItem: SearchItem) {
-        searchItemList.remove(searchItem)
-    }
-
-    private fun deleteSearchItemList() {
-        //find function..
-        searchItemList = ArrayList<SearchItem>()
     }
 }

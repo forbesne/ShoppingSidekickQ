@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import edu.uc.forbesne.shoppingsidekick.MainActivity
 import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.CartItem
 import kotlinx.android.synthetic.main.main_fragment.*
@@ -30,6 +32,7 @@ class MainFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        var btnFindCheapestMarket: Button = this.activity!!.findViewById(R.id.button5)
         var recyclerView = view!!.findViewById<RecyclerView>(R.id.recLstProducts)
         recyclerView.layoutManager = GridLayoutManager(this.context, 3)
 
@@ -38,17 +41,18 @@ class MainFragment : Fragment() {
             addCartItem()
         }*/
 
-        btnIncrease.setOnClickListener{
-            val qty = cartItem.quantity + 1
-            cartItem.add(qty)
-            etnQuantity.text = qty.toString()
-        }
 
-        btnDecrease.setOnClickListener{
-            val qty = cartItem.quantity - 1
-            cartItem.reduce(qty)
-            etnQuantity.text = qty.toString()
-        }
+        /*btnIncrease.setOnClickListener{
+              val qty = cartItem.quantity + 1
+              cartItem.add(qty)
+              etnQuantity.text = qty.toString()
+          }
+
+          btnDecrease.setOnClickListener{
+              val qty = cartItem.quantity - 1
+              cartItem.reduce(qty)
+              etnQuantity.text = qty.toString()
+          }*/
 
         viewModel.fetchAllProducts()
         viewModel.products.observe(this, Observer { products ->
@@ -60,10 +64,14 @@ class MainFragment : Fragment() {
                     )
             )
             adapter = ProductListAdapter(
-                    viewModel.products.value!!
+                    viewModel.products.value!!, viewModel
             )
             recyclerView.adapter = adapter
         })
+
+        btnFindCheapestMarket.setOnClickListener{
+            viewModel.findCheapestMarket()
+        }
     }
 
     // This will get called when the user clicks on the pop-up window.
