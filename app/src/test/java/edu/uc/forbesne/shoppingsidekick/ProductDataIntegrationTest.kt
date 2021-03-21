@@ -19,13 +19,13 @@ import java.lang.Thread.sleep
  */
 class ProductDataIntegrationTest {
 
-    /*@get:Rule
+    @get:Rule
     var rule: TestRule =  InstantTaskExecutorRule()
     lateinit var mvm: MainViewModel
 
     @Test
     fun confirmChips_outputsChips () {
-        var product: Product = Product(1, "Chips",2.5f, "Item", "Best Chips", "Snacks","100000001","chipsImageURL")
+        var product: Product = Product("100000001", 2.5f,"Item","Best Chips","Snacks",   "chipsImageURL","Chips",1)
         assertEquals("Description: Chips, Price: 2.5, Category: Snacks", product.toString());
     }
 
@@ -53,5 +53,5 @@ class ProductDataIntegrationTest {
             //does work
             //assertTrue(it.size == 25)
         }
-    }*/
+    }
 }
