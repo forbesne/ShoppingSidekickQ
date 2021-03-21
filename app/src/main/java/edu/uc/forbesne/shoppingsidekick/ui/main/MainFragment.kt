@@ -41,17 +41,18 @@ class MainFragment : Fragment() {
             addCartItem()
         }*/
 
-        btnIncrease.setOnClickListener{
-            val qty = cartItem.quantity + 1
-            cartItem.add(qty)
-            etnQuantity.text = qty.toString()
-        }
 
-        btnDecrease.setOnClickListener{
-            val qty = cartItem.quantity - 1
-            cartItem.reduce(qty)
-            etnQuantity.text = qty.toString()
-        }
+        /*btnIncrease.setOnClickListener{
+              val qty = cartItem.quantity + 1
+              cartItem.add(qty)
+              etnQuantity.text = qty.toString()
+          }
+
+          btnDecrease.setOnClickListener{
+              val qty = cartItem.quantity - 1
+              cartItem.reduce(qty)
+              etnQuantity.text = qty.toString()
+          }*/
 
         viewModel.fetchAllProducts()
         viewModel.products.observe(this, Observer { products ->
