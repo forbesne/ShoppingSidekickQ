@@ -23,7 +23,7 @@ import org.junit.rules.TestRule
 
 class ProductDataUnitTest {
 
-    /*@get:Rule
+    @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
     lateinit var mvm: MainViewModel
 
@@ -31,7 +31,7 @@ class ProductDataUnitTest {
 
     @Test
     fun confirmApple_outputsApple () {
-        var product: Product = Product(1, "Apple", 2.5f, "Item", "Granny Smith", "Fruit","100000001","appleImageURL")
+        var product: Product = Product("100000001", 2.5f,"Item","Granny Smith","Fruit",   "appleImageURL","Apple", 1 )
         assertEquals("Description: Apple, Price: 2.5, Category: Fruit", product.toString());
     }
 
@@ -57,9 +57,9 @@ class ProductDataUnitTest {
     private fun createMockData() {
         var allProductsLiveData = MutableLiveData<ArrayList<Product>>()
         var allProducts = ArrayList<Product>()
-        var apple = Product(1, "Apple", 2.5f, "Item", "Granny Smith", "Fruit","100000001","appleImageURL")
+        var apple = Product("100000001", 2.5f,"Item",   "Granny Smith","Fruit", "appleImageURL","Apple",1)
         allProducts.add(apple)
-        var banana = Product(1, "Banana", 1.5f, "Item", "Nuleaf", "Fruit","100000002","bananaImageURL")
+        var banana = Product("100000002", 1.5f,"Item",  "Nuleaf","Fruit",  "bananaImageURL","Banana",1)
         allProducts.add(banana)
 
         allProductsLiveData.postValue(allProducts)
@@ -103,7 +103,4 @@ class ProductDataUnitTest {
             assertEquals(0, it.size)
         }
     }
-
-*/
-
 }
