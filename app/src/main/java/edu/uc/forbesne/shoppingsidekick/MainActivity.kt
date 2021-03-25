@@ -6,8 +6,11 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import edu.uc.forbesne.shoppingsidekick.dto.MarketFragment
 import edu.uc.forbesne.shoppingsidekick.ui.main.MainFragment
+import edu.uc.forbesne.shoppingsidekick.ui.main.MainFragment.Companion.newInstance
 import edu.uc.forbesne.shoppingsidekick.ui.main.MainViewModel
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -44,4 +47,11 @@ class MainActivity : AppCompatActivity() {
 
         return super.onOptionsItemSelected(item)
     }
+
+     fun findCheapestMarket(){
+        supportFragmentManager.beginTransaction()
+                //.replace(R.id.container, MarketFragment.newInstance())
+                .commitNow()
+    }
+
 }
