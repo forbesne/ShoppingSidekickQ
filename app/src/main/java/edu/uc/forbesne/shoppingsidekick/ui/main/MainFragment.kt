@@ -1,6 +1,8 @@
 package edu.uc.forbesne.shoppingsidekick.ui.main
 // based code on Top Ten project https://github.com/IsaiahDicristoforo/Top-Ten
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.firebase.ui.auth.AuthUI
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import edu.uc.forbesne.shoppingsidekick.MainActivity
 import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.CartItem
@@ -22,7 +27,8 @@ class MainFragment : Fragment() {
     private lateinit var viewModel: MainViewModel
     private lateinit var adapter : ProductListAdapter
     private lateinit var cartItem : CartItem
-
+    private val AUTH_REQUEST_CODE = 1701
+    private var user : FirebaseUser? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -71,6 +77,28 @@ class MainFragment : Fragment() {
 
         btnFindCheapestMarket.setOnClickListener{
             viewModel.findCheapestMarket()
+        }
+
+        btnLogin.setOnClickListener {
+            login()
+        }
+    }
+
+    private fun login() {
+        var providers = arrayListOf(
+            AuthUI.IdpConfig.EmailBuilder().build()
+        )
+        startActivityForResult(
+            AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers).build(), AUTH_REQUEST_CODE
+        )
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK) {
+            if (requestCode == AUTH_REQUEST_CODE) {
+                user = FirebaseAuth.getInstance().currentUser
+            }
         }
     }
 
