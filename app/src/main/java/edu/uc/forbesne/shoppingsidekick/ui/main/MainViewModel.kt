@@ -23,6 +23,8 @@ class MainViewModel : ViewModel() {
     var productsFromShop1: MutableLiveData<ArrayList<Product>> = MutableLiveData<ArrayList<Product>>()
     var productsFromShop2: MutableLiveData<ArrayList<Product>> = MutableLiveData<ArrayList<Product>>()
     var productsFromShop3: MutableLiveData<ArrayList<Product>> = MutableLiveData<ArrayList<Product>>()
+    var markets: MutableLiveData<ArrayList<Market>> = MutableLiveData<ArrayList<Market>>()
+
     val cart: Cart = Cart()
 
     // A map/table containing all key value pairs where key = productUPC, value = array with 3 objects of type {shopName, ProductUPC,shopPrice}
@@ -208,8 +210,20 @@ class MainViewModel : ViewModel() {
         //add remove from database..
     }
 
-    // For now returns a string like: shop 1 is cheapest
-    fun findCheapestMarket(): String {
+    // For now the update in the markets live data only happens when user clicks on
+    // 'findCheapestMarket' - but this will change to when ever user adds item to cart.
+    fun findCheapestMarket(){
+
+        //for now the market are created statically
+        var market1 = Market("Market 1",5.2f, 0f)
+        var market2 = Market("Market 2",3.4f, 0f)
+        var market3 = Market("Market 3",1.2f, 0f)
+
+        var marketList = ArrayList<Market>()
+        marketList.add(market1)
+        marketList.add(market2)
+        marketList.add(market3)
+
         var cart1Total = 0f
         var cart2Total = 0f
         var cart3Total = 0f
@@ -224,25 +238,13 @@ class MainViewModel : ViewModel() {
             itemQuantity = it.value.quantity
 
             productPricesList = productPricesByShopMap.get(itemUPC)!!
-            cart1Total += productPricesList.list[0].price * itemQuantity
-            cart2Total += productPricesList.list[1].price * itemQuantity
-            cart3Total += productPricesList.list[2].price * itemQuantity
-
-        }
-        if (cart1Total < cart2Total){
-            if (cart1Total < cart3Total) {
-                cheapestMarket = "Market 1$cheapestMarket"
-            }
-            else {
-                cheapestMarket = "Market 3$cheapestMarket"
-            }
-        } else if (cart2Total < cart3Total) {
-            cheapestMarket = "Market 2$cheapestMarket"
-        }
-        else {
-            cheapestMarket = "Market 3$cheapestMarket"
+            market1.cartPrice += productPricesList.list[0].price * itemQuantity
+            market2.cartPrice += productPricesList.list[1].price * itemQuantity
+            market3.cartPrice += productPricesList.list[2].price * itemQuantity
         }
 
-        return cheapestMarket
+        marketList.sortBy { it.cartPrice }
+
+        markets.value = marketList
     }
 }
