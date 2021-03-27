@@ -33,7 +33,7 @@ class MainFragment : Fragment() {
             viewModel = ViewModelProvider(it!!).get(MainViewModel::class.java)
         }
 
-        var btnFindCheapestMarket: Button = this.activity!!.findViewById(R.id.button5)
+        var btnFindCheapestMarket: Button = this.activity!!.findViewById(R.id.btnFindCheapestMarket)
         var recyclerView = view!!.findViewById<RecyclerView>(R.id.recLstProducts)
         recyclerView.layoutManager = GridLayoutManager(this.context, 3)
 
