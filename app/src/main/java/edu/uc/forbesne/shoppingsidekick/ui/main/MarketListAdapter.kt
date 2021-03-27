@@ -13,33 +13,34 @@ import com.squareup.picasso.Picasso
 import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.Market
 
-/*
+
 class MarketListAdapter (private val marketList: ArrayList<Market>, mainViewModel: MainViewModel):RecyclerView.Adapter<MarketListAdapter.ViewHolder>(){
-    lateinit var mContext: Context
+    //lateinit var mContext: Context
     var mvm = mainViewModel
 
     override fun onCreateViewHolder(
             viewGroup: ViewGroup,
             viewType: Int
     ): ViewHolder {
-        val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.market_list_item,viewGroup, false)
-        mContext = viewGroup.context
+        val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.market,viewGroup, false)
+        //mContext = viewGroup.context
         return  ViewHolder(view)
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val marketCard = view
         val name: TextView = view.findViewById(R.id.txtName)
-        val cartPrice: TextView = view.findViewById(R.id.txtPrice)
+        val cartPrice: TextView = view.findViewById(R.id.txtCartPrice)
         val distance: TextView = view.findViewById(R.id.txtDistance)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int){
         holder.name.text = marketList[position].name
-        holder.cartPrice.text = marketList[position].cartPrice
-        holder.distance.text = marketList[position].distance
 
-        holder.marketCard.setOnClickListener(){
+        holder.cartPrice.text = "Price: $ ${"%.2f".format(marketList[position].cartPrice).toString()}"
+        holder.distance.text = "Distance: ${"%.2f".format(marketList[position].distance).toString()} Miles"
+
+/*        holder.marketCard.setOnClickListener(){
 
         }
 
@@ -49,10 +50,10 @@ class MarketListAdapter (private val marketList: ArrayList<Market>, mainViewMode
 
         btnMap.setOnClickListener{
 
-        }
+        }*/
     }
 
     override fun getItemCount(): Int {
         return marketList.size
     }
-}*/
+}
