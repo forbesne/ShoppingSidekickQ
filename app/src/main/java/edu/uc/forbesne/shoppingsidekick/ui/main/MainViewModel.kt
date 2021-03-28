@@ -14,54 +14,58 @@ import edu.uc.forbesne.shoppingsidekick.dto.Product
 import edu.uc.forbesne.shoppingsidekick.service.MarketAPIService
 
 /**
- *  Gets data from Firebase and APIs, makes adjustments, provides live data to activities
+ *  Gets data from Firebase and APIs, builds objects to provide live data
  */
 class MainViewModel : ViewModel() {
+
     private lateinit var firestore: FirebaseFirestore
     var marketAPIService: MarketAPIService = MarketAPIService()
-    var products: MutableLiveData<ArrayList<Product>> = MutableLiveData<ArrayList<Product>>()
 
+    // Used for tests
+    var productsFromShop1: MutableLiveData<ArrayList<Product>> =
+        MutableLiveData<ArrayList<Product>>()
+
+    // Holds actual data fetched from APIs wrapped as live data.
+    // Incoming data will be exactly like this{market: {name:'', distance:''}, products: [...] }
     var marketApiObject1: MutableLiveData<MarketApiObject> = MutableLiveData<MarketApiObject>()
     var marketApiObject2: MutableLiveData<MarketApiObject> = MutableLiveData<MarketApiObject>()
     var marketApiObject3: MutableLiveData<MarketApiObject> = MutableLiveData<MarketApiObject>()
 
-    //This is used for tests
-    var productsFromShop1: MutableLiveData<ArrayList<Product>> =
-        MutableLiveData<ArrayList<Product>>()
-
+    // Used to hold a list of market part of the incoming data from APis {market: {name:'', distance: '''}, ...}
     private var _markets: MutableLiveData<ArrayList<Market>> = MutableLiveData<ArrayList<Market>>()
     var markets: MutableLiveData<ArrayList<Market>>? = null
         get() {
-            updateMarketCarts()
+            updateMarketsTotals()
             return _markets
         }
 
-    val cart: Cart = Cart()
+    // Used to hold the products part of the incoming data{... , products: [] }
+    // For simplicity reasons, we have all the APIs return the same products, and only differ in prices
+    // Thus, we assign 'products' (later) one list of products from one market API call
+    var products: MutableLiveData<ArrayList<Product>> = MutableLiveData<ArrayList<Product>>()
 
-    // A map/table containing all key value pairs where key = productUPC, value = array with 3 objects of type {shopName, ProductUPC,shopPrice}
+    // Holds cart data, its state is 'managed' by firebase using addSnapshotListener
+    private val cart: Cart = Cart()
+
+    // A HashMap containing all products and all their market prices as key value pairs. Where
+    // key = productUPC, value = array with 3 objects of type {shopName, ...,shopPrice}
     var productPricesByShopMap: HashMap<String, ProductPriceList> =
         HashMap<String, ProductPriceList>()
 
     init {
         createFirebaseInstance()
-        fetchSop1Products()
-        fetchSop2Products()
-        fetchSop3Products()
+        fetchMarket1()
+        fetchMarket2()
+        fetchMarket3()
         assignProducts()
-        createObservablesFromApis()
-        // createObservableShopsPricesMap()
+        createObservablesFromApisData()
         getCartFromFirebase()
-
-
-updateMarketCarts()
     }
 
-
-    fun createFirebaseInstance() {
+    private fun createFirebaseInstance() {
         firestore = FirebaseFirestore.getInstance()
         firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
     }
-
 
     private fun createInitialProductPriceList(): ProductPriceList {
         var initialProductPriceList: ProductPriceList = ProductPriceList(3)
@@ -71,16 +75,16 @@ updateMarketCarts()
         return initialProductPriceList
     }
 
-    private fun fetchSop1Products() {
-        marketApiObject1 = marketAPIService.fetchAllDaraFromMarket1()
+    private fun fetchMarket1() {
+        marketApiObject1 = marketAPIService.fetchAllDataFromMarket1()
     }
 
-    private fun fetchSop2Products() {
-        marketApiObject2 = marketAPIService.fetchAllDaraFromMarket2()
+    private fun fetchMarket2() {
+        marketApiObject2 = marketAPIService.fetchAllDataFromMarket2()
     }
 
-    private fun fetchSop3Products() {
-        marketApiObject3 = marketAPIService.fetchAllDaraFromMarket3()
+    private fun fetchMarket3() {
+        marketApiObject3 = marketAPIService.fetchAllDataFromMarket3()
     }
 
     private fun assignProducts() {
@@ -90,11 +94,14 @@ updateMarketCarts()
         }
     }
 
+    // provides products data (to main fragment)
     fun fetchAllProducts(): MutableLiveData<ArrayList<Product>> {
         return products
     }
 
-    private fun createObservablesFromApis() {
+    // Separates the incoming api data into Market data and Products data.
+    // Creates from them observables
+    private fun createObservablesFromApisData() {
         createObservableMarkets()
         createObservableShopsPricesMap()
     }
@@ -104,12 +111,13 @@ updateMarketCarts()
         var market1 = Market()
         var market2 = Market()
         var market3 = Market()
-        _markets.value = ArrayList<Market>()
 
+        _markets.value = ArrayList<Market>()
         _markets.value!!.add(market1)
         _markets.value!!.add(market2)
         _markets.value!!.add(market3)
 
+        // Market data could theoretically change, so we observe the api objects for that
         marketApiObject1.observeForever {
             _markets.value!![0].name = it.market.name
             _markets.value!![0].distance = it.market.distance
@@ -126,13 +134,15 @@ updateMarketCarts()
         }
     }
 
+    // Observes api market data to update for any changes in the products.
+    // First time product entry (with shop prices) is added to map,
+    // other times price (for a shop) is updated for map's product
     private fun createObservableShopsPricesMap() {
 
         marketApiObject1.observeForever {
             it.products.forEach { product ->
                 var arr0 = productPricesByShopMap.get(product.UPC)
                 if (arr0 == null) {
-                    //var productPriceList = initialProductPriceList
                     var productPriceList = createInitialProductPriceList()
                     productPriceList.list[0].price = product.price
                     productPricesByShopMap.put(product.UPC, productPriceList)
@@ -147,7 +157,6 @@ updateMarketCarts()
             it.products.forEach { product ->
                 var arr1 = productPricesByShopMap.get(product.UPC)
                 if (arr1 == null) {
-                    //var productPriceList = initialProductPriceList
                     var productPriceList = createInitialProductPriceList()
                     productPriceList.list[1].price = product.price
                     productPricesByShopMap.put(product.UPC, productPriceList)
@@ -162,7 +171,6 @@ updateMarketCarts()
             it.products.forEach { product ->
                 var arr2 = productPricesByShopMap.get(product.UPC)
                 if (arr2 == null) {
-                    //var productPriceList = initialProductPriceList
                     var productPriceList = createInitialProductPriceList()
                     productPriceList.list[2].price = product.price
                     productPricesByShopMap.put(product.UPC, productPriceList)
@@ -174,6 +182,7 @@ updateMarketCarts()
         }
     }
 
+    // For now only used for testing, later will make use of text search using the auto complete view
     fun fetchProductsByName(productName: String) {
         productsFromShop1 = marketAPIService.fetchProductsByName(productName)
     }
@@ -193,6 +202,7 @@ updateMarketCarts()
 
                     val cartItem = it.toObject(CartItem::class.java)
                     if (cartItem != null) {
+                        // Sets id to the one firebase creats. used to updtate item's quantity in firebase
                         cartItem.id = it.id
                         cart.addItem(cartItem)
                     }
@@ -201,20 +211,19 @@ updateMarketCarts()
         }
     }
 
+    // Gets called from product pop-up view to add product to cart
     fun addToCart(product: Product, quantity: Int) {
         if (quantity <= 0) return
         var cartItem = CartItem(product.UPC, quantity, product.imageURL, product.description)
 
         if (cart.doesHaveItem(product.UPC)) {
-            adjustCartItemQuantityInFirebase(cart.getCartItem(product.UPC), cartItem.quantity)
+            adjustCartItemQuantityInFirebase(cart.getCartItem(product.UPC), quantity)
         } else {
-            val newCartItemId = addCartItemToFirebase(cartItem)
-            //adjust local cartItem to have the id of the new firebase cartItem
-            cartItem.id = newCartItemId
+            addCartItemToFirebase(cartItem)
         }
     }
 
-    fun addCartItemToFirebase(cartItem: CartItem): String {
+    private fun addCartItemToFirebase(cartItem: CartItem): String {
         val document =
             firestore.collection("cart")
                 .document()
@@ -248,33 +257,18 @@ updateMarketCarts()
             }
     }
 
+    // not implemented yet
     fun removeFromCart(cartItem: CartItem) {
         cart.removeItemFromCart(cartItem)
     }
 
+    // not implemented yet
     fun deleteCart() {
         //add remove from database..
     }
 
-    // For now the update in the markets live data only happens when user clicks on
-// 'findCheapestMarket' - but this will change to when ever user adds item to cart.
-//fun findCheapestMarket(){
-    private fun updateMarketCarts() {
-
-        //for now the market are created statically
-/*        var market1 = Market("Market 1",5.2f, 0f)
-    var market2 = Market("Market 2",3.4f, 0f)
-    var market3 = Market("Market 3",1.2f, 0f)*/
-
-        //var marketList = ArrayList<Market>()
-/*       marketList.add(market1)
-    marketList.add(market2)
-    marketList.add(market3)
-    var cart1Total = 0f
-    var cart2Total = 0f
-    var cart3Total = 0f
-    var cheapestMarket = " is the cheapest market!!"*/
-
+    // Called before providing the '_markets' (to the MarketFragment)
+    private fun updateMarketsTotals() {
         var itemQuantity = 0
         var itemUPC = ""
         var productPricesList = ProductPriceList(3)
@@ -292,7 +286,5 @@ updateMarketCarts()
             _markets.value!![1].cartPrice += productPricesList.list[1].price * itemQuantity
             _markets.value!![2].cartPrice += productPricesList.list[2].price * itemQuantity
         }
-
-        //marketList.sortBy { it.cartPrice }
     }
 }

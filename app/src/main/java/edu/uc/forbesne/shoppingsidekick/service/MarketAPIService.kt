@@ -11,7 +11,7 @@ import retrofit2.Response
 import kotlin.collections.ArrayList
 
 /**
- * Makes calls to APIs to get product data
+ * Makes calls to APIs to get markets data
  *
  */
 class MarketAPIService {
@@ -20,7 +20,7 @@ class MarketAPIService {
         return MutableLiveData<ArrayList<Product>>()
     }
 
-    fun fetchAllDaraFromMarket1() : MutableLiveData<MarketApiObject> {
+    fun fetchAllDataFromMarket1() : MutableLiveData<MarketApiObject> {
         var _marketApiObject: MutableLiveData<MarketApiObject> = MutableLiveData<MarketApiObject>()
         val service = RetrofitClientInstance.retrofitInstance?.create(IProductDAO::class.java)
         val call = service?.getMarketApi1()
@@ -51,7 +51,7 @@ class MarketAPIService {
         return _marketApiObject
     }
 
-    fun fetchAllDaraFromMarket2() : MutableLiveData<MarketApiObject> {
+    fun fetchAllDataFromMarket2() : MutableLiveData<MarketApiObject> {
         var _marketApiObject = MutableLiveData<MarketApiObject>()
         val service = RetrofitClientInstance.retrofitInstance?.create(IProductDAO::class.java)
         val call = service?.getMarketApi2()
@@ -82,7 +82,7 @@ class MarketAPIService {
         return _marketApiObject
     }
 
-    fun fetchAllDaraFromMarket3() : MutableLiveData<MarketApiObject> {
+    fun fetchAllDataFromMarket3() : MutableLiveData<MarketApiObject> {
         var _marketApiObject = MutableLiveData<MarketApiObject>()
         val service = RetrofitClientInstance.retrofitInstance?.create(IProductDAO::class.java)
         val call = service?.getMarketApi3()
