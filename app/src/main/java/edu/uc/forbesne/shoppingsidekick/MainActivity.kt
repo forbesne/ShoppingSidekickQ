@@ -7,7 +7,6 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import edu.uc.forbesne.shoppingsidekick.dto.Market
 import edu.uc.forbesne.shoppingsidekick.ui.main.MainFragment
 import edu.uc.forbesne.shoppingsidekick.ui.main.MainViewModel
 import edu.uc.forbesne.shoppingsidekick.ui.main.MarketFragment

@@ -14,9 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.uc.forbesne.shoppingsidekick.MainActivity
 import edu.uc.forbesne.shoppingsidekick.R
-import edu.uc.forbesne.shoppingsidekick.dto.CartItem
 import kotlinx.android.synthetic.main.main_fragment.*
-import kotlinx.android.synthetic.main.product_popup.*
 
 class MainFragment : Fragment() {
     private lateinit var viewModel: MainViewModel

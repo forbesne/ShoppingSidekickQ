@@ -1,15 +1,10 @@
 package edu.uc.forbesne.shoppingsidekick.ui.main
 
-import android.content.Context
-import android.content.Context.LAYOUT_INFLATER_SERVICE
-import android.transition.Slide
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
 import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.Market
 
