@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.uc.forbesne.shoppingsidekick.MainActivity
 import edu.uc.forbesne.shoppingsidekick.R
+import edu.uc.forbesne.shoppingsidekick.dto.Market
 import kotlinx.android.synthetic.main.main_fragment.*
 
 class MarketFragment : Fragment() {
@@ -43,12 +44,16 @@ class MarketFragment : Fragment() {
         recyclerView.layoutManager =  GridLayoutManager(this.context, 1)
 
         // For now this is needed to update the markets data in mvm.
-        viewModel.findCheapestMarket()
+        //viewModel.findCheapestMarket()
+        var sortedByPriceMarketList: ArrayList<Market> = ArrayList<Market>()
 
-        viewModel.markets.observe(this, Observer { market ->
+        viewModel.markets?.observe(this, Observer { markets ->
+
+            sortedByPriceMarketList = markets
+            sortedByPriceMarketList.sortBy { it.cartPrice }
 
             adapter = MarketListAdapter(
-                    viewModel.markets.value!!, viewModel
+                    sortedByPriceMarketList, viewModel
             )
             recyclerView.adapter = adapter
         })
