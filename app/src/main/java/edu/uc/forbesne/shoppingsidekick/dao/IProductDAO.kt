@@ -1,6 +1,7 @@
 package edu.uc.forbesne.shoppingsidekick.dao
 // based onp professor's code - https://github.com/discospiff/MyPlantDiaryQ
 
+import edu.uc.forbesne.shoppingsidekick.dto.MarketApiObject
 import edu.uc.forbesne.shoppingsidekick.dto.Product
 import retrofit2.Call
 import retrofit2.http.GET
@@ -11,14 +12,15 @@ import retrofit2.http.Query
  *
  */
 interface IProductDAO {
-    @GET("shop_1.php")
-    fun getAllProductsFromOneStore(): Call<ArrayList<Product>>
 
-    @GET("shop_2.php")
-    fun getAllProductsFromTwoStore(): Call<ArrayList<Product>>
+    @GET("market_1.php")
+    fun getMarketApi1(): Call<MarketApiObject>
 
-    @GET("shop_3.php")
-    fun getAllProductsFromThreeStore(): Call<ArrayList<Product>>
+    @GET("market_2.php")
+    fun getMarketApi2(): Call<MarketApiObject>
+
+    @GET("market_3.php")
+    fun getMarketApi3(): Call<MarketApiObject>
 
 /*    @GET()
     fun getProductsFromOneStore(@Query(")) : Call<ArrayList<Product>>*/

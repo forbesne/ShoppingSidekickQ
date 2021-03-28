@@ -3,31 +3,33 @@ package edu.uc.forbesne.shoppingsidekick.service
 
 import androidx.lifecycle.MutableLiveData
 import edu.uc.forbesne.shoppingsidekick.dao.IProductDAO
+import edu.uc.forbesne.shoppingsidekick.dto.MarketApiObject
 import edu.uc.forbesne.shoppingsidekick.dto.Product
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.collections.ArrayList
 
 /**
  * Makes calls to APIs to get product data
  *
  */
-class ProductService {
+class MarketAPIService {
 
     fun fetchProductsByName(productName: String) : MutableLiveData<ArrayList<Product>> {
         return MutableLiveData<ArrayList<Product>>()
     }
 
-    fun fetchAllProductsFromOneStore() : MutableLiveData<ArrayList<Product>> {
-        var _products = MutableLiveData<ArrayList<Product>>()
+    fun fetchAllDaraFromMarket1() : MutableLiveData<MarketApiObject> {
+        var _marketApiObject: MutableLiveData<MarketApiObject> = MutableLiveData<MarketApiObject>()
         val service = RetrofitClientInstance.retrofitInstance?.create(IProductDAO::class.java)
-        val call = service?.getAllProductsFromOneStore()
-        call?.enqueue(object : Callback<ArrayList<Product>> {
+        val call = service?.getMarketApi1()
+        call?.enqueue(object : Callback<MarketApiObject> {
             /**
              * Invoked when a network exception occurred talking to the server or when an unexpected
              * exception occurred creating the request or processing the response.
              */
-            override fun onFailure(call: Call<ArrayList<Product>>, t: Throwable) {
+            override fun onFailure(call: Call<MarketApiObject>, t: Throwable) {
             }
 
             /**
@@ -38,27 +40,27 @@ class ProductService {
              * Call [Response.isSuccessful] to determine if the response indicates success.
              */
             override fun onResponse(
-                call: Call<ArrayList<Product>>,
-                response: Response<ArrayList<Product>>
+                call: Call<MarketApiObject>,
+                response: Response<MarketApiObject>
             ) {
-                _products.value = response.body()
+                _marketApiObject.value = response.body()
             }
 
         })
 
-        return _products
+        return _marketApiObject
     }
 
-    fun fetchAllProductsFromTwoStore() : MutableLiveData<ArrayList<Product>> {
-        var _products = MutableLiveData<ArrayList<Product>>()
+    fun fetchAllDaraFromMarket2() : MutableLiveData<MarketApiObject> {
+        var _marketApiObject = MutableLiveData<MarketApiObject>()
         val service = RetrofitClientInstance.retrofitInstance?.create(IProductDAO::class.java)
-        val call = service?.getAllProductsFromTwoStore()
-        call?.enqueue(object : Callback<ArrayList<Product>> {
+        val call = service?.getMarketApi2()
+        call?.enqueue(object : Callback<MarketApiObject> {
             /**
              * Invoked when a network exception occurred talking to the server or when an unexpected
              * exception occurred creating the request or processing the response.
              */
-            override fun onFailure(call: Call<ArrayList<Product>>, t: Throwable) {
+            override fun onFailure(call: Call<MarketApiObject>, t: Throwable) {
             }
 
             /**
@@ -69,27 +71,27 @@ class ProductService {
              * Call [Response.isSuccessful] to determine if the response indicates success.
              */
             override fun onResponse(
-                    call: Call<ArrayList<Product>>,
-                    response: Response<ArrayList<Product>>
+                    call: Call<MarketApiObject>,
+                    response: Response<MarketApiObject>
             ) {
-                _products.value = response.body()
-            }
+                _marketApiObject.value = response.body()
+         }
 
         })
 
-        return _products
+        return _marketApiObject
     }
 
-    fun fetchAllProductsFromThreeStore() : MutableLiveData<ArrayList<Product>> {
-        var _products = MutableLiveData<ArrayList<Product>>()
+    fun fetchAllDaraFromMarket3() : MutableLiveData<MarketApiObject> {
+        var _marketApiObject = MutableLiveData<MarketApiObject>()
         val service = RetrofitClientInstance.retrofitInstance?.create(IProductDAO::class.java)
-        val call = service?.getAllProductsFromThreeStore()
-        call?.enqueue(object : Callback<ArrayList<Product>> {
+        val call = service?.getMarketApi3()
+        call?.enqueue(object : Callback<MarketApiObject> {
             /**
              * Invoked when a network exception occurred talking to the server or when an unexpected
              * exception occurred creating the request or processing the response.
              */
-            override fun onFailure(call: Call<ArrayList<Product>>, t: Throwable) {
+            override fun onFailure(call: Call<MarketApiObject>, t: Throwable) {
             }
 
             /**
@@ -100,14 +102,14 @@ class ProductService {
              * Call [Response.isSuccessful] to determine if the response indicates success.
              */
             override fun onResponse(
-                    call: Call<ArrayList<Product>>,
-                    response: Response<ArrayList<Product>>
+                    call: Call<MarketApiObject>,
+                    response: Response<MarketApiObject>
             ) {
-                _products.value = response.body()
+                _marketApiObject.value = response.body()
             }
 
         })
 
-        return _products
+        return _marketApiObject
     }
 }

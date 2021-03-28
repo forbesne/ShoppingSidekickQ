@@ -3,9 +3,7 @@ package edu.uc.forbesne.shoppingsidekick
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import edu.uc.forbesne.shoppingsidekick.dto.Product
-import edu.uc.forbesne.shoppingsidekick.service.ProductService
 import edu.uc.forbesne.shoppingsidekick.ui.main.MainViewModel
-import io.mockk.mockk
 import org.junit.Test
 
 import org.junit.Assert.*

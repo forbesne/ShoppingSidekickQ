@@ -3,7 +3,7 @@ package edu.uc.forbesne.shoppingsidekick
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import edu.uc.forbesne.shoppingsidekick.dto.Product
-import edu.uc.forbesne.shoppingsidekick.service.ProductService
+import edu.uc.forbesne.shoppingsidekick.service.MarketAPIService
 import edu.uc.forbesne.shoppingsidekick.ui.main.MainViewModel
 import io.mockk.confirmVerified
 import io.mockk.every
@@ -27,7 +27,7 @@ class ProductDataUnitTest {
     var rule: TestRule = InstantTaskExecutorRule()
     lateinit var mvm: MainViewModel
 
-    var productService = mockk<ProductService>()
+    var productService = mockk<MarketAPIService>()
 
     @Test
     fun confirmApple_outputsApple () {
@@ -65,7 +65,7 @@ class ProductDataUnitTest {
         allProductsLiveData.postValue(allProducts)
         every { productService.fetchProductsByName(or("Apple", "Banana")) } returns allProductsLiveData
         every { productService.fetchProductsByName(not(or("Apple", "Banana"))) } returns MutableLiveData<ArrayList<Product>>()
-        mvm.productService = productService
+        mvm.marketAPIService = productService
 
     }
 
