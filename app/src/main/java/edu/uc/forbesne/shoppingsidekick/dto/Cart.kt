@@ -11,7 +11,6 @@ data class Cart (var size :Int =0) {
     fun addItem(item:CartItem){
         val existingItemInCart = itemQuantityMap.get(item.UPC)
 
-        // Adjust cart size
         if(existingItemInCart == null){
             size++
         }

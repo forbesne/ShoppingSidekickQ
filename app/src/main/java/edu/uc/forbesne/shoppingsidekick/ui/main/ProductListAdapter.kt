@@ -3,7 +3,6 @@ package edu.uc.forbesne.shoppingsidekick.ui.main
 
 import android.content.Context
 import android.content.Context.LAYOUT_INFLATER_SERVICE
-import android.transition.Slide
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +13,9 @@ import com.squareup.picasso.Picasso
 import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.Product
 
-class ProductListAdapter( private val productList: ArrayList<Product>, mainViewModel: MainViewModel):RecyclerView.Adapter<ProductListAdapter.ViewHolder>() {
+class ProductListAdapter( private val productList: ArrayList<Product>, mainViewModel: MainViewModel)
+    :RecyclerView.Adapter<ProductListAdapter.ViewHolder>() {
+
     lateinit var mContext: Context
     var mvm = mainViewModel
 
@@ -35,7 +36,6 @@ class ProductListAdapter( private val productList: ArrayList<Product>, mainViewM
         val brand: TextView = view.findViewById(R.id.prodBrand)
         val unitValue: TextView = view.findViewById(R.id.prodUnitValue)
         val img: ImageView = view.findViewById(R.id.imgProduct)
-
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -47,14 +47,13 @@ class ProductListAdapter( private val productList: ArrayList<Product>, mainViewM
         holder.unitValue.text = productList[position].price_type
 
         holder.productCard.setOnClickListener(){
-            //holder.productCard.isClickable = false
-            //open pop-up for product
+            //open pop-up for clicked product
             openProductPopUp(holder.upc.text.toString(), holder.description.text.toString(),
                     holder.imgURL.text.toString(),holder.brand.text.toString(),holder.unitValue.text.toString())
         }
     }
 
-    //From https://android--code.blogspot.com/2018/02/android-kotlin-popup-window-example.html
+    //Pop up logic from https://android--code.blogspot.com/2018/02/android-kotlin-popup-window-example.html
     private fun openProductPopUp(upc: String, description: String, imgURL: String, brand: String, unitValue: String) {
         // Initialize a new layout inflater instance
         val inflater:LayoutInflater = mContext.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -78,7 +77,6 @@ class ProductListAdapter( private val productList: ArrayList<Product>, mainViewM
         prodUPC.text = upc
         prodBrand.text = brand
         prodUnitValue.text = unitValue
-        //prodUPC.setGravity(Gravity.CENTER);
 
         // Initialize a new instance of popup window
         val popupWindow = PopupWindow(
@@ -91,16 +89,6 @@ class ProductListAdapter( private val productList: ArrayList<Product>, mainViewM
             LinearLayout.LayoutParams.MATCH_PARENT, // Width of popup window
             LinearLayout.LayoutParams.MATCH_PARENT // Window height
         )
-
-        // Create a new slide animation for popup window enter transition
-        //val slideIn = Slide()
-        //slideIn.slideEdge = Gravity.TOP
-        //popupWindow.enterTransition = slideIn
-
-        // Slide animation for popup window exit transition
-        //val slideOut = Slide()
-        //slideOut.slideEdge = Gravity.RIGHT
-        //popupWindow.exitTransition = slideOut
 
         view_backdrop.setOnClickListener{
             // Dismiss the popup window

@@ -40,16 +40,14 @@ class MarketFragment : Fragment() {
         }
 
         var recyclerView = view!!.findViewById<RecyclerView>(R.id.recMarketList)
-        //recyclerView.layoutManager =  LinearLayoutManager(activity, LinearLayoutManager.VERTICAL ,false)
         recyclerView.layoutManager =  GridLayoutManager(this.context, 1)
-
-        // For now this is needed to update the markets data in mvm.
-        //viewModel.findCheapestMarket()
         var sortedByPriceMarketList: ArrayList<Market> = ArrayList<Market>()
 
         viewModel.markets?.observe(this, Observer { markets ->
 
             sortedByPriceMarketList = markets
+
+            // Cheapest market 1st
             sortedByPriceMarketList.sortBy { it.cartPrice }
 
             adapter = MarketListAdapter(

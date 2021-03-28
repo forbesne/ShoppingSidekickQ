@@ -14,8 +14,9 @@ import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.Market
 
 
-class MarketListAdapter (private val marketList: ArrayList<Market>, mainViewModel: MainViewModel):RecyclerView.Adapter<MarketListAdapter.ViewHolder>(){
-    //lateinit var mContext: Context
+class MarketListAdapter (private val marketList: ArrayList<Market>, mainViewModel: MainViewModel)
+    :RecyclerView.Adapter<MarketListAdapter.ViewHolder>(){
+
     var mvm = mainViewModel
 
     override fun onCreateViewHolder(
@@ -23,7 +24,6 @@ class MarketListAdapter (private val marketList: ArrayList<Market>, mainViewMode
             viewType: Int
     ): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.market,viewGroup, false)
-        //mContext = viewGroup.context
         return  ViewHolder(view)
     }
 
@@ -40,16 +40,14 @@ class MarketListAdapter (private val marketList: ArrayList<Market>, mainViewMode
         holder.cartPrice.text = "Price: $ ${"%.2f".format(marketList[position].cartPrice).toString()}"
         holder.distance.text = "Distance: ${"%.2f".format(marketList[position].distance).toString()} Miles"
 
-/*        holder.marketCard.setOnClickListener(){
-
+        // To be continued...
+        /*holder.marketCard.setOnClickListener(){
         }
 
         btnName.setOnClickListener{
-
         }
 
         btnMap.setOnClickListener{
-
         }*/
     }
 
