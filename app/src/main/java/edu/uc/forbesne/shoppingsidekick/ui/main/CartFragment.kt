@@ -43,7 +43,23 @@ class CartFragment : Fragment() {
         rcyCartItems.adapter = CartAdapter(viewModel.product.cartItems, R.layout.Cart_List_Item)*/
     }
 
+//    saveCart might not be needed, adding it just in case as that's what the professor had in his video.
 
+    private fun saveCart() {
+        var cartItem = CartItem()
+        with (cartItem) {
+            /*productBrand = actproductBrand.text.toString()
+            description = edtDescription.text.toString
+            var quantityString = edtQuantity.text.toString();
+            if (quantityString.length > 0) {
+                quantity = quantityString.toDouble()
+            }
+            measurementUnit = actMeasurementUnit.text.toString()*/
+        }
+        /*viewModel.product.cartItems.add(cartItem)
+        clearAll()
+        rcyCartItems.adapter?.notifyDataSetChanged()*/
+    }
 
     inner class CartAdapter(val cartItems: List<CartItem>, val itemLayout: Int) : RecyclerView.Adapter<CartFragment.CartViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
