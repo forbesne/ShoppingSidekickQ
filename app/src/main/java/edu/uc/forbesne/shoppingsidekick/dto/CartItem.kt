@@ -14,8 +14,9 @@ data class CartItem (var UPC : String ="", var quantity: Int = 0, var imageURL :
     }
 
     fun reduce(quantity: Int){
-        this.quantity -= quantity
-        if(this.quantity < 0) this.quantity = 0
+        if(this.quantity > 0) {
+            this.quantity -= quantity
+        }
     }
 
     fun remove(){

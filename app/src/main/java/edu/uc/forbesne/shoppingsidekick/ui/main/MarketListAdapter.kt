@@ -9,17 +9,17 @@ import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.Market
 
 
-class MarketListAdapter (private val marketList: ArrayList<Market>, mainViewModel: MainViewModel)
-    :RecyclerView.Adapter<MarketListAdapter.ViewHolder>(){
+class MarketListAdapter (
+    private val marketList: ArrayList<Market>, mainViewModel: MainViewModel) : RecyclerView.Adapter<MarketListAdapter.ViewHolder>(){
 
-    var mvm = mainViewModel
+        var mvm = mainViewModel
 
-    override fun onCreateViewHolder(
-            viewGroup: ViewGroup,
-            viewType: Int
-    ): ViewHolder {
-        val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.market,viewGroup, false)
-        return  ViewHolder(view)
+        override fun onCreateViewHolder(
+                viewGroup: ViewGroup,
+                viewType: Int
+        ): ViewHolder {
+            val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.market,viewGroup, false)
+            return  ViewHolder(view)
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
