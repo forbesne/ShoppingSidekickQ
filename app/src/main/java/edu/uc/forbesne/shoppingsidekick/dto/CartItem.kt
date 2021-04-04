@@ -10,7 +10,6 @@ data class CartItem (var UPC : String ="", var quantity: Int = 0, var imageURL :
     }
 
     fun reduce(quantity: Int){
-        //implement in future to disable reduce button, if quantity <= 0
         if(this.quantity > 0) {
             this.quantity -= quantity
         }
