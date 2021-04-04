@@ -14,17 +14,6 @@
         android:layout_height="150dp"
         app:layout_constraintHorizontal_bias="0.5">
 
-        <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-        <!--            android:id="@+id/btnOpenProduct"-->
-        <!--            android:layout_width="30dp"-->
-        <!--            android:layout_height="30dp"-->
-        <!--            android:clickable="false"-->
-        <!--            app:layout_constraintBottom_toTopOf="@+id/imgProduct"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintHorizontal_bias="0.5"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="parent"-->
-        <!--            tools:srcCompat="@android:drawable/ic_menu_add" />-->
         <ImageButton
             android:id="@+id/btnOpenProduct"
             android:layout_width="wrap_content"
@@ -35,15 +24,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <!--        <ImageView
-            android:id="@+id/imgProduct"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="15dp"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />-->
 
         <ImageView
             android:id="@+id/imgProduct"

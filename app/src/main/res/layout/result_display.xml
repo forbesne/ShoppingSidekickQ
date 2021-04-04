@@ -8,14 +8,11 @@
 
     <TextView
         android:id="@+id/txtName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/title"
         app:layout_constraintHorizontal_bias="0.5"
         android:text="Cheapest Markets"
         android:layout_marginLeft="50dp"
-        android:layout_marginTop="20dp"
-        android:textSize="32dp"
-        android:textStyle="bold" />
+        android:layout_marginTop="20dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recMarketList"
