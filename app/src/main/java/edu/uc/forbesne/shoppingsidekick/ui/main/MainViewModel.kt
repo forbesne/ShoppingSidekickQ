@@ -35,8 +35,7 @@ class MainViewModel : ViewModel() {
     private var _markets: MutableLiveData<ArrayList<Market>> = MutableLiveData<ArrayList<Market>>()
     var markets: MutableLiveData<ArrayList<Market>>? = null
         get() {
-            updateMarketsTotals()
-            return _markets
+            return updateMarketsTotals()
         }
 
     // Used to hold the products part of the incoming data{... , products: [] }
@@ -268,7 +267,7 @@ class MainViewModel : ViewModel() {
     }
 
     // Called before providing the '_markets' (to the MarketFragment)
-    private fun updateMarketsTotals() {
+    private fun updateMarketsTotals(): MutableLiveData<ArrayList<Market>> {
         var itemQuantity = 0
         var itemUPC = ""
         var productPricesList = ProductPriceList(3)
@@ -286,5 +285,6 @@ class MainViewModel : ViewModel() {
             _markets.value!![1].cartPrice += productPricesList.list[1].price * itemQuantity
             _markets.value!![2].cartPrice += productPricesList.list[2].price * itemQuantity
         }
+        return _markets
     }
 }
