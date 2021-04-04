@@ -27,6 +27,22 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@android:drawable/sym_def_app_icon" />
 
+        <Button
+            android:id="@+id/btnAddProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:drawableRight="@drawable/ic_arrowbutton"
+            android:paddingLeft="5dp"
+            android:paddingTop="0dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="0dp"
+            android:text=" Add"
+            android:textAllCaps="false"
+            app:cornerRadius="500dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/lblProductUpc"
             android:layout_width="match_parent"
@@ -136,21 +152,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/btnAddProduct"
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:layout_marginStart="10dp"
-        android:drawableRight="@drawable/ic_arrowbutton"
-        android:paddingLeft="5dp"
-        android:paddingTop="0dp"
-        android:paddingRight="5dp"
-        android:paddingBottom="0dp"
-        android:text=" Add"
-        android:textAllCaps="false"
-        app:cornerRadius="500dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </LinearLayout>

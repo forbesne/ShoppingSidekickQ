@@ -22,11 +22,16 @@
         android:id="@+id/txtCart"
         android:layout_width="79dp"
         android:layout_height="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="39dp"
+        android:layout_marginEnd="316dp"
         android:text="Current Cart"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="39dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/cartListView"
         android:layout_width="406dp"
         android:layout_height="617dp"
         android:layout_marginBottom="52dp"
