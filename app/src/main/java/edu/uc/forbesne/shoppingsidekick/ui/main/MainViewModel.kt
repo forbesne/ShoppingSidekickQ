@@ -5,9 +5,11 @@ import android.content.ContentValues
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.firestore.DocumentSnapshot
 import edu.uc.forbesne.shoppingsidekick.dto.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
+import com.google.firebase.firestore.QuerySnapshot
 import edu.uc.forbesne.shoppingsidekick.dto.Cart
 import edu.uc.forbesne.shoppingsidekick.dto.CartItem
 import edu.uc.forbesne.shoppingsidekick.dto.Product
@@ -202,7 +204,7 @@ class MainViewModel : ViewModel() {
 
                     val cartItem = it.toObject(CartItem::class.java)
                     if (cartItem != null) {
-                        // Sets id to the one firebase creats. used to updtate item's quantity in firebase
+                        // Sets id to the one firebase creates. used to update item's quantity in firebase
                         cartItem.id = it.id
                         cart.addItem(cartItem)
                     }
@@ -260,11 +262,24 @@ class MainViewModel : ViewModel() {
     // not implemented yet
     fun removeFromCart(cartItem: CartItem) {
         cart.removeItemFromCart(cartItem)
-    }
 
+    }
     // not implemented yet
     fun deleteCart() {
-        //add remove from database..
+        cart.emptyCart();
+        firestore.collection("cart").get().addOnSuccessListener { querySnapshot ->
+            for (documentSnapshot in querySnapshot) {
+                firestore.collection("cart").document(documentSnapshot.id)
+                    .delete()
+                    .addOnSuccessListener {
+                        Log.d(
+                            "Firebase",
+                            "DocumentSnapshot successfully deleted!"
+                        )
+                    }
+                    .addOnFailureListener { e -> Log.w("Firebase", "Error deleting document", e) }
+            }
+        }.addOnFailureListener { e -> Log.w("Firebase", "Error deleting documents", e)}
     }
 
     // Called before providing the '_markets' (to the MarketFragment)

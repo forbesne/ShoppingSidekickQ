@@ -47,10 +47,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.itmCart -> Toast.makeText(this,"cart Selected", Toast.LENGTH_SHORT).show()
-            R.id.itmHome -> Toast.makeText(this,"item3 Selected", Toast.LENGTH_SHORT).show()
-            R.id.itmProfile -> Toast.makeText(this,"item4 Selected", Toast.LENGTH_SHORT).show()
-            R.id.itmMore -> Toast.makeText(this,"item5 Selected", Toast.LENGTH_SHORT).show()
+            R.id.itmCart -> Toast.makeText(this,"Cart Selected", Toast.LENGTH_SHORT).show()
+            R.id.itmClearCart -> {
+                viewModel.deleteCart();
+
+            };
         }
 
         return super.onOptionsItemSelected(item)
