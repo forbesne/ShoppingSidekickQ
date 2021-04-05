@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.itmCart -> Toast.makeText(this,"Cart Selected", Toast.LENGTH_SHORT).show()
             R.id.itmClearCart -> {
-                viewModel.deleteCart();
+                viewModel.clearCart();
 
             };
     }
