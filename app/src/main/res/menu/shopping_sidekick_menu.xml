@@ -21,6 +21,11 @@
         android:icon="@drawable/ic_shopping_cart"
         android:title="Cart"
         app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/itmClearCart"
+        android:title="Clear Cart "
+        android:icon="@drawable/ic_baseline_menu_24"
+        app:showAsAction="never" />
 
 
 

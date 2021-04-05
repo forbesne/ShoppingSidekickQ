@@ -61,10 +61,24 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-
-
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+        val inflater = menuInflater;
+        inflater.inflate(R.menu.shopping_sidekick_menu,menu);
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.itmCart -> Toast.makeText(this,"Cart Selected", Toast.LENGTH_SHORT).show()
+            R.id.itmClearCart -> {
+                viewModel.deleteCart();
+
+            };
+    }
 
      fun displayMarketFragment(){
          if (activeFragment == mainFragment) {

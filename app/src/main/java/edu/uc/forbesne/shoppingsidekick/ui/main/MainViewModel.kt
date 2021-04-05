@@ -5,9 +5,11 @@ import android.content.ContentValues
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import edu.uc.forbesne.shoppingsidekick.dto.*
+import com.google.firebase.firestore.QuerySnapshot
 import edu.uc.forbesne.shoppingsidekick.service.MarketAPIService
 
 /**
@@ -218,8 +220,6 @@ open class MainViewModel : ViewModel() {
         } else {
             addCartItemToFirebase(cartItem)
         }
-        getCartItems()
-
     }
 
     private fun addCartItemToFirebase(cartItem: CartItem): String {
@@ -265,7 +265,20 @@ open class MainViewModel : ViewModel() {
 
     // not implemented yet
     fun deleteCart() {
-        //add remove from database..
+        //cart.emptyCart();
+        firestore.collection("cart").get().addOnSuccessListener { querySnapshot ->
+            for (documentSnapshot in querySnapshot) {
+                firestore.collection("cart").document(documentSnapshot.id)
+                    .delete()
+                    .addOnSuccessListener {
+                        Log.d(
+                            "Firebase",
+                            "DocumentSnapshot successfully deleted!"
+                        )
+                    }
+                    .addOnFailureListener { e -> Log.w("Firebase", "Error deleting document", e) }
+            }
+        }.addOnFailureListener { e -> Log.w("Firebase", "Error deleting documents", e)}
     }
 
     // Called before providing the '_markets' (to the MarketFragment)
