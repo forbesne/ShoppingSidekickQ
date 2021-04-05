@@ -5,11 +5,9 @@ import android.content.ContentValues
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.firebase.firestore.DocumentSnapshot
 import edu.uc.forbesne.shoppingsidekick.dto.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
-import com.google.firebase.firestore.QuerySnapshot
 import edu.uc.forbesne.shoppingsidekick.dto.Cart
 import edu.uc.forbesne.shoppingsidekick.dto.CartItem
 import edu.uc.forbesne.shoppingsidekick.dto.Product
@@ -264,9 +262,15 @@ class MainViewModel : ViewModel() {
         cart.removeItemFromCart(cartItem)
 
     }
-    // not implemented yet
-    fun deleteCart() {
+    // Empties the cart locally then calls deleteCartInFirebase
+    fun clearCart() {
         cart.emptyCart();
+        clearCartInFirebase();
+
+    }
+
+    //Iteratively deletes each cartItem's respective document within the cart in firebase
+    fun clearCartInFirebase(){
         firestore.collection("cart").get().addOnSuccessListener { querySnapshot ->
             for (documentSnapshot in querySnapshot) {
                 firestore.collection("cart").document(documentSnapshot.id)
@@ -281,6 +285,7 @@ class MainViewModel : ViewModel() {
             }
         }.addOnFailureListener { e -> Log.w("Firebase", "Error deleting documents", e)}
     }
+
 
     // Called before providing the '_markets' (to the MarketFragment)
     private fun updateMarketsTotals() {
