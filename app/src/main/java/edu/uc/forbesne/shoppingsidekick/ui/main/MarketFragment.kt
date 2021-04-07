@@ -25,7 +25,7 @@ class MarketFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.result_display, container, false)
+        return inflater.inflate(R.layout.market_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

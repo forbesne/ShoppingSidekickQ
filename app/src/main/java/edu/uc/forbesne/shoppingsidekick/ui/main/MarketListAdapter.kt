@@ -18,7 +18,7 @@ class MarketListAdapter (private val marketList: ArrayList<Market>, mainViewMode
             viewGroup: ViewGroup,
             viewType: Int
     ): ViewHolder {
-        val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.market,viewGroup, false)
+        val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.market_fragment_row,viewGroup, false)
         return  ViewHolder(view)
     }
 
