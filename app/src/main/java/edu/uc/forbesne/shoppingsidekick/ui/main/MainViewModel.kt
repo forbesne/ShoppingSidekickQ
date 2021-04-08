@@ -5,12 +5,9 @@ import android.content.ContentValues
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import edu.uc.forbesne.shoppingsidekick.dto.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
-import edu.uc.forbesne.shoppingsidekick.dto.Cart
-import edu.uc.forbesne.shoppingsidekick.dto.CartItem
-import edu.uc.forbesne.shoppingsidekick.dto.Product
+import edu.uc.forbesne.shoppingsidekick.dto.*
 import edu.uc.forbesne.shoppingsidekick.service.MarketAPIService
 
 /**
@@ -202,7 +199,7 @@ class MainViewModel : ViewModel() {
 
                     val cartItem = it.toObject(CartItem::class.java)
                     if (cartItem != null) {
-                        // Sets id to the one firebase creats. used to updtate item's quantity in firebase
+                        // Sets id to the one firebase creates. used to update item's quantity in firebase
                         cartItem.id = it.id
                         cart.addItem(cartItem)
                     }
@@ -214,13 +211,15 @@ class MainViewModel : ViewModel() {
     // Gets called from product pop-up view to add product to cart
     fun addToCart(product: Product, quantity: Int) {
         if (quantity <= 0) return
-        var cartItem = CartItem(product.UPC, quantity, product.imageURL, product.description)
+        var cartItem = CartItem(product.UPC, quantity, product.imageURL, product.description,product.brand, product.price_type)
 
         if (cart.doesHaveItem(product.UPC)) {
             adjustCartItemQuantityInFirebase(cart.getCartItem(product.UPC), quantity)
         } else {
             addCartItemToFirebase(cartItem)
         }
+        getCartItems()
+
     }
 
     private fun addCartItemToFirebase(cartItem: CartItem): String {
@@ -242,13 +241,14 @@ class MainViewModel : ViewModel() {
     }
 
     private fun adjustCartItemQuantityInFirebase(existingCartItem: CartItem, quantityToAdd: Int) {
-        var adjustedCartItem = CartItem(existingCartItem.UPC, existingCartItem.quantity)
-        adjustedCartItem.id = existingCartItem.id
-        adjustedCartItem.quantity += quantityToAdd
+        //var adjustedCartItem = CartItem(existingCartItem.UPC, existingCartItem.quantity)
+        //adjustedCartItem.id = existingCartItem.id
+        //adjustedCartItem.quantity += quantityToAdd
+        existingCartItem.quantity += quantityToAdd
 
         firestore.collection("cart")
-            .document(adjustedCartItem.id)
-            .set(adjustedCartItem)
+            .document(existingCartItem.id)
+            .set(existingCartItem)
             .addOnSuccessListener {
                 Log.d("Firebase", "document saved")
             }
@@ -286,5 +286,11 @@ class MainViewModel : ViewModel() {
             _markets.value!![1].cartPrice += productPricesList.list[1].price * itemQuantity
             _markets.value!![2].cartPrice += productPricesList.list[2].price * itemQuantity
         }
+    }
+
+    fun getCartItems(): List<CartItem>{
+        //var cartItemList : List<CartItem> = List()
+        val getValues: List<CartItem> = listOf(cart.itemQuantityMap.values) as List<CartItem>
+        return getValues
     }
 }
