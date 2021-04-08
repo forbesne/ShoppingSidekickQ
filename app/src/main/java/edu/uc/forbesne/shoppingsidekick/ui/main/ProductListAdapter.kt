@@ -71,12 +71,14 @@ class ProductListAdapter( private val productList: ArrayList<Product>, mainViewM
         val btnDecrease: ImageButton = view_popup.findViewById(R.id.btnDecrease)
         val btnIncrease: ImageButton = view_popup.findViewById(R.id.btnIncrease)
         val lblQuantity: TextView = view_popup.findViewById(R.id.etnQuantity)
+        var lblImageUrl: TextView = view_popup.findViewById(R.id.lblImageUrl)
 
         Picasso.get().load(imgURL).into(prodImg);
         prodName.text = description
         prodUPC.text = upc
         prodBrand.text = brand
         prodUnitValue.text = unitValue
+        lblImageUrl.text = imgURL
 
         // Initialize a new instance of popup window
         val popupWindow = PopupWindow(
@@ -112,10 +114,14 @@ class ProductListAdapter( private val productList: ArrayList<Product>, mainViewM
 
         btnAddProductToCart.setOnClickListener{
             var upc = prodUPC.text.toString()
+            var description = prodName.text.toString()
+            var brand = prodBrand.text.toString()
+            var unitValue = prodUnitValue.text.toString()
+            var ImageUrl = lblImageUrl.text.toString()
             var strQuantity = lblQuantity.text.toString()
             var quantity = strQuantity.toInt()
 
-            var prod = Product(upc)
+            var prod = Product(upc, 0f, unitValue, brand,"", ImageUrl, description )
 
             //call add to cart on viewModel
             mvm.addToCart(prod,quantity )
