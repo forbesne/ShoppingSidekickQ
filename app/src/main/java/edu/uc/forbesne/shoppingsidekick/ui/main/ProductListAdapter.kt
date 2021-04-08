@@ -72,7 +72,8 @@ class ProductListAdapter( private val productList: ArrayList<Product>, mainViewM
         val btnIncrease: ImageButton = view_popup.findViewById(R.id.btnIncrease)
         val lblQuantity: TextView = view_popup.findViewById(R.id.etnQuantity)
 
-        Picasso.get().load(imgURL).into(prodImg);
+        val Picasso = null
+        val into: Any = Picasso.get().load(imgURL).into(prodImg);
         prodName.text = description
         prodUPC.text = upc
         prodBrand.text = brand

@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseUser
 import edu.uc.forbesne.shoppingsidekick.MainActivity
 import edu.uc.forbesne.shoppingsidekick.MapsActivity
 import edu.uc.forbesne.shoppingsidekick.R
+import edu.uc.forbesne.shoppingsidekick.dto.Product
 import kotlinx.android.synthetic.main.main_fragment.*
 import kotlinx.android.synthetic.main.market_fragment_row.*
 
@@ -46,6 +47,7 @@ class MainFragment : Fragment() {
 
         viewModel.fetchAllProducts()
         viewModel.products.observe(this, Observer { products ->
+            val actProductName = null
             actProductName.setAdapter(
                     ArrayAdapter(
                             context!!,
@@ -98,4 +100,8 @@ class MainFragment : Fragment() {
     companion object {
         fun newInstance() = MainFragment()
     }
+}
+
+private fun Nothing?.setAdapter(arrayAdapter: ArrayAdapter<Product>) {
+
 }
