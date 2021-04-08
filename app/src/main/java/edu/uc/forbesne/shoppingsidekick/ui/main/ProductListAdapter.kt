@@ -23,7 +23,7 @@ class ProductListAdapter( private val productList: ArrayList<Product>, mainViewM
         viewGroup: ViewGroup,
         viewType: Int
     ): ViewHolder {
-        val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.product_list_item,viewGroup, false)
+        val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.main_fragment_row,viewGroup, false)
         mContext = viewGroup.context
         return  ViewHolder(view)
     }
