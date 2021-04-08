@@ -18,8 +18,10 @@ import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import edu.uc.forbesne.shoppingsidekick.MainActivity
+import edu.uc.forbesne.shoppingsidekick.MapsActivity
 import edu.uc.forbesne.shoppingsidekick.R
 import kotlinx.android.synthetic.main.main_fragment.*
+import kotlinx.android.synthetic.main.market_fragment_row.*
 
 class MainFragment : Fragment() {
     private lateinit var viewModel: MainViewModel
@@ -63,6 +65,15 @@ class MainFragment : Fragment() {
 
         btnLogin.setOnClickListener {
             login()
+        }
+
+        btnSave.setOnClickListener{
+            (activity as MainActivity).displayCartFragment()
+        }
+
+        btnTakePhoto.setOnClickListener{
+            val intent = Intent(context, MapsActivity::class.java)
+            startActivity(intent)
         }
     }
 
