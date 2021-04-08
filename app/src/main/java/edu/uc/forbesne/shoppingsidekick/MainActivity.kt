@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import edu.uc.forbesne.shoppingsidekick.ui.main.MainFragment
 import edu.uc.forbesne.shoppingsidekick.ui.main.MainViewModel
 import edu.uc.forbesne.shoppingsidekick.ui.main.MarketFragment
+import kotlinx.android.synthetic.main.main_activity.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -35,8 +36,22 @@ class MainActivity : AppCompatActivity() {
             activeFragment = mainFragment
 
         }
-    }
 
+     //   replaceFragment(mainFragment)
+
+
+        bottom_nav.setOnNavigationItemReselectedListener {
+            when(it.itemId){
+                R.id.home -> replaceFragment(mainFragment)
+                R.id.history -> replaceFragment(marketFragment)
+
+            }
+
+
+        }
+
+    }
+/*
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
         val inflater = menuInflater;
@@ -44,6 +59,7 @@ class MainActivity : AppCompatActivity() {
 
         return super.onCreateOptionsMenu(menu)
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -55,6 +71,7 @@ class MainActivity : AppCompatActivity() {
 
         return super.onOptionsItemSelected(item)
     }
+    */
 
      fun displayMarketFragment(){
          if (activeFragment == mainFragment) {
@@ -66,4 +83,17 @@ class MainActivity : AppCompatActivity() {
 
          }
     }
+
+
+    fun replaceFragment(fragment: Fragment){
+        if (fragment != null) {
+
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.container, fragment)
+            transaction.commit()
+
+        }
+    }
+
+
 }
