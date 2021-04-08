@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.CartItem
+import kotlinx.android.synthetic.main.cart_fragment.*
 
 class CartFragment : Fragment() {
 
@@ -21,7 +22,7 @@ class CartFragment : Fragment() {
         fun newInstance() = CartFragment()
     }
 
-    private lateinit var viewModel: CartViewModel
+    private lateinit var viewModel: MainViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -32,15 +33,15 @@ class CartFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(CartViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         // TODO: Use the ViewModel
 
 //        These have been commented out to allow the project to compile
 
-       /* rcyCartItems.hasFixedSize()
-        rcyCartItems.layoutManager = LinearLayoutManager(context)
-        rcyCartItems.itemAnimator = DefaultItemAnimator()
-        rcyCartItems.adapter = CartAdapter(viewModel.product.cartItems, R.layout.Cart_List_Item)*/
+        cartListView.hasFixedSize()
+        cartListView.layoutManager = LinearLayoutManager(context)
+        cartListView.itemAnimator = DefaultItemAnimator()
+        cartListView.adapter = CartAdapter(viewModel.getCartItems(), R.layout.cart_fragment_row)
     }
 
 //    saveCart might not be needed, adding it just in case as that's what the professor had in his video.
@@ -79,14 +80,21 @@ class CartFragment : Fragment() {
     }
 
     inner class CartViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-        private var productImage : ImageView = itemView.findViewById(R.id.productImage)
-        private var lblUPC : TextView = itemView.findViewById(R.id.lblUPC)
-
+        private var cartProductImage : ImageView = itemView.findViewById(R.id.cartProductImage)
+//        private var lblUPC :t TextView = itemView.findViewById(R.id.lblUPC)
+        private var productName : TextView = itemView.findViewById(R.id.productName)
+        private var productBrand : TextView = itemView.findViewById(R.id.productBrand)
+        private var lblQuantity : TextView = itemView.findViewById(R.id.lblQuantity)
+        private var unitLbl : TextView = itemView.findViewById(R.id.unitLbl)
 
 
         fun updateCart (cartItem : CartItem) {
-            lblUPC.text = cartItem.toString()
-
+//            if ()
+//            lblUPC.text = cartItem.toString()
+            productName.text = cartItem.toString()
+            productBrand.text = cartItem.toString()
+            lblQuantity.text = cartItem.toString()
+            unitLbl.text = cartItem.toString()
         }
     }
 
