@@ -202,7 +202,7 @@ class MainViewModel : ViewModel() {
 
                     val cartItem = it.toObject(CartItem::class.java)
                     if (cartItem != null) {
-                        // Sets id to the one firebase creats. used to updtate item's quantity in firebase
+                        // Sets id to the one firebase creates. used to update item's quantity in firebase
                         cartItem.id = it.id
                         cart.addItem(cartItem)
                     }
@@ -260,12 +260,32 @@ class MainViewModel : ViewModel() {
     // not implemented yet
     fun removeFromCart(cartItem: CartItem) {
         cart.removeItemFromCart(cartItem)
+
+    }
+    // Empties the cart locally then calls deleteCartInFirebase
+    fun clearCart() {
+        cart.emptyCart();
+        clearCartInFirebase();
+
     }
 
-    // not implemented yet
-    fun deleteCart() {
-        //add remove from database..
+    //Iteratively deletes each cartItem's respective document within the cart in firebase
+    fun clearCartInFirebase(){
+        firestore.collection("cart").get().addOnSuccessListener { querySnapshot ->
+            for (documentSnapshot in querySnapshot) {
+                firestore.collection("cart").document(documentSnapshot.id)
+                    .delete()
+                    .addOnSuccessListener {
+                        Log.d(
+                            "Firebase",
+                            "DocumentSnapshot successfully deleted!"
+                        )
+                    }
+                    .addOnFailureListener { e -> Log.w("Firebase", "Error deleting document", e) }
+            }
+        }.addOnFailureListener { e -> Log.w("Firebase", "Error deleting documents", e)}
     }
+
 
     // Called before providing the '_markets' (to the MarketFragment)
     private fun updateMarketsTotals() {

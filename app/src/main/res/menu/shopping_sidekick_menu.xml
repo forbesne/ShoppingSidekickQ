@@ -3,36 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <item
-        android:id="@+id/item3"
-        android:title="Home"
-        android:icon="@drawable/ic_baseline_home_24"
-        app:showAsAction="never"/>
+
+
 
 
     <item
-        android:id="@+id/item6"
-        android:title="Saved"
-        android:icon="@drawable/ic_shopping_bag_24"
-        app:showAsAction="never"/>
-
-
-    <item
-        android:id="@+id/item2"
+        android:id="@+id/itmCart"
         android:icon="@drawable/ic_shopping_cart"
         android:title="Cart"
         app:showAsAction="ifRoom"/>
-
-
+    <item
+        android:id="@+id/itmClearCart"
+        android:title="Clear Cart "
+        android:icon="@drawable/ic_baseline_menu_24"
+        app:showAsAction="never" />
 
     <item
-        android:id="@+id/item4"
-        android:title="Profile"
-        android:icon="@drawable/ic_person_24"
-        app:showAsAction="never"/>
-
-    <item
-        android:id="@+id/item5"
+        android:id="@+id/itmMore"
         android:title="More"
         android:icon="@drawable/ic_baseline_menu_24"
         app:showAsAction="never" >
