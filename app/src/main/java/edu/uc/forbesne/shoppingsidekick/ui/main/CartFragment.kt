@@ -2,13 +2,13 @@ package edu.uc.forbesne.shoppingsidekick.ui.main
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.provider.CalendarContract
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,7 +22,8 @@ class CartFragment : Fragment() {
         fun newInstance() = CartFragment()
     }
 
-    private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: CartViewModel
+    private var _cartItems = java.util.ArrayList<CartItem>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -33,15 +34,22 @@ class CartFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(CartViewModel::class.java)
         // TODO: Use the ViewModel
 
 //        These have been commented out to allow the project to compile
-
+        viewModel.fetchCartItem()
         cartListView.hasFixedSize()
         cartListView.layoutManager = LinearLayoutManager(context)
         cartListView.itemAnimator = DefaultItemAnimator()
-        cartListView.adapter = CartAdapter(viewModel.getCartItems(), R.layout.cart_fragment_row)
+        cartListView.adapter = CartAdapter(_cartItems, R.layout.cart_fragment_row)
+
+        viewModel.cartItem.observe(this, Observer{
+            cartItem ->
+            _cartItems.removeAll(_cartItems)
+            _cartItems.addAll(cartItem)
+            cartListView.adapter!!.notifyDataSetChanged()
+        })
     }
 
 //    saveCart might not be needed, adding it just in case as that's what the professor had in his video.
@@ -91,10 +99,10 @@ class CartFragment : Fragment() {
         fun updateCart (cartItem : CartItem) {
 //            if ()
 //            lblUPC.text = cartItem.toString()
-            productName.text = cartItem.toString()
-            productBrand.text = cartItem.toString()
-            lblQuantity.text = cartItem.toString()
-            unitLbl.text = cartItem.toString()
+            productName.text = cartItem.description
+            productBrand.text = cartItem.productBrand
+            lblQuantity.text = cartItem.quantity.toString()
+            unitLbl.text = cartItem.measurementUnit
         }
     }
 
