@@ -1,5 +1,7 @@
 package edu.uc.forbesne.shoppingsidekick.ui.main
 
+import android.graphics.ImageDecoder
+import android.net.Uri
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -97,7 +99,11 @@ class CartFragment : Fragment() {
 
 
         fun updateCart (cartItem : CartItem) {
-//            if ()
+            if (cartItem.imageURL != null && cartItem.imageURL != "null") {
+                val source = ImageDecoder.createSource(activity!!.contentResolver, Uri.parse(cartItem.imageURL))
+                val bitmap = ImageDecoder.decodeBitmap(source)
+                cartProductImage.setImageBitmap(bitmap)
+            }
 //            lblUPC.text = cartItem.toString()
             productName.text = cartItem.description
             productBrand.text = cartItem.productBrand
