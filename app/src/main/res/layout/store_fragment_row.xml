@@ -1,6 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/storeLayout"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="225dp"
+        android:layout_height="204dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="215dp"
+            android:layout_height="196dp"
+            tools:srcCompat="@tools:sample/avatars" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="277dp"
+        android:layout_height="201dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/productname"
+            android:layout_width="246dp"
+            android:layout_height="wrap_content"
+            android:text="2% Milk" />
+
+        <TextView
+            android:id="@+id/brandname"
+            android:layout_width="246dp"
+            android:layout_height="wrap_content"
+            android:text="Brand" />
+
+        <LinearLayout
+            android:layout_width="246dp"
+            android:layout_height="46dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/lblquantity"
+                android:layout_width="74dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="1" />
+
+            <TextView
+                android:id="@+id/txtprice"
+                android:layout_width="152dp"
+                android:layout_height="wrap_content"
+                android:text="$10" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="248dp"
+            android:layout_height="74dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/unitlbl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Unit" />
+
+            <TextView
+                android:id="@+id/unitvaluelbl"
+                android:layout_width="83dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="fl.oz" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
