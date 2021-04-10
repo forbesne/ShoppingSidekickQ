@@ -13,9 +13,9 @@ import edu.uc.forbesne.shoppingsidekick.service.MarketAPIService
 /**
  *  Gets data from Firebase and APIs, builds objects to provide live data
  */
-class MainViewModel : ViewModel() {
+open class MainViewModel : ViewModel() {
 
-    private lateinit var firestore: FirebaseFirestore
+    internal lateinit var firestore: FirebaseFirestore
     var marketAPIService: MarketAPIService = MarketAPIService()
 
     // Used for tests

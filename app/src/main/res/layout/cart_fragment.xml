@@ -9,22 +9,24 @@
 
     <TextView
         android:id="@+id/txtCart"
-        android:layout_width="79dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="39dp"
-        android:layout_marginEnd="316dp"
+        style="@style/title"
+        app:layout_constraintHorizontal_bias="0.5"
+
+
         android:text="Current Cart"
-        app:layout_constraintEnd_toEndOf="parent"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cartListView"
-        android:layout_width="406dp"
-        android:layout_height="617dp"
-        android:layout_marginBottom="52dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="65dp"
+        android:layout_marginTop="65dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtCart"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

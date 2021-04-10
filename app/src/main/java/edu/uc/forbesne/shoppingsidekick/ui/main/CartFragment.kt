@@ -1,19 +1,23 @@
 package edu.uc.forbesne.shoppingsidekick.ui.main
 
+import android.graphics.ImageDecoder
+import android.net.Uri
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.provider.CalendarContract
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.CartItem
+import kotlinx.android.synthetic.main.cart_fragment.*
 
 class CartFragment : Fragment() {
 
@@ -22,6 +26,7 @@ class CartFragment : Fragment() {
     }
 
     private lateinit var viewModel: CartViewModel
+    private var _cartItems = java.util.ArrayList<CartItem>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -36,11 +41,18 @@ class CartFragment : Fragment() {
         // TODO: Use the ViewModel
 
 //        These have been commented out to allow the project to compile
+        viewModel.fetchCartItem()
+        cartListView.hasFixedSize()
+        cartListView.layoutManager = LinearLayoutManager(context)
+        cartListView.itemAnimator = DefaultItemAnimator()
+        cartListView.adapter = CartAdapter(_cartItems, R.layout.cart_fragment_row)
 
-       /* rcyCartItems.hasFixedSize()
-        rcyCartItems.layoutManager = LinearLayoutManager(context)
-        rcyCartItems.itemAnimator = DefaultItemAnimator()
-        rcyCartItems.adapter = CartAdapter(viewModel.product.cartItems, R.layout.Cart_List_Item)*/
+        viewModel.cartItem.observe(this, Observer{
+            cartItem ->
+            _cartItems.removeAll(_cartItems)
+            _cartItems.addAll(cartItem)
+            cartListView.adapter!!.notifyDataSetChanged()
+        })
     }
 
 //    saveCart might not be needed, adding it just in case as that's what the professor had in his video.
@@ -79,14 +91,26 @@ class CartFragment : Fragment() {
     }
 
     inner class CartViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-        private var productImage : ImageView = itemView.findViewById(R.id.productImage)
-        private var lblUPC : TextView = itemView.findViewById(R.id.lblUPC)
-
+        private var cartProductImage : ImageView = itemView.findViewById(R.id.cartProductImage)
+//        private var lblUPC :t TextView = itemView.findViewById(R.id.lblUPC)
+        private var productName : TextView = itemView.findViewById(R.id.productName)
+        private var productBrand : TextView = itemView.findViewById(R.id.productBrand)
+        private var lblQuantity : TextView = itemView.findViewById(R.id.lblQuantity)
+        private var unitLbl : TextView = itemView.findViewById(R.id.unitLbl)
 
 
         fun updateCart (cartItem : CartItem) {
-            lblUPC.text = cartItem.toString()
-
+            if (cartItem.imageURL != null && cartItem.imageURL != "null" && cartItem.imageURL != "") {
+                Picasso.get().load(cartItem.imageURL).into(cartProductImage);
+                /*val source = ImageDecoder.createSource(activity!!.contentResolver, Uri.parse(cartItem.imageURL))
+                val bitmap = ImageDecoder.decodeBitmap(source)
+                cartProductImage.setImageBitmap(bitmap)*/
+            }
+//            lblUPC.text = cartItem.toString()
+            productName.text = cartItem.description
+            productBrand.text = cartItem.productBrand
+            lblQuantity.text = cartItem.quantity.toString()
+            unitLbl.text = cartItem.measurementUnit
         }
     }
 
