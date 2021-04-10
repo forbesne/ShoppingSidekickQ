@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.CartItem
 import kotlinx.android.synthetic.main.cart_fragment.*
@@ -99,10 +100,11 @@ class CartFragment : Fragment() {
 
 
         fun updateCart (cartItem : CartItem) {
-            if (cartItem.imageURL != null && cartItem.imageURL != "null") {
-                val source = ImageDecoder.createSource(activity!!.contentResolver, Uri.parse(cartItem.imageURL))
+            if (cartItem.imageURL != null && cartItem.imageURL != "null" && cartItem.imageURL != "") {
+                Picasso.get().load(cartItem.imageURL).into(cartProductImage);
+                /*val source = ImageDecoder.createSource(activity!!.contentResolver, Uri.parse(cartItem.imageURL))
                 val bitmap = ImageDecoder.decodeBitmap(source)
-                cartProductImage.setImageBitmap(bitmap)
+                cartProductImage.setImageBitmap(bitmap)*/
             }
 //            lblUPC.text = cartItem.toString()
             productName.text = cartItem.description
