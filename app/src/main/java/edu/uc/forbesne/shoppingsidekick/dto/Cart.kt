@@ -1,5 +1,10 @@
 package edu.uc.forbesne.shoppingsidekick.dto
 
+/**
+ * A data class that stores Cart data in a HashMap
+ *
+ * @param size The cart size
+ */
 data class Cart (var size :Int =0) {
 
     // HashMap of all items in cart - more efficient than using an array list, as searching by UPC is needed

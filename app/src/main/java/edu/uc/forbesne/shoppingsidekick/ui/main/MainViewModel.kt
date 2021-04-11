@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import edu.uc.forbesne.shoppingsidekick.dto.*
+import edu.uc.forbesne.shoppingsidekick.dto.*
+import edu.uc.forbesne.shoppingsidekick.service.FirebaseService
 import edu.uc.forbesne.shoppingsidekick.service.MarketAPIService
 
 /**
@@ -17,6 +19,7 @@ open class MainViewModel : ViewModel() {
 
     internal lateinit var firestore: FirebaseFirestore
     var marketAPIService: MarketAPIService = MarketAPIService()
+    var firebaseService: FirebaseService = FirebaseService()
 
     // Used for tests
     var productsFromShop1: MutableLiveData<ArrayList<Product>> =
@@ -42,7 +45,7 @@ open class MainViewModel : ViewModel() {
     var products: MutableLiveData<ArrayList<Product>> = MutableLiveData<ArrayList<Product>>()
 
     // Holds cart data, its state is 'managed' by firebase using addSnapshotListener
-    private val cart: Cart = Cart()
+    lateinit private var cart: Cart
 
     // A HashMap containing all products and all their market prices as key value pairs. Where
     // key = productUPC, value = array with 3 objects of type {shopName, ...,shopPrice}
@@ -50,18 +53,13 @@ open class MainViewModel : ViewModel() {
         HashMap<String, ProductPriceList>()
 
     init {
-        createFirebaseInstance()
+        //createFirebaseInstance()
         fetchMarket1()
         fetchMarket2()
         fetchMarket3()
         assignProducts()
         createObservablesFromApisData()
-        getCartFromFirebase()
-    }
-
-    private fun createFirebaseInstance() {
-        firestore = FirebaseFirestore.getInstance()
-        firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
+        cart = firebaseService.getCart()
     }
 
     private fun createInitialProductPriceList(): ProductPriceList {
@@ -184,78 +182,17 @@ open class MainViewModel : ViewModel() {
         productsFromShop1 = marketAPIService.fetchProductsByName(productName)
     }
 
-    private fun getCartFromFirebase() {
-        firestore.collection("cart").addSnapshotListener { snapshot, e ->
-            // if there is an exception we want to skip.
-            if (e != null) {
-                Log.w(ContentValues.TAG, "Listen Failed", e)
-                return@addSnapshotListener
-            }
-
-            // if we are here, we did not encounter an exception
-            if (snapshot != null) {
-                val documents = snapshot.documents
-                documents.forEach {
-
-                    val cartItem = it.toObject(CartItem::class.java)
-                    if (cartItem != null) {
-                        // Sets id to the one firebase creates. used to update item's quantity in firebase
-                        cartItem.id = it.id
-                        cart.addItem(cartItem)
-                    }
-                }
-            }
-        }
-    }
-
-    // Gets called from product pop-up view to add product to cart
     fun addToCart(product: Product, quantity: Int) {
+        val db = FirebaseFirestore.getInstance()
+
         if (quantity <= 0) return
         var cartItem = CartItem(product.UPC, quantity, product.imageURL, product.description,product.brand, product.price_type)
 
         if (cart.doesHaveItem(product.UPC)) {
-            adjustCartItemQuantityInFirebase(cart.getCartItem(product.UPC), quantity)
+            firebaseService.adjustCartItemQuantityInFirebase(cart.getCartItem(product.UPC), quantity)
         } else {
-            addCartItemToFirebase(cartItem)
+            firebaseService.addCartItemToFirebase(cartItem)
         }
-        getCartItems()
-
-    }
-
-    private fun addCartItemToFirebase(cartItem: CartItem): String {
-        val document =
-            firestore.collection("cart")
-                .document()
-
-        val cartItemId = document.id
-        cartItem.id = cartItemId
-
-        document.set(cartItem)
-            .addOnSuccessListener {
-                Log.d("Firebase", "document saved")
-            }
-            .addOnFailureListener {
-                Log.d("Firebase", "Save Failed")
-            }
-
-        return cartItemId
-    }
-
-    private fun adjustCartItemQuantityInFirebase(existingCartItem: CartItem, quantityToAdd: Int) {
-        //var adjustedCartItem = CartItem(existingCartItem.UPC, existingCartItem.quantity)
-        //adjustedCartItem.id = existingCartItem.id
-        //adjustedCartItem.quantity += quantityToAdd
-        existingCartItem.quantity += quantityToAdd
-
-        firestore.collection("cart")
-            .document(existingCartItem.id)
-            .set(existingCartItem)
-            .addOnSuccessListener {
-                Log.d("Firebase", "document saved")
-            }
-            .addOnFailureListener {
-                Log.d("Firebase", "Save Failed")
-            }
     }
 
     // not implemented yet
