@@ -17,6 +17,11 @@ class FirebaseService {
         return cart
     }
 
+    fun getFireBaseInstance(): FirebaseFirestore{
+        val db = FirebaseFirestore.getInstance()
+        return db
+    }
+
     private fun getCartFromFirebase() {
         val db = FirebaseFirestore.getInstance()
 
