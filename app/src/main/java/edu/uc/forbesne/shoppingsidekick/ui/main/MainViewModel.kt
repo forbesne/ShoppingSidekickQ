@@ -197,6 +197,11 @@ open class MainViewModel : ViewModel() {
             // if we are here, we did not encounter an exception
             if (snapshot != null) {
                 val documents = snapshot.documents
+
+                if(documents.isEmpty()){
+                    cart.emptyCart()
+                }
+
                 documents.forEach {
 
                     val cartItem = it.toObject(CartItem::class.java)
@@ -264,9 +269,7 @@ open class MainViewModel : ViewModel() {
     }
     // Empties the cart locally then calls deleteCartInFirebase
     fun clearCart() {
-        //cart.emptyCart();
         clearCartInFirebase();
-
     }
 
     //Iteratively deletes each cartItem's respective document within the cart in firebase
