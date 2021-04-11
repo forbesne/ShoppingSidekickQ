@@ -58,5 +58,6 @@ data class Cart (var size :Int =0) {
     // once it will we need to change this to use firebase
     fun emptyCart(){
         itemQuantityMap.clear()
+        size = 0;
     }
 }
