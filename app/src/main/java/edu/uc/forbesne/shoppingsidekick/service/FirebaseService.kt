@@ -9,7 +9,15 @@ import edu.uc.forbesne.shoppingsidekick.dto.CartItem
 class FirebaseService {
     private val cart: Cart = Cart()
 
-    fun getCartFromFirebase() {
+    init{
+        getCartFromFirebase()
+    }
+
+    fun getCart(): Cart{
+        return cart
+    }
+
+    private fun getCartFromFirebase() {
         val db = FirebaseFirestore.getInstance()
 
         db.collection("cart").addSnapshotListener { snapshot, e ->
@@ -60,14 +68,11 @@ class FirebaseService {
 
     fun adjustCartItemQuantityInFirebase(existingCartItem: CartItem, quantityToAdd: Int) {
         val db = FirebaseFirestore.getInstance()
-
-        var adjustedCartItem = CartItem(existingCartItem.UPC, existingCartItem.quantity)
-        adjustedCartItem.id = existingCartItem.id
-        adjustedCartItem.quantity += quantityToAdd
+        existingCartItem.quantity += quantityToAdd
 
         db.collection("cart")
-                .document(adjustedCartItem.id)
-                .set(adjustedCartItem)
+                .document(existingCartItem.id)
+                .set(existingCartItem)
                 .addOnSuccessListener {
                     Log.d("Firebase", "document saved")
                 }
