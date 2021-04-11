@@ -73,11 +73,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.itmCart -> Toast.makeText(this,"Cart Selected", Toast.LENGTH_SHORT).show()
+            R.id.itmCart -> Toast.makeText(this, "Cart Selected", Toast.LENGTH_SHORT).show()
             R.id.itmClearCart -> {
                 viewModel.clearCart();
 
             };
+        }
     }
 
      fun displayMarketFragment(){
@@ -119,7 +120,5 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
-
-
 
 }
