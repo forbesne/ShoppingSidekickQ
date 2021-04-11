@@ -45,7 +45,7 @@ open class MainViewModel : ViewModel() {
     var products: MutableLiveData<ArrayList<Product>> = MutableLiveData<ArrayList<Product>>()
 
     // Holds cart data, its state is 'managed' by firebase using addSnapshotListener
-    private val cart: Cart = Cart()
+    lateinit private var cart: Cart
 
     // A HashMap containing all products and all their market prices as key value pairs. Where
     // key = productUPC, value = array with 3 objects of type {shopName, ...,shopPrice}
@@ -59,7 +59,7 @@ open class MainViewModel : ViewModel() {
         fetchMarket3()
         assignProducts()
         createObservablesFromApisData()
-        firebaseService.getCartFromFirebase()
+        cart = firebaseService.getCart()
     }
 
     private fun createInitialProductPriceList(): ProductPriceList {
