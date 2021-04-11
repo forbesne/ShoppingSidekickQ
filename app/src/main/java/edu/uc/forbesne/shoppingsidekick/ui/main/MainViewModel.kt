@@ -228,6 +228,7 @@ open class MainViewModel : ViewModel() {
                 .document()
 
         val cartItemId = document.id
+        cartItem.id = cartItemId
 
         document.set(cartItem)
             .addOnSuccessListener {
