@@ -22,11 +22,16 @@ class FirebaseService {
             // if we are here, we did not encounter an exception
             if (snapshot != null) {
                 val documents = snapshot.documents
+
+                if(documents.isEmpty()){
+                    cart.emptyCart()
+                }
+
                 documents.forEach {
 
                     val cartItem = it.toObject(CartItem::class.java)
                     if (cartItem != null) {
-                        // Sets id to the one firebase creats. used to updtate item's quantity in firebase
+                        // Sets id to the one firebase creates. used to updtate item's quantity in firebase
                         cartItem.id = it.id
                         cart.addItem(cartItem)
                     }
@@ -40,6 +45,7 @@ class FirebaseService {
 
         val document = db.collection("cart").document()
         val cartItemId = document.id
+        cartItem.id = cartItemId
 
         document.set(cartItem)
         .addOnSuccessListener {
