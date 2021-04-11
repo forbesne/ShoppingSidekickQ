@@ -71,14 +71,15 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+   override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.itmCart -> Toast.makeText(this, "Cart Selected", Toast.LENGTH_SHORT).show()
+            R.id.cart -> Toast.makeText(this, "Cart Selected", Toast.LENGTH_SHORT).show()
             R.id.itmClearCart -> {
                 viewModel.clearCart();
 
             };
         }
+        return super.onOptionsItemSelected(item)
     }
 
      fun displayMarketFragment(){
