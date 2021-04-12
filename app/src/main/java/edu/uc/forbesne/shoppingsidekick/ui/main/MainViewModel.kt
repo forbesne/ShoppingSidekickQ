@@ -1,13 +1,9 @@
 package edu.uc.forbesne.shoppingsidekick.ui.main
 // code is based on professor's github - https://github.com/discospiff/MyPlantDiaryQ
 
-import android.content.ContentValues
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreSettings
-import edu.uc.forbesne.shoppingsidekick.dto.*
 import edu.uc.forbesne.shoppingsidekick.dto.*
 import edu.uc.forbesne.shoppingsidekick.service.FirebaseService
 import edu.uc.forbesne.shoppingsidekick.service.MarketAPIService
@@ -17,7 +13,6 @@ import edu.uc.forbesne.shoppingsidekick.service.MarketAPIService
  */
 open class MainViewModel : ViewModel() {
 
-    internal lateinit var firestore: FirebaseFirestore
     var marketAPIService: MarketAPIService = MarketAPIService()
     var firebaseService: FirebaseService = FirebaseService()
 
@@ -59,7 +54,13 @@ open class MainViewModel : ViewModel() {
         fetchMarket3()
         assignProducts()
         createObservablesFromApisData()
+        //cart = firebaseService.getCart()
+    }
+
+    //Since these methods create Firebase instances, for enabling testing we need this to be called from outside the class
+    fun initialize(){
         cart = firebaseService.getCart()
+        firebaseService.initialize()
     }
 
     private fun createInitialProductPriceList(): ProductPriceList {
