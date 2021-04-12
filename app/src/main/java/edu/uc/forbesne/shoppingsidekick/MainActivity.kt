@@ -27,6 +27,10 @@ class MainActivity : AppCompatActivity() {
         storeFragment = StoreFragment.newInstance()
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
+        // This enable tests,
+        // main activity triggers the methods that create the firebase instances
+        viewModel.initilize()
+
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, mainFragment)
@@ -63,15 +67,15 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-     fun displayMarketFragment(){
-         if (activeFragment == mainFragment) {
+    fun displayMarketFragment(){
+        if (activeFragment == mainFragment) {
 
-             supportFragmentManager.beginTransaction()
-                     .replace(R.id.container, marketFragment)
-                     .commitNow()
-             activeFragment = marketFragment
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.container, marketFragment)
+                .commitNow()
+            activeFragment = marketFragment
 
-         }
+        }
     }
 
     fun displayCartFragment() {

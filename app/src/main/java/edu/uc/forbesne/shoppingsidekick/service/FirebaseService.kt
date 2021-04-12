@@ -9,7 +9,9 @@ import edu.uc.forbesne.shoppingsidekick.dto.CartItem
 class FirebaseService {
     private val cart: Cart = Cart()
 
-    init{
+    // To enable testing
+    // removed firebase instances from being created automatically when class object is created
+    fun initilize(){
         getCartFromFirebase()
     }
 
@@ -22,7 +24,7 @@ class FirebaseService {
         return db
     }
 
-    private fun getCartFromFirebase() {
+    fun getCartFromFirebase() {
         val db = FirebaseFirestore.getInstance()
 
         db.collection("cart").addSnapshotListener { snapshot, e ->
@@ -61,12 +63,12 @@ class FirebaseService {
         cartItem.id = cartItemId
 
         document.set(cartItem)
-        .addOnSuccessListener {
-            Log.d("Firebase", "document saved")
-        }
-        .addOnFailureListener {
-            Log.d("Firebase", "Save Failed")
-        }
+            .addOnSuccessListener {
+                Log.d("Firebase", "document saved")
+            }
+            .addOnFailureListener {
+                Log.d("Firebase", "Save Failed")
+            }
 
         return cartItemId
     }
@@ -76,13 +78,13 @@ class FirebaseService {
         existingCartItem.quantity += quantityToAdd
 
         db.collection("cart")
-                .document(existingCartItem.id)
-                .set(existingCartItem)
-                .addOnSuccessListener {
-                    Log.d("Firebase", "document saved")
-                }
-                .addOnFailureListener {
-                    Log.d("Firebase", "Save Failed")
-                }
+            .document(existingCartItem.id)
+            .set(existingCartItem)
+            .addOnSuccessListener {
+                Log.d("Firebase", "document saved")
+            }
+            .addOnFailureListener {
+                Log.d("Firebase", "Save Failed")
+            }
     }
 }
