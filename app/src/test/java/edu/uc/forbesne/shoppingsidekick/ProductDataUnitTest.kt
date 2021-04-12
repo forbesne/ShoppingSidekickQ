@@ -75,7 +75,7 @@ class ProductDataUnitTest {
 
     private fun thenResultContainsApple() {
         var appleFound = false;
-        mvm.products.observeForever {
+        mvm.productsFromShop1.observeForever {
             assertNotNull(it)
             assertTrue(it.size > 0)
             it.forEach {
