@@ -12,7 +12,7 @@
 
     <item
         android:id="@+id/history"
-        android:title="Saved"
+        android:title="Markets"
         android:icon="@drawable/ic_shopping_bag_24"
         app:showAsAction="never"/>
 
@@ -27,7 +27,7 @@
 
     <item
         android:id="@+id/profile"
-        android:title="Profile"
+        android:title="Login"
         android:icon="@drawable/ic_person_24"
         app:showAsAction="never"/>
 
