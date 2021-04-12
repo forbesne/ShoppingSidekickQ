@@ -11,7 +11,7 @@ class FirebaseService {
 
     // To enable testing
     // removed firebase instances from being created automatically when class object is created
-    fun initilize(){
+    fun initialize(){
         getCartFromFirebase()
     }
 

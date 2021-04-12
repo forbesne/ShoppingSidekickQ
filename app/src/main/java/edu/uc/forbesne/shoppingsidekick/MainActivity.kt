@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         // This enable tests,
         // main activity triggers the methods that create the firebase instances
-        viewModel.initilize()
+        viewModel.initialize()
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
