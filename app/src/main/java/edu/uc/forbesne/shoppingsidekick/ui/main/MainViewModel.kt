@@ -198,7 +198,9 @@ open class MainViewModel : ViewModel() {
 
     // not implemented yet
     fun removeFromCart(cartItem: CartItem) {
-        cart.removeItemFromCart(cartItem)
+        //cart.removeItemFromCart(cartItem)
+        firebaseService.removeItemFromCart(cartItem)
+
     }
 
     // not implemented yet
@@ -231,5 +233,9 @@ open class MainViewModel : ViewModel() {
         //var cartItemList : List<CartItem> = List()
         val getValues: List<CartItem> = listOf(cart.itemQuantityMap.values) as List<CartItem>
         return getValues
+    }
+
+    fun emptyCart(){
+        firebaseService.emptyCart()
     }
 }
