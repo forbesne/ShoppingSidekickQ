@@ -46,8 +46,8 @@
                 android:id="@+id/unitLbl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Size:" />
+
+                android:text="Size: " />
 
             <TextView
                 android:id="@+id/UnitValueLbl"
