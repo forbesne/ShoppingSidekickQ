@@ -9,6 +9,8 @@ package edu.uc.forbesne.shoppingsidekick.dto
  * @param id Market ID
  */
 data class Market (var name : String="", var distance : Float = 0f, var cartPrice : Float = 0f,
+                   var latitude :String = "", var longitude :String = "",
+                   val cartItems: ArrayList<CartItem> = ArrayList<CartItem>(),
                    var id : String="") {
 
     override fun toString(): String {
