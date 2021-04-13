@@ -60,10 +60,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.cart -> {
                     replaceFragment(cartFragment)
                 }
-               /* R.id.more -> {
+                R.id.more -> {
                     //replaceFragment(storeFragment)
-                    replaceFragment(storeFragment2)
-                }*/
+                    //replaceFragment(storeFragment2)
+                }
                 R.id.profile -> {
                     login()
                 }
