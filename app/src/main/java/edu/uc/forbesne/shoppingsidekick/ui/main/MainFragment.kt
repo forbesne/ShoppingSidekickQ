@@ -63,7 +63,7 @@ class MainFragment : Fragment() {
             (activity as MainActivity).displayMarketFragment()
         }
 
-        btnLogin.setOnClickListener {
+        /*btnLogin.setOnClickListener {
             login()
         }
 
@@ -74,7 +74,7 @@ class MainFragment : Fragment() {
         btnTakePhoto.setOnClickListener{
             val intent = Intent(context, MapsActivity::class.java)
             startActivity(intent)
-        }
+        }*/
     }
 
     private fun login() {

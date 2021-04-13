@@ -10,6 +10,8 @@
         android:id="@+id/txtStore"
         style="@style/title"
         android:text="Stores"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toTopOf="@+id/storeView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

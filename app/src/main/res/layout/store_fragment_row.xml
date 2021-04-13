@@ -4,74 +4,91 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/storeLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@drawable/ss_border">
 
     <LinearLayout
-        android:layout_width="225dp"
-        android:layout_height="204dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="215dp"
-            android:layout_height="196dp"
-            tools:srcCompat="@tools:sample/avatars" />
+            style="@style/SSImage" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="277dp"
-        android:layout_height="201dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/productname"
-            android:layout_width="246dp"
+            style="@style/SStext1"
             android:layout_height="wrap_content"
             android:text="2% Milk" />
 
         <TextView
             android:id="@+id/brandname"
-            android:layout_width="246dp"
+            style="@style/SStext2"
             android:layout_height="wrap_content"
             android:text="Brand" />
 
         <LinearLayout
-            android:layout_width="246dp"
-            android:layout_height="46dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/unitlbl"
+                style="@style/SStext2"
+                android:layout_weight="1"
+                android:text="Size: " />
+
+            <TextView
+                android:id="@+id/unitvaluelbl"
+                style="@style/SStext2"
+                android:layout_weight="1"
+                android:text="fl.oz" />
+
+            <TextView
+                android:id="@+id/pirce"
+                style="@style/SStext2"
+                android:layout_marginStart="30dp"
+                android:layout_height="wrap_content"
+                android:text="Price (each): " />
+
+            <TextView
+                android:id="@+id/txtprice"
+                style="@style/SStext2"
+                android:layout_marginStart="0dp"
+                android:text="$10" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/qty"
+                style="@style/SStext2"
+                android:layout_height="wrap_content"
+                android:text="Quantity: " />
+
+            <TextView
                 android:id="@+id/lblquantity"
+                style="@style/SStext2"
                 android:layout_width="74dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="1" />
 
-            <TextView
-                android:id="@+id/txtprice"
-                android:layout_width="152dp"
-                android:layout_height="wrap_content"
-                android:text="$10" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="248dp"
-            android:layout_height="74dp"
-            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/unitlbl"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Unit" />
 
-            <TextView
-                android:id="@+id/unitvaluelbl"
-                android:layout_width="83dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="fl.oz" />
-        </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>

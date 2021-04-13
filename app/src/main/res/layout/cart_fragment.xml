@@ -11,22 +11,40 @@
         android:id="@+id/txtCart"
         style="@style/title"
         app:layout_constraintHorizontal_bias="0.5"
-
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
 
         android:text="Current Cart"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/btnClearCart"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/Tomato"
+        android:outlineSpotShadowColor="@color/Tomato"
+        android:drawableRight="@drawable/ic_remove"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="25dp"
+        android:text="Clear Cart"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cartListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="65dp"
         android:layout_marginTop="65dp"
+        android:layout_marginBottom="65dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtCart"/>
+        app:layout_constraintTop_toBottomOf="@+id/txtCart"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

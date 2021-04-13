@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import edu.uc.forbesne.shoppingsidekick.MainActivity
 import edu.uc.forbesne.shoppingsidekick.MapsActivity
 import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.Market
@@ -53,6 +54,8 @@ class MarketFragment : Fragment() {
             )
             recyclerView.adapter = adapter
         })
-
+        txtName.setOnClickListener() {
+            (activity as MainActivity).displayStoreFragment()
+        }
     }
 }

@@ -5,7 +5,7 @@
     android:id="@+id/viewCartProduct"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="20dp"
+    android:layout_margin="10dp"
     android:background="@drawable/ss_border">
 
     <LinearLayout
@@ -15,10 +15,7 @@
 
         <ImageView
             android:id="@+id/cartProductImage"
-            android:layout_width="139dp"
-            android:layout_height="99dp"
-            android:padding="10dp"
-            tools:srcCompat="@tools:sample/avatars" />
+            style="@style/SSImage"/>
 
     </LinearLayout>
 
@@ -29,48 +26,19 @@
 
         <TextView
             android:id="@+id/productName"
-            android:layout_width="match_parent"
+            style="@style/SStext1"
             android:layout_height="wrap_content"
             android:text="2% Milk" />
 
         <TextView
             android:id="@+id/productBrand"
-            android:layout_width="match_parent"
+            style="@style/SStext2"
             android:layout_height="wrap_content"
             android:text="Brand" />
 
         <LinearLayout
-            android:layout_width="176dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/decreaseBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/transparent"
-                app:srcCompat="@drawable/ic_decrease" />
-
-            <TextView
-                android:id="@+id/lblQuantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="1" />
-
-            <ImageButton
-                android:id="@+id/increaseBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/transparent"
-                app:srcCompat="@drawable/ic_increase" />
-
-        </LinearLayout>
-
-        <LinearLayout
             android:layout_width="131dp"
+            style="@style/SStext2"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -78,8 +46,8 @@
                 android:id="@+id/unitLbl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Unit" />
+
+                android:text="Size: " />
 
             <TextView
                 android:id="@+id/UnitValueLbl"
@@ -88,6 +56,46 @@
                 android:layout_weight="1"
                 android:text="fl.oz" />
         </LinearLayout>
-    </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="176dp"
+            style="@style/SStext2"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/decreaseBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:background="@color/transparent"
+                app:srcCompat="@drawable/ic_decrease" />
+
+            <TextView
+                android:id="@+id/lblQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:text="1" />
+
+            <ImageButton
+                android:id="@+id/increaseBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:background="@color/transparent"
+                app:srcCompat="@drawable/ic_increase" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <ImageButton
+        android:id="@+id/btnRemove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="9dp"
+        android:background="@color/transparent"
+        app:srcCompat="@drawable/ic_remove" />
 </LinearLayout>

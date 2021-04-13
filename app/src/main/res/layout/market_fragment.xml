@@ -11,7 +11,7 @@
         style="@style/title"
         app:layout_constraintHorizontal_bias="0.5"
         android:text="Cheapest Markets"
-        android:layout_marginLeft="50dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp" />
 
     <androidx.recyclerview.widget.RecyclerView
