@@ -13,7 +13,7 @@ package edu.uc.forbesne.shoppingsidekick.dto
  * @param id The product id for api reference
  */
 data class CartItem (var UPC : String ="", var quantity: Int = 0, var imageURL : String ="", var description : String ="",
-                      var productBrand: String = "", var measurementUnit: String = "",var id:String = "" ) {
+                      var productBrand: String = "", var measurementUnit: String = "", var price: Float = 0f, var id:String = "" ) {
 
     override fun toString(): String {
         return "$description $productBrand $quantity $measurementUnit"
