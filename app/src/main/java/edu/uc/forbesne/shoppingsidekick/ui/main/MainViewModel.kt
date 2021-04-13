@@ -230,17 +230,18 @@ open class MainViewModel : ViewModel() {
             _markets.value!![2].cartPrice += productPricesList.list[2].price * itemQuantity
 
             if(itemQuantity >0){
-                var cartItem = cart.getCartItem(itemUPC).copy()
-                cartItem.price = productPricesList.list[0].price
-                _markets.value!![0].cartItems.add(cartItem)
+                var cartItem0 = cart.getCartItem(itemUPC).copy()
+                var cartItem1 = cart.getCartItem(itemUPC).copy()
+                var cartItem2 = cart.getCartItem(itemUPC).copy()
 
-                cartItem = cart.getCartItem(itemUPC).copy()
-                cartItem.price = productPricesList.list[1].price
-                _markets.value!![1].cartItems.add(cart.getCartItem(itemUPC))
+                cartItem0.price = productPricesList.list[0].price
+                _markets.value!![0].cartItems.add(cartItem0)
 
-                cartItem = cart.getCartItem(itemUPC).copy()
-                cartItem.price = productPricesList.list[2].price
-                _markets.value!![2].cartItems.add(cart.getCartItem(itemUPC))
+                cartItem1.price = productPricesList.list[1].price
+                _markets.value!![1].cartItems.add(cartItem1)
+
+                cartItem2.price = productPricesList.list[2].price
+                _markets.value!![2].cartItems.add(cartItem2)
             }
         }
     }
