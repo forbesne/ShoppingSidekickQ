@@ -196,16 +196,8 @@ open class MainViewModel : ViewModel() {
         }
     }
 
-    // not implemented yet
     fun removeFromCart(cartItem: CartItem) {
-        //cart.removeItemFromCart(cartItem)
-        firebaseService.removeItemFromCart(cartItem)
-
-    }
-
-    // not implemented yet
-    fun deleteCart() {
-        //add remove from database..
+        firebaseService.removeItemFromCart(cartItem, ::updateMarketsTotals )
     }
 
     // Called before providing the '_markets' (to the MarketFragment)
@@ -237,5 +229,14 @@ open class MainViewModel : ViewModel() {
 
     fun emptyCart(){
         firebaseService.emptyCart()
+    }
+
+    // Moved here from CartViewModel - 1
+    private var _cartItem = MutableLiveData<List<CartItem>>()
+    internal var cartItem : MutableLiveData<List<CartItem>>
+        get() { return _cartItem}
+        set(value) {_cartItem = value}
+    internal fun fetchCartItem(){
+        firebaseService.fetchCartItem(_cartItem)
     }
 }
