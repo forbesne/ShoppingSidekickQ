@@ -38,9 +38,14 @@ class MarketListAdapter (private val marketList: ArrayList<Market>, mainViewMode
         holder.cartPrice.text = "Price: $ ${"%.2f".format(marketList[position].cartPrice).toString()}"
         holder.distance.text = "Distance: ${"%.2f".format(marketList[position].distance).toString()} Miles"
 
+        //TODO get the latitude altitude
         // To be continued...
         holder.marketCard.setOnClickListener(){
+            //TODO benjamin work on this!!
         }
+
+
+
 
 /*        btnName.setOnClickListener{
         }*/
