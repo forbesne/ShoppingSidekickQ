@@ -26,13 +26,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var storeName ="Shoprite"
+        //var storeName ="Shoprite"
         setContentView(R.layout.main_activity)
         mainFragment = MainFragment.newInstance()
         marketFragment = MarketFragment.newInstance()
         cartFragment = CartFragment.newInstance()
-        storeFragment = StoreFragment.newInstance()
-        storeFragment2 = StoreFragment2.newInstance(storeName)
+        //storeFragment = StoreFragment.newInstance()
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
@@ -61,10 +60,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.cart -> {
                     replaceFragment(cartFragment)
                 }
-                R.id.more -> {
+               /* R.id.more -> {
                     //replaceFragment(storeFragment)
                     replaceFragment(storeFragment2)
-                }
+                }*/
                 R.id.profile -> {
                     login()
                 }
@@ -97,12 +96,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun displayStoreFragment() {
-        if (activeFragment != storeFragment) {
+    fun displayStoreFragment(storeName:String) {
+        storeFragment2 = StoreFragment2.newInstance(storeName)
+        if (activeFragment != storeFragment2) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, storeFragment)
+                .replace(R.id.container, storeFragment2)
                 .commitNow()
-            activeFragment = storeFragment
+            activeFragment = storeFragment2
         }
     }
 
