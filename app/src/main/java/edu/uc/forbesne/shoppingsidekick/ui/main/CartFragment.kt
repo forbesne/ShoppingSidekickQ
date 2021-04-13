@@ -26,7 +26,7 @@ class CartFragment : Fragment() {
         fun newInstance() = CartFragment()
     }
 
-    private lateinit var viewModel: CartViewModel
+    private lateinit var viewModel: MainViewModel
     private var _cartItems = java.util.ArrayList<CartItem>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -38,7 +38,10 @@ class CartFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(CartViewModel::class.java)
+        activity.let {
+            viewModel = ViewModelProvider(it!!).get(MainViewModel::class.java)
+        }
+        //viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         // TODO: Use the ViewModel
 
 //        These have been commented out to allow the project to compile
@@ -55,9 +58,9 @@ class CartFragment : Fragment() {
             cartListView.adapter!!.notifyDataSetChanged()
         })
 
-       /* btnClearCart.setOnClickListener() {
-            viewModel.deleteCart()
-        }*/
+       btnClearCart.setOnClickListener() {
+            viewModel.emptyCart()
+        }
     }
 
 //    saveCart might not be needed, adding it just in case as that's what the professor had in his video.
@@ -142,7 +145,6 @@ class CartFragment : Fragment() {
             btnRemove.setOnClickListener {
                 viewModel.removeFromCart(cartItem)
             }
-
         }
     }
 

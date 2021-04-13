@@ -24,7 +24,7 @@ class StoreFragment : Fragment() {
     }
 
 //    private lateinit var viewModel: StoreViewModel
-    private lateinit var viewModel: CartViewModel
+    private lateinit var viewModel: MainViewModel
     private var _cartItems = java.util.ArrayList<CartItem>()
 
     override fun onCreateView(
@@ -36,7 +36,10 @@ class StoreFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(CartViewModel::class.java)
+        activity.let {
+            viewModel = ViewModelProvider(it!!).get(MainViewModel::class.java)
+        }
+        //viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         // TODO: Use the ViewModel
 
         viewModel.fetchCartItem()
