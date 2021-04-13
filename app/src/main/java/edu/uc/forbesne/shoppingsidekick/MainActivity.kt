@@ -19,18 +19,21 @@ class MainActivity : AppCompatActivity() {
     private lateinit var activeFragment: Fragment
     private lateinit var cartFragment: CartFragment
     private lateinit var storeFragment: StoreFragment
+    private lateinit var storeFragment2: StoreFragment2
     private lateinit var viewModel: MainViewModel
     private val AUTH_REQUEST_CODE = 1701
     private var user : FirebaseUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        var storeName ="Shoprite"
         setContentView(R.layout.main_activity)
         mainFragment = MainFragment.newInstance()
         marketFragment = MarketFragment.newInstance()
         cartFragment = CartFragment.newInstance()
         storeFragment = StoreFragment.newInstance()
+        storeFragment2 = StoreFragment2.newInstance(storeName)
+
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         // This enable tests,
@@ -59,7 +62,8 @@ class MainActivity : AppCompatActivity() {
                     replaceFragment(cartFragment)
                 }
                 R.id.more -> {
-                    replaceFragment(storeFragment)
+                    //replaceFragment(storeFragment)
+                    replaceFragment(storeFragment2)
                 }
                 R.id.profile -> {
                     login()
