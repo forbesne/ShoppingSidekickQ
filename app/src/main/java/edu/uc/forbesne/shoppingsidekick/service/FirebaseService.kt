@@ -2,9 +2,11 @@ package edu.uc.forbesne.shoppingsidekick.service
 
 import android.content.ContentValues
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.FirebaseFirestore
 import edu.uc.forbesne.shoppingsidekick.dto.Cart
 import edu.uc.forbesne.shoppingsidekick.dto.CartItem
+import kotlin.reflect.KFunction0
 
 class FirebaseService {
     private val cart: Cart = Cart()
@@ -38,9 +40,7 @@ class FirebaseService {
             if (snapshot != null) {
                 val documents = snapshot.documents
 
-                if(documents.isEmpty()){
-                    cart.emptyCart()
-                }
+                cart.emptyCart()
 
                 documents.forEach {
 
@@ -86,5 +86,49 @@ class FirebaseService {
             .addOnFailureListener {
                 Log.d("Firebase", "Save Failed")
             }
+    }
+
+    fun emptyCart(){
+
+        val firestore = FirebaseFirestore.getInstance()
+
+        firestore.collection("cart").get().addOnSuccessListener { querySnapshot ->
+            for (documentSnapshot in querySnapshot) {
+                firestore.collection("cart").document(documentSnapshot.id)
+                        .delete()
+                        .addOnSuccessListener {
+                            Log.d(
+                                    "Firebase",
+                                    "DocumentSnapshot successfully deleted!"
+                            )
+                        }
+                        .addOnFailureListener { e -> Log.w("Firebase", "Error deleting document", e) }
+            }
+        }.addOnFailureListener { e -> Log.w("Firebase", "Error deleting documents", e)}
+    }
+
+    fun removeItemFromCart(cartItem: CartItem, callback: KFunction0<Unit>){
+        val firestore = FirebaseFirestore.getInstance()
+        firestore.collection("cart").document(cartItem.id)
+                .delete()
+                .addOnSuccessListener {
+                    callback()
+                    Log.d(
+                            "Firebase",
+                            "DocumentSnapshot successfully deleted!"
+                    )
+                }
+                .addOnFailureListener { e -> Log.w("Firebase", "Error deleting document", e) }
+    }
+
+    // Moved here from CartViewModel -2 (last)
+    internal fun fetchCartItem(cartItem: MutableLiveData<List<CartItem>>) {
+        val firestore = FirebaseFirestore.getInstance()
+
+        var cartCollection = firestore.collection("cart")
+        cartCollection.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+            var innerCartItems = querySnapshot?.toObjects(CartItem::class.java)
+            cartItem.postValue(innerCartItems!!)
+        }
     }
 }
