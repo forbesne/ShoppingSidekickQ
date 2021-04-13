@@ -49,18 +49,7 @@ data class Cart (var size :Int =0) {
         return existingItemInCart.quantity
     }
 
-    // This is still not implemented in the application
-    // once it will we need to change this to be updated from firebase
-    fun removeItemFromCart(item:CartItem){
-        var existingItemInCart = itemQuantityMap.get(item.UPC)
-        if(existingItemInCart != null){
-            existingItemInCart.remove()
-            itemQuantityMap.put(item.UPC, existingItemInCart)
-        }
-    }
 
-    // This is still not implemented in the application
-    // once it will we need to change this to use firebase
     fun emptyCart(){
         itemQuantityMap.clear()
     }
