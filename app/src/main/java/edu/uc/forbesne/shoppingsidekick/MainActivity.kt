@@ -1,9 +1,14 @@
 package edu.uc.forbesne.shoppingsidekick
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
@@ -21,8 +26,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var cartFragment: CartFragment
     private lateinit var storeFragment: StoreFragment
     private lateinit var storeFragment2: StoreFragment2
+
     private lateinit var viewModel: MainViewModel
+    private lateinit var appViewModel: AppViewModel
+
     private val AUTH_REQUEST_CODE = 1701
+    private val LOCATION_PERMISSION_REQUEST_CODE = 1702
+
     private var user : FirebaseUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         //storeFragment = StoreFragment.newInstance()
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
+//        appViewModel = ViewModelProvider(this).get(AppViewModel::class.java)
         // This enable tests,
         // main activity triggers the methods that create the firebase instances
         viewModel.initialize()
@@ -72,7 +82,7 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-
+        prepRequestLocationUpdates()
 
     }
 
@@ -131,6 +141,23 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
+    private fun prepRequestLocationUpdates() {
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            requestLocationUpdates()
+        } else {
+            val permissionRequest = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
+            requestPermissions(permissionRequest, LOCATION_PERMISSION_REQUEST_CODE)
+        }
+    }
+
+    private fun requestLocationUpdates() {
+
+        appViewModel.getLocationLiveData().observe(this, Observer {
+            var currLatitude = it.latitude
+            var currLongitude = it.longitude
+        })
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
@@ -140,4 +167,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when(requestCode) {
+            LOCATION_PERMISSION_REQUEST_CODE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    requestLocationUpdates()
+                } else {
+                    Toast.makeText(this.getApplicationContext(), "Unable to update location without permission", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+    }
 }
