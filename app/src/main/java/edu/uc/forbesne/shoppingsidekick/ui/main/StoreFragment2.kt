@@ -40,6 +40,10 @@ class StoreFragment2(store:Market) : Fragment() {
 
         var storeName = view!!.findViewById<TextView>(R.id.txtStore)
         storeName.text = store.name
+        var storeAddress = view!!.findViewById<TextView>(R.id.txtAddress)
+        storeAddress.text = store.address.replace(',', '\n')
+        var storeTotal = view!!.findViewById<TextView>(R.id.txtTotal)
+        storeTotal.text = "Total: $ ${"%.2f".format(store.cartPrice).toString()}"
 
         var recyclerView = view!!.findViewById<RecyclerView>(R.id.storeView)
         recyclerView.layoutManager =  GridLayoutManager(this.context, 1)
