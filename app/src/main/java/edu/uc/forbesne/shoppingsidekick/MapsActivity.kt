@@ -37,5 +37,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val marker = LatLng(39.13166665253337, -84.51633962801935)
         mMap.addMarker(MarkerOptions().position(marker).title("Marker"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(marker))
+        mMap.moveCamera(CameraUpdateFactory.zoomTo(10F))
     }
 }
