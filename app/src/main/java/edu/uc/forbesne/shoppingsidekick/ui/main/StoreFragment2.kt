@@ -13,14 +13,15 @@ import androidx.recyclerview.widget.RecyclerView
 import edu.uc.forbesne.shoppingsidekick.MainActivity
 import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.CartItem
+import edu.uc.forbesne.shoppingsidekick.dto.Market
 import kotlinx.android.synthetic.main.market_fragment_row.*
 
-class StoreFragment2(storeName:String) : Fragment() {
+class StoreFragment2(store:Market) : Fragment() {
 
-    var storeName2 = storeName
+    var store = store
 
     companion object {
-        fun newInstance(storeName: String) = StoreFragment2(storeName)
+        fun newInstance(store: Market) = StoreFragment2(store)
     }
 
     private lateinit var viewModel: MainViewModel
@@ -38,7 +39,7 @@ class StoreFragment2(storeName:String) : Fragment() {
         }
 
         var storeName = view!!.findViewById<TextView>(R.id.txtStore)
-        storeName.text = storeName2
+        storeName.text = store.name
 
         var recyclerView = view!!.findViewById<RecyclerView>(R.id.storeView)
         recyclerView.layoutManager =  GridLayoutManager(this.context, 1)
@@ -47,7 +48,7 @@ class StoreFragment2(storeName:String) : Fragment() {
         viewModel.markets?.observe(this, Observer {
             shops ->
             shops.forEach { shop ->
-                if (shop.name == storeName2) {
+                if (shop.name == store.name) {
 
                     adapter = StoreListAdapter(
                             shop.cartItems, viewModel
