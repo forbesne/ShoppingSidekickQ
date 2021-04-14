@@ -119,6 +119,7 @@ open class MainViewModel : ViewModel() {
             _markets.value!![0].distance = it.market.distance
             _markets.value!![0].latitude = it.market.latitude
             _markets.value!![0].longitude = it.market.longitude
+            _markets.value!![0].address = it.market.address
         }
 
         marketApiObject2.observeForever {
@@ -126,6 +127,7 @@ open class MainViewModel : ViewModel() {
             _markets.value!![1].distance = it.market.distance
             _markets.value!![1].latitude = it.market.latitude
             _markets.value!![1].longitude = it.market.longitude
+            _markets.value!![1].address = it.market.address
         }
 
         marketApiObject3.observeForever {
@@ -133,6 +135,7 @@ open class MainViewModel : ViewModel() {
             _markets.value!![2].distance = it.market.distance
             _markets.value!![2].latitude = it.market.latitude
             _markets.value!![2].longitude = it.market.longitude
+            _markets.value!![2].address = it.market.address
         }
     }
 
