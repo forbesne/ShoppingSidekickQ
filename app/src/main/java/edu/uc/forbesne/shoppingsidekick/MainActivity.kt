@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import edu.uc.forbesne.shoppingsidekick.dto.Market
 import edu.uc.forbesne.shoppingsidekick.ui.main.*
 import kotlinx.android.synthetic.main.main_activity.*
 
@@ -96,8 +97,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun displayStoreFragment(storeName:String) {
-        storeFragment2 = StoreFragment2.newInstance(storeName)
+    fun displayStoreFragment(store: Market) {
+        storeFragment2 = StoreFragment2.newInstance(store)
         if (activeFragment != storeFragment2) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, storeFragment2)
