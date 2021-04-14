@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import edu.uc.forbesne.shoppingsidekick.MainActivity
 import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.Market
-import kotlinx.android.synthetic.main.market_fragment_row.*
 
 class MarketFragment : Fragment() {
 

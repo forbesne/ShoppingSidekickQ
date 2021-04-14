@@ -30,6 +30,14 @@
             android:text="TextView" />
 
         <TextView
+            android:id="@+id/floatCartPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:visibility="gone"
+            />
+
+        <TextView
             android:id="@+id/txtDistance"
             style="@style/heading3"
             android:text="TextView"
@@ -44,13 +52,17 @@
                 android:id="@+id/latitude"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="latitude:      " />
+                android:text="latitude:      "
+                android:visibility="gone"
+                />
 
             <TextView
                 android:id="@+id/txtLatitude"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="TextView"
+                android:visibility="gone"
+                />
 
         </LinearLayout>
 
@@ -62,10 +74,26 @@
                 android:id="@+id/longitude"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="longitude:   " />
+                android:text="longitude:   "
+                android:visibility="gone"
+                />
 
             <TextView
                 android:id="@+id/txtLongitude"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:visibility="gone"
+                />
+
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Address:   " />
+
+            <TextView
+                android:id="@+id/txtAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView" />

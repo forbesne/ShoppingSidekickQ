@@ -8,12 +8,13 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import edu.uc.forbesne.shoppingsidekick.MapsActivity
 import edu.uc.forbesne.shoppingsidekick.R
+import edu.uc.forbesne.shoppingsidekick.dto.CartItem
 import edu.uc.forbesne.shoppingsidekick.dto.Market
 import kotlin.reflect.KFunction1
 
 
 class MarketListAdapter(private val marketList: ArrayList<Market>, mainViewModel: MainViewModel,
-                        callback: KFunction1<@ParameterName(name = "storeName") String, Unit>
+                        callback: KFunction1<@ParameterName(name = "store") Market, Unit>
 )
 
     :RecyclerView.Adapter<MarketListAdapter.ViewHolder>(){
@@ -33,22 +34,30 @@ class MarketListAdapter(private val marketList: ArrayList<Market>, mainViewModel
         val marketCard = view
         val name: TextView = view.findViewById(R.id.txtName)
         val cartPrice: TextView = view.findViewById(R.id.txtCartPrice)
-        //val distance: TextView = view.findViewById(R.id.txtDistance)
+        val floatPrice: TextView = view.findViewById(R.id.floatCartPrice)
+        val distance: TextView = view.findViewById(R.id.txtDistance)
         val latitude: TextView = view.findViewById(R.id.txtLatitude)
         val longitude: TextView = view.findViewById(R.id.txtLongitude)
         val mapIcon: ImageButton = view.findViewById(R.id.btnMap)
+        val address: TextView = view.findViewById(R.id.txtAddress)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int){
         holder.name.text = marketList[position].name
+        holder.floatPrice.text = "${"%.2f".format(marketList[position].cartPrice)}"
         holder.cartPrice.text = "Price: $ ${"%.2f".format(marketList[position].cartPrice).toString()}"
-        holder.latitude.text = " ${marketList[position].latitude.substring(0, 8)}"
-        holder.longitude.text = "${marketList[position].longitude.substring(0, 8)}"
+        holder.distance.text = " ${marketList[position].distance}"
+        holder.latitude.text = " ${marketList[position].latitude}"
+        holder.longitude.text = "${marketList[position].longitude}"
+        holder.address.text = "${marketList[position].address}"
 
         //holder.distance.text = "Distance: ${"%.2f".format(marketList[position].distance).toString()} Miles"
 
         holder.name.setOnClickListener(){
-            callback(holder.name.text.toString())
+            var market: Market = Market(holder.name.text.toString(),holder.distance.text.toString().toFloat(),
+                    holder.floatPrice.text.toString().toFloat(), holder.latitude.text.toString(),holder.longitude.text.toString(),
+                    ArrayList<CartItem>(),holder.address.text.toString())
+            callback(market)
         }
 
 
