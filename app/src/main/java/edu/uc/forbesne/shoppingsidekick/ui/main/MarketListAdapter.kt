@@ -9,12 +9,17 @@ import androidx.recyclerview.widget.RecyclerView
 import edu.uc.forbesne.shoppingsidekick.MapsActivity
 import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.Market
+import kotlin.reflect.KFunction1
 
 
-class MarketListAdapter (private val marketList: ArrayList<Market>, mainViewModel: MainViewModel)
+class MarketListAdapter(private val marketList: ArrayList<Market>, mainViewModel: MainViewModel,
+                        callback: KFunction1<@ParameterName(name = "storeName") String, Unit>
+)
+
     :RecyclerView.Adapter<MarketListAdapter.ViewHolder>(){
 
     var mvm = mainViewModel
+    var callback = callback
 
     override fun onCreateViewHolder(
             viewGroup: ViewGroup,
@@ -28,19 +33,26 @@ class MarketListAdapter (private val marketList: ArrayList<Market>, mainViewMode
         val marketCard = view
         val name: TextView = view.findViewById(R.id.txtName)
         val cartPrice: TextView = view.findViewById(R.id.txtCartPrice)
-        val distance: TextView = view.findViewById(R.id.txtDistance)
+        //val distance: TextView = view.findViewById(R.id.txtDistance)
+        val latitude: TextView = view.findViewById(R.id.txtLatitude)
+        val longitude: TextView = view.findViewById(R.id.txtLongitude)
         val mapIcon: ImageButton = view.findViewById(R.id.btnMap)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int){
         holder.name.text = marketList[position].name
-
         holder.cartPrice.text = "Price: $ ${"%.2f".format(marketList[position].cartPrice).toString()}"
-        holder.distance.text = "Distance: ${"%.2f".format(marketList[position].distance).toString()} Miles"
+        holder.latitude.text = " ${marketList[position].latitude.substring(0, 8)}"
+        holder.longitude.text = "${marketList[position].longitude.substring(0, 8)}"
 
-        // To be continued...
-        holder.marketCard.setOnClickListener(){
+        //holder.distance.text = "Distance: ${"%.2f".format(marketList[position].distance).toString()} Miles"
+
+        holder.name.setOnClickListener(){
+            callback(holder.name.text.toString())
         }
+
+
+
 
 /*        btnName.setOnClickListener{
         }*/

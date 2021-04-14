@@ -54,8 +54,8 @@ open class MainViewModel : ViewModel() {
         fetchMarket3()
         assignProducts()
         createObservablesFromApisData()
-        //cart = firebaseService.getCart()
     }
+
 
     //Since these methods create Firebase instances, for enabling testing we need this to be called from outside the class
     fun initialize(){
@@ -117,16 +117,22 @@ open class MainViewModel : ViewModel() {
         marketApiObject1.observeForever {
             _markets.value!![0].name = it.market.name
             _markets.value!![0].distance = it.market.distance
+            _markets.value!![0].latitude = it.market.latitude
+            _markets.value!![0].longitude = it.market.longitude
         }
 
         marketApiObject2.observeForever {
             _markets.value!![1].name = it.market.name
             _markets.value!![1].distance = it.market.distance
+            _markets.value!![1].latitude = it.market.latitude
+            _markets.value!![1].longitude = it.market.longitude
         }
 
         marketApiObject3.observeForever {
             _markets.value!![2].name = it.market.name
             _markets.value!![2].distance = it.market.distance
+            _markets.value!![2].latitude = it.market.latitude
+            _markets.value!![2].longitude = it.market.longitude
         }
     }
 
@@ -196,14 +202,8 @@ open class MainViewModel : ViewModel() {
         }
     }
 
-    // not implemented yet
     fun removeFromCart(cartItem: CartItem) {
-        cart.removeItemFromCart(cartItem)
-    }
-
-    // not implemented yet
-    fun deleteCart() {
-        //add remove from database..
+        firebaseService.removeItemFromCart(cartItem, ::updateMarketsTotals )
     }
 
     // Called before providing the '_markets' (to the MarketFragment)
@@ -216,6 +216,10 @@ open class MainViewModel : ViewModel() {
         _markets.value!![1].cartPrice = 0f
         _markets.value!![2].cartPrice = 0f
 
+        _markets.value!![0].cartItems.clear()
+        _markets.value!![1].cartItems.clear()
+        _markets.value!![2].cartItems.clear()
+
         cart.itemQuantityMap.forEach {
             itemUPC = it.key
             itemQuantity = it.value.quantity
@@ -224,6 +228,21 @@ open class MainViewModel : ViewModel() {
             _markets.value!![0].cartPrice += productPricesList.list[0].price * itemQuantity
             _markets.value!![1].cartPrice += productPricesList.list[1].price * itemQuantity
             _markets.value!![2].cartPrice += productPricesList.list[2].price * itemQuantity
+
+            if(itemQuantity >0){
+                var cartItem0 = cart.getCartItem(itemUPC).copy()
+                var cartItem1 = cart.getCartItem(itemUPC).copy()
+                var cartItem2 = cart.getCartItem(itemUPC).copy()
+
+                cartItem0.price = productPricesList.list[0].price
+                _markets.value!![0].cartItems.add(cartItem0)
+
+                cartItem1.price = productPricesList.list[1].price
+                _markets.value!![1].cartItems.add(cartItem1)
+
+                cartItem2.price = productPricesList.list[2].price
+                _markets.value!![2].cartItems.add(cartItem2)
+            }
         }
     }
 
@@ -231,5 +250,18 @@ open class MainViewModel : ViewModel() {
         //var cartItemList : List<CartItem> = List()
         val getValues: List<CartItem> = listOf(cart.itemQuantityMap.values) as List<CartItem>
         return getValues
+    }
+
+    fun emptyCart(){
+        firebaseService.emptyCart()
+    }
+
+    // Moved here from CartViewModel - 1
+    private var _cartItem = MutableLiveData<List<CartItem>>()
+    internal var cartItem : MutableLiveData<List<CartItem>>
+        get() { return _cartItem}
+        set(value) {_cartItem = value}
+    internal fun fetchCartItem(){
+        firebaseService.fetchCartItem(_cartItem)
     }
 }

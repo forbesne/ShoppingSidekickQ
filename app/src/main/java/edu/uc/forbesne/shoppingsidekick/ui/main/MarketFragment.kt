@@ -1,6 +1,5 @@
 package edu.uc.forbesne.shoppingsidekick.ui.main
 
-import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,7 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.uc.forbesne.shoppingsidekick.MainActivity
-import edu.uc.forbesne.shoppingsidekick.MapsActivity
 import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.Market
 import kotlinx.android.synthetic.main.market_fragment_row.*
@@ -50,12 +48,12 @@ class MarketFragment : Fragment() {
             sortedByPriceMarketList.sortBy { it.cartPrice }
 
             adapter = MarketListAdapter(
-                    sortedByPriceMarketList, viewModel
+                    sortedByPriceMarketList, viewModel , (activity as MainActivity)::displayStoreFragment
             )
             recyclerView.adapter = adapter
         })
-        txtName.setOnClickListener() {
+/*        txtName.setOnClickListener() {
             (activity as MainActivity).displayStoreFragment()
-        }
+        }*/
     }
 }
