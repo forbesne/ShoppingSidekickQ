@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var cartFragment: CartFragment
     private lateinit var storeFragment: StoreFragment
     private lateinit var storeFragment2: StoreFragment2
+    private lateinit var mapsFragment: MapsFragment
 
     private lateinit var viewModel: MainViewModel
     private lateinit var appViewModel: AppViewModel
@@ -45,7 +46,6 @@ class MainActivity : AppCompatActivity() {
         //storeFragment = StoreFragment.newInstance()
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-//        appViewModel = ViewModelProvider(this).get(AppViewModel::class.java)
         // This enable tests,
         // main activity triggers the methods that create the firebase instances
         viewModel.initialize()
@@ -117,6 +117,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun displayMapsFragment(store: Market) {
+        mapsFragment = MapsFragment.newInstance(store)
+        if (activeFragment != mapsFragment) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.container, mapsFragment)
+                .commitNow()
+            activeFragment = mapsFragment
+        }
+    }
 
     fun replaceFragment(fragment: Fragment){
         if (fragment != null) {
@@ -151,11 +160,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun requestLocationUpdates() {
+        /*appViewModel = ViewModelProvider(this).get(AppViewModel::class.java)
 
         appViewModel.getLocationLiveData().observe(this, Observer {
             var currLatitude = it.latitude
             var currLongitude = it.longitude
-        })
+        })*/
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
