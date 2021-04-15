@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -21,6 +22,7 @@ import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.CartItem
 import edu.uc.forbesne.shoppingsidekick.dto.Market
 import kotlinx.android.synthetic.main.market_fragment_row.*
+import kotlinx.android.synthetic.main.store_fragment.*
 
 class StoreFragment2(store:Market) : Fragment(), OnMapReadyCallback {
 
@@ -55,13 +57,15 @@ class StoreFragment2(store:Market) : Fragment(), OnMapReadyCallback {
         storeAddress.text = store.address.replace(',', '\n')
         var storeTotal = view!!.findViewById<TextView>(R.id.txtTotal)
         storeTotal.text = "Total: $ ${"%.2f".format(store.cartPrice).toString()}"
-
+        var btnMap : ImageButton = view!!.findViewById(R.id.btnMap)
         mapView = view!!.findViewById(R.id.mapView3)
         val mapViewBundle = savedInstanceState?.getBundle(MAPVIEW_BUNDLE_KEY)
 
         mapView.onCreate(mapViewBundle)
         mapView.getMapAsync(this)
-
+        btnMap.setOnClickListener() {
+            (activity as MainActivity).displayMarketFragment()
+        }
         var recyclerView = view!!.findViewById<RecyclerView>(R.id.storeView)
         recyclerView.layoutManager =  GridLayoutManager(this.context, 1)
         var storeCartItems: ArrayList<CartItem> = ArrayList<CartItem>()

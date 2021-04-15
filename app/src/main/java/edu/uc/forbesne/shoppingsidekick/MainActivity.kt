@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     private val AUTH_REQUEST_CODE = 1701
     private val LOCATION_PERMISSION_REQUEST_CODE = 1702
 
-    private var user : FirebaseUser? = null
+    internal var user : FirebaseUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
