@@ -4,6 +4,8 @@ package edu.uc.forbesne.shoppingsidekick.ui.main
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,10 +20,11 @@ import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import edu.uc.forbesne.shoppingsidekick.MainActivity
-import edu.uc.forbesne.shoppingsidekick.MapsActivity
 import edu.uc.forbesne.shoppingsidekick.R
+import edu.uc.forbesne.shoppingsidekick.dto.Product
 import kotlinx.android.synthetic.main.main_fragment.*
 import kotlinx.android.synthetic.main.market_fragment_row.*
+
 
 class MainFragment : Fragment() {
     private lateinit var viewModel: MainViewModel
@@ -46,13 +49,13 @@ class MainFragment : Fragment() {
 
         viewModel.fetchAllProducts()
         viewModel.products.observe(this, Observer { products ->
-            actProductName.setAdapter(
+            /*actProductName.setAdapter(
                     ArrayAdapter(
                             context!!,
                             android.R.layout.simple_spinner_dropdown_item,
                             products
                     )
-            )
+            )*/
             adapter = ProductListAdapter(
                     viewModel.products.value!!, viewModel
             )
@@ -62,6 +65,21 @@ class MainFragment : Fragment() {
         btnFindCheapestMarket.setOnClickListener{
             (activity as MainActivity).displayMarketFragment()
         }
+
+        searchProduct.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable) {
+
+                filter(s.toString())
+            }
+        })
 
         /*btnLogin.setOnClickListener {
             login()
@@ -76,13 +94,21 @@ class MainFragment : Fragment() {
             startActivity(intent)
         }*/
     }
-
+    fun filter(text: String) {
+        val temp: ArrayList<Product> = ArrayList()
+        for (d in viewModel.products.value!!) {
+            if (d.description.toLowerCase().contains(text.toLowerCase())) {
+                temp.add(d)
+            }
+        }
+        adapter.updateProductList(temp)
+    }
     private fun login() {
         var providers = arrayListOf(
-            AuthUI.IdpConfig.EmailBuilder().build()
+                AuthUI.IdpConfig.EmailBuilder().build()
         )
         startActivityForResult(
-            AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers).build(), AUTH_REQUEST_CODE
+                AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers).build(), AUTH_REQUEST_CODE
         )
     }
 

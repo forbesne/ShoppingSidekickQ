@@ -9,21 +9,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.common.data.DataHolder
 import com.squareup.picasso.Picasso
 import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.Product
 
-class ProductListAdapter( private val productList: ArrayList<Product>, mainViewModel: MainViewModel)
+
+class ProductListAdapter(private var productList: ArrayList<Product>, mainViewModel: MainViewModel)
     :RecyclerView.Adapter<ProductListAdapter.ViewHolder>() {
 
     lateinit var mContext: Context
     var mvm = mainViewModel
 
     override fun onCreateViewHolder(
-        viewGroup: ViewGroup,
-        viewType: Int
+            viewGroup: ViewGroup,
+            viewType: Int
     ): ViewHolder {
-        val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.main_fragment_row,viewGroup, false)
+        val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.main_fragment_row, viewGroup, false)
         mContext = viewGroup.context
         return  ViewHolder(view)
     }
@@ -49,8 +51,13 @@ class ProductListAdapter( private val productList: ArrayList<Product>, mainViewM
         holder.productCard.setOnClickListener(){
             //open pop-up for clicked product
             openProductPopUp(holder.upc.text.toString(), holder.description.text.toString(),
-                    holder.imgURL.text.toString(),holder.brand.text.toString(),holder.unitValue.text.toString())
+                    holder.imgURL.text.toString(), holder.brand.text.toString(), holder.unitValue.text.toString())
         }
+    }
+
+    fun updateProductList(list: ArrayList<Product>) {
+        productList = list
+        notifyDataSetChanged()
     }
 
     //Pop up logic from https://android--code.blogspot.com/2018/02/android-kotlin-popup-window-example.html
@@ -59,8 +66,8 @@ class ProductListAdapter( private val productList: ArrayList<Product>, mainViewM
         val inflater:LayoutInflater = mContext.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
         // Inflate a custom view using layout inflater
-        val view_popup = inflater.inflate(R.layout.product_popup,null)
-        val view_backdrop = inflater.inflate(R.layout.backdrop,null)
+        val view_popup = inflater.inflate(R.layout.product_popup, null)
+        val view_backdrop = inflater.inflate(R.layout.backdrop, null)
 
         val prodName: TextView = view_popup.findViewById(R.id.lblProductName)
         val prodBrand: TextView = view_popup.findViewById(R.id.lblProductBrand)
@@ -82,14 +89,14 @@ class ProductListAdapter( private val productList: ArrayList<Product>, mainViewM
 
         // Initialize a new instance of popup window
         val popupWindow = PopupWindow(
-            view_popup, // Custom view to show in popup window
-            LinearLayout.LayoutParams.WRAP_CONTENT, // Width of popup window
-            LinearLayout.LayoutParams.WRAP_CONTENT // Window height
+                view_popup, // Custom view to show in popup window
+                LinearLayout.LayoutParams.WRAP_CONTENT, // Width of popup window
+                LinearLayout.LayoutParams.WRAP_CONTENT // Window height
         )
         val backdropWindow = PopupWindow(
-            view_backdrop, // Custom view to show in popup window
-            LinearLayout.LayoutParams.MATCH_PARENT, // Width of popup window
-            LinearLayout.LayoutParams.MATCH_PARENT // Window height
+                view_backdrop, // Custom view to show in popup window
+                LinearLayout.LayoutParams.MATCH_PARENT, // Width of popup window
+                LinearLayout.LayoutParams.MATCH_PARENT // Window height
         )
 
         view_backdrop.setOnClickListener{
@@ -100,16 +107,16 @@ class ProductListAdapter( private val productList: ArrayList<Product>, mainViewM
 
         //TransitionManager.beginDelayedTransition(rltvProducts)
         backdropWindow.showAtLocation(
-            view_backdrop, // Location to display popup window
-            Gravity.CENTER, // Exact position of layout to display popup
-            0, // X offset
-            0 // Y offset
+                view_backdrop, // Location to display popup window
+                Gravity.CENTER, // Exact position of layout to display popup
+                0, // X offset
+                0 // Y offset
         )
         popupWindow.showAtLocation(
-            view_popup, // Location to display popup window
-            Gravity.CENTER, // Exact position of layout to display popup
-            0, // X offset
-            0 // Y offset
+                view_popup, // Location to display popup window
+                Gravity.CENTER, // Exact position of layout to display popup
+                0, // X offset
+                0 // Y offset
         )
 
         btnAddProductToCart.setOnClickListener{
@@ -121,10 +128,10 @@ class ProductListAdapter( private val productList: ArrayList<Product>, mainViewM
             var strQuantity = lblQuantity.text.toString()
             var quantity = strQuantity.toInt()
 
-            var prod = Product(upc, 0f, unitValue, brand,"", ImageUrl, description )
+            var prod = Product(upc, 0f, unitValue, brand, "", ImageUrl, description)
 
             //call add to cart on viewModel
-            mvm.addToCart(prod,quantity )
+            mvm.addToCart(prod, quantity)
 
             popupWindow.dismiss()
             backdropWindow.dismiss()
