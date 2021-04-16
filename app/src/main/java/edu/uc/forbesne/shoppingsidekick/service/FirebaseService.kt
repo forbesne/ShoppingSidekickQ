@@ -14,8 +14,6 @@ import kotlin.reflect.KFunction0
 class FirebaseService {
     private val cart: Cart = Cart()
 
-    var user = FirebaseAuth.getInstance().currentUser
-
     // To enable testing
     // removed firebase instances from being created automatically when class object is created
     fun initialize(){
@@ -33,8 +31,9 @@ class FirebaseService {
 
     fun getCartFromFirebase() {
         val db = FirebaseFirestore.getInstance()
+        var user = FirebaseAuth.getInstance().currentUser.uid
 
-        db.collection("cart").addSnapshotListener { snapshot, e ->
+        db.collection(user).addSnapshotListener { snapshot, e ->
             // if there is an exception we want to skip.
             if (e != null) {
                 Log.w(ContentValues.TAG, "Listen Failed", e)
@@ -63,8 +62,8 @@ class FirebaseService {
     fun addCartItemToFirebase(cartItem: CartItem): String {
 
         val db = FirebaseFirestore.getInstance()
-
-        val document = db.collection("cart").document()
+        var user = FirebaseAuth.getInstance().currentUser.uid
+        val document = db.collection(user).document()
         val cartItemId = document.id
         cartItem.id = cartItemId
 
@@ -82,8 +81,9 @@ class FirebaseService {
     fun adjustCartItemQuantityInFirebase(existingCartItem: CartItem, quantityToAdd: Int) {
         val db = FirebaseFirestore.getInstance()
         existingCartItem.quantity += quantityToAdd
+        var user = FirebaseAuth.getInstance().currentUser.uid
 
-        db.collection("cart")
+        db.collection(user)
             .document(existingCartItem.id)
             .set(existingCartItem)
             .addOnSuccessListener {
@@ -97,10 +97,11 @@ class FirebaseService {
     fun emptyCart(){
 
         val firestore = FirebaseFirestore.getInstance()
+        var user = FirebaseAuth.getInstance().currentUser.uid
 
-        firestore.collection("cart").get().addOnSuccessListener { querySnapshot ->
+        firestore.collection(user).get().addOnSuccessListener { querySnapshot ->
             for (documentSnapshot in querySnapshot) {
-                firestore.collection("cart").document(documentSnapshot.id)
+                firestore.collection(user).document(documentSnapshot.id)
                         .delete()
                         .addOnSuccessListener {
                             Log.d(
@@ -115,7 +116,9 @@ class FirebaseService {
 
     fun removeItemFromCart(cartItem: CartItem, callback: KFunction0<Unit>){
         val firestore = FirebaseFirestore.getInstance()
-        firestore.collection("cart").document(cartItem.id)
+        var user = FirebaseAuth.getInstance().currentUser.uid
+
+        firestore.collection(user).document(cartItem.id)
                 .delete()
                 .addOnSuccessListener {
                     callback()
@@ -130,11 +133,13 @@ class FirebaseService {
     // Moved here from CartViewModel -2 (last)
     internal fun fetchCartItem(cartItem: MutableLiveData<List<CartItem>>) {
         val firestore = FirebaseFirestore.getInstance()
+        var user = FirebaseAuth.getInstance().currentUser.uid
 
-        var cartCollection = firestore.collection("cart")
+        var cartCollection = firestore.collection(user)
         cartCollection.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
             var innerCartItems = querySnapshot?.toObjects(CartItem::class.java)
             cartItem.postValue(innerCartItems!!)
         }
     }
+
 }

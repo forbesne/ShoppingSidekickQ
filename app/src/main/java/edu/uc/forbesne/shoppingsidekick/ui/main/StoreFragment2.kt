@@ -57,15 +57,13 @@ class StoreFragment2(store:Market) : Fragment(), OnMapReadyCallback {
         storeAddress.text = store.address.replace(',', '\n')
         var storeTotal = view!!.findViewById<TextView>(R.id.txtTotal)
         storeTotal.text = "Total: $ ${"%.2f".format(store.cartPrice).toString()}"
-        var btnMap : ImageButton = view!!.findViewById(R.id.btnMap)
+
         mapView = view!!.findViewById(R.id.mapView3)
         val mapViewBundle = savedInstanceState?.getBundle(MAPVIEW_BUNDLE_KEY)
 
         mapView.onCreate(mapViewBundle)
         mapView.getMapAsync(this)
-        btnMap.setOnClickListener() {
-            (activity as MainActivity).displayMarketFragment()
-        }
+
         var recyclerView = view!!.findViewById<RecyclerView>(R.id.storeView)
         recyclerView.layoutManager =  GridLayoutManager(this.context, 1)
         var storeCartItems: ArrayList<CartItem> = ArrayList<CartItem>()
