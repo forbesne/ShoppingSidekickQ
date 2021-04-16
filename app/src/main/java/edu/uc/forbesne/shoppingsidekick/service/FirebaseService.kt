@@ -32,7 +32,9 @@ class FirebaseService {
     fun getCartFromFirebase() {
         val db = FirebaseFirestore.getInstance()
         var user = FirebaseAuth.getInstance().currentUser.uid
-
+        if (user == null) {
+            user = "cart"
+        }
         db.collection(user).addSnapshotListener { snapshot, e ->
             // if there is an exception we want to skip.
             if (e != null) {
@@ -63,6 +65,9 @@ class FirebaseService {
 
         val db = FirebaseFirestore.getInstance()
         var user = FirebaseAuth.getInstance().currentUser.uid
+        if (user == null) {
+            user = "cart"
+        }
         val document = db.collection(user).document()
         val cartItemId = document.id
         cartItem.id = cartItemId
@@ -82,7 +87,9 @@ class FirebaseService {
         val db = FirebaseFirestore.getInstance()
         existingCartItem.quantity += quantityToAdd
         var user = FirebaseAuth.getInstance().currentUser.uid
-
+        if (user == null) {
+            user = "cart"
+        }
         db.collection(user)
             .document(existingCartItem.id)
             .set(existingCartItem)
@@ -98,7 +105,9 @@ class FirebaseService {
 
         val firestore = FirebaseFirestore.getInstance()
         var user = FirebaseAuth.getInstance().currentUser.uid
-
+        if (user == null) {
+            user = "cart"
+        }
         firestore.collection(user).get().addOnSuccessListener { querySnapshot ->
             for (documentSnapshot in querySnapshot) {
                 firestore.collection(user).document(documentSnapshot.id)
@@ -117,7 +126,9 @@ class FirebaseService {
     fun removeItemFromCart(cartItem: CartItem, callback: KFunction0<Unit>){
         val firestore = FirebaseFirestore.getInstance()
         var user = FirebaseAuth.getInstance().currentUser.uid
-
+        if (user == null) {
+            user = "cart"
+        }
         firestore.collection(user).document(cartItem.id)
                 .delete()
                 .addOnSuccessListener {
@@ -134,7 +145,9 @@ class FirebaseService {
     internal fun fetchCartItem(cartItem: MutableLiveData<List<CartItem>>) {
         val firestore = FirebaseFirestore.getInstance()
         var user = FirebaseAuth.getInstance().currentUser.uid
-
+        if (user == null) {
+            user = "cart"
+        }
         var cartCollection = firestore.collection(user)
         cartCollection.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
             var innerCartItems = querySnapshot?.toObjects(CartItem::class.java)
