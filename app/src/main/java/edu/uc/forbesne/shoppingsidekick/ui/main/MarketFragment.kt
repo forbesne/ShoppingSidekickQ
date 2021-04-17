@@ -47,7 +47,8 @@ class MarketFragment : Fragment() {
             sortedByPriceMarketList.sortBy { it.cartPrice }
 
             adapter = MarketListAdapter(
-                    sortedByPriceMarketList, viewModel , (activity as MainActivity)::displayStoreFragment
+                    sortedByPriceMarketList, viewModel , (activity as MainActivity)::displayStoreFragment,
+                (activity as MainActivity)::displayMapsFragment
             )
             recyclerView.adapter = adapter
         })
