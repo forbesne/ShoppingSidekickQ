@@ -29,10 +29,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mapsFragment: MapsFragment
 
     private lateinit var viewModel: MainViewModel
-    private lateinit var appViewModel: AppViewModel
 
     private val AUTH_REQUEST_CODE = 1701
-    private val LOCATION_PERMISSION_REQUEST_CODE = 1702
 
     internal var user : FirebaseUser? = null
 
@@ -82,7 +80,6 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        prepRequestLocationUpdates()
 
     }
 
@@ -150,23 +147,7 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun prepRequestLocationUpdates() {
-        if (ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            requestLocationUpdates()
-        } else {
-            val permissionRequest = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
-            requestPermissions(permissionRequest, LOCATION_PERMISSION_REQUEST_CODE)
-        }
-    }
 
-    private fun requestLocationUpdates() {
-        /*appViewModel = ViewModelProvider(this).get(AppViewModel::class.java)
-
-        appViewModel.getLocationLiveData().observe(this, Observer {
-            var currLatitude = it.latitude
-            var currLongitude = it.longitude
-        })*/
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -177,15 +158,5 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        when(requestCode) {
-            LOCATION_PERMISSION_REQUEST_CODE -> {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    requestLocationUpdates()
-                } else {
-                    Toast.makeText(this.getApplicationContext(), "Unable to update location without permission", Toast.LENGTH_LONG).show()
-                }
-            }
-        }
-    }
+
 }
