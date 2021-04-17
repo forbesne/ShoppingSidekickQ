@@ -31,8 +31,15 @@ class FirebaseService {
 
     fun getCartFromFirebase() {
         val db = FirebaseFirestore.getInstance()
-        var user = FirebaseAuth.getInstance().currentUser.uid
-        if (user == null) {
+        var authInstance = FirebaseAuth.getInstance()
+        var user = ""
+        if(authInstance!=null) {
+            var firbaseUser = authInstance.currentUser
+            if(firbaseUser!=null) {
+                user = firbaseUser.uid
+            }
+        }
+        if(user==""){
             user = "cart"
         }
         db.collection(user).addSnapshotListener { snapshot, e ->
@@ -64,8 +71,15 @@ class FirebaseService {
     fun addCartItemToFirebase(cartItem: CartItem): String {
 
         val db = FirebaseFirestore.getInstance()
-        var user = FirebaseAuth.getInstance().currentUser.uid
-        if (user == null) {
+        var authInstance = FirebaseAuth.getInstance()
+        var user = ""
+        if(authInstance!=null) {
+            var firbaseUser = authInstance.currentUser
+            if(firbaseUser!=null) {
+                user = firbaseUser.uid
+            }
+        }
+        if(user==""){
             user = "cart"
         }
         val document = db.collection(user).document()
@@ -73,12 +87,12 @@ class FirebaseService {
         cartItem.id = cartItemId
 
         document.set(cartItem)
-            .addOnSuccessListener {
-                Log.d("Firebase", "document saved")
-            }
-            .addOnFailureListener {
-                Log.d("Firebase", "Save Failed")
-            }
+                .addOnSuccessListener {
+                    Log.d("Firebase", "document saved")
+                }
+                .addOnFailureListener {
+                    Log.d("Firebase", "Save Failed")
+                }
 
         return cartItemId
     }
@@ -86,26 +100,40 @@ class FirebaseService {
     fun adjustCartItemQuantityInFirebase(existingCartItem: CartItem, quantityToAdd: Int) {
         val db = FirebaseFirestore.getInstance()
         existingCartItem.quantity += quantityToAdd
-        var user = FirebaseAuth.getInstance().currentUser.uid
-        if (user == null) {
+        var authInstance = FirebaseAuth.getInstance()
+        var user = ""
+        if(authInstance!=null) {
+            var firbaseUser = authInstance.currentUser
+            if(firbaseUser!=null) {
+                user = firbaseUser.uid
+            }
+        }
+        if(user==""){
             user = "cart"
         }
         db.collection(user)
-            .document(existingCartItem.id)
-            .set(existingCartItem)
-            .addOnSuccessListener {
-                Log.d("Firebase", "document saved")
-            }
-            .addOnFailureListener {
-                Log.d("Firebase", "Save Failed")
-            }
+                .document(existingCartItem.id)
+                .set(existingCartItem)
+                .addOnSuccessListener {
+                    Log.d("Firebase", "document saved")
+                }
+                .addOnFailureListener {
+                    Log.d("Firebase", "Save Failed")
+                }
     }
 
     fun emptyCart(){
 
         val firestore = FirebaseFirestore.getInstance()
-        var user = FirebaseAuth.getInstance().currentUser.uid
-        if (user == null) {
+        var authInstance = FirebaseAuth.getInstance()
+        var user = ""
+        if(authInstance!=null) {
+            var firbaseUser = authInstance.currentUser
+            if(firbaseUser!=null) {
+                user = firbaseUser.uid
+            }
+        }
+        if(user==""){
             user = "cart"
         }
         firestore.collection(user).get().addOnSuccessListener { querySnapshot ->
@@ -125,8 +153,15 @@ class FirebaseService {
 
     fun removeItemFromCart(cartItem: CartItem, callback: KFunction0<Unit>){
         val firestore = FirebaseFirestore.getInstance()
-        var user = FirebaseAuth.getInstance().currentUser.uid
-        if (user == null) {
+        var authInstance = FirebaseAuth.getInstance()
+        var user = ""
+        if(authInstance!=null) {
+            var firbaseUser = authInstance.currentUser
+            if(firbaseUser!=null) {
+                user = firbaseUser.uid
+            }
+        }
+        if(user==""){
             user = "cart"
         }
         firestore.collection(user).document(cartItem.id)
@@ -144,8 +179,15 @@ class FirebaseService {
     // Moved here from CartViewModel -2 (last)
     internal fun fetchCartItem(cartItem: MutableLiveData<List<CartItem>>) {
         val firestore = FirebaseFirestore.getInstance()
-        var user = FirebaseAuth.getInstance().currentUser.uid
-        if (user == null) {
+        var authInstance = FirebaseAuth.getInstance()
+        var user = ""
+        if(authInstance!=null) {
+            var firbaseUser = authInstance.currentUser
+            if(firbaseUser!=null) {
+                user = firbaseUser.uid
+            }
+        }
+        if(user==""){
             user = "cart"
         }
         var cartCollection = firestore.collection(user)
