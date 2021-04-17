@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mapsFragment: MapsFragment
 
     private lateinit var viewModel: MainViewModel
+    var isUserSignedIn = false
 
     private val AUTH_REQUEST_CODE = 1701
 
@@ -47,6 +48,7 @@ class MainActivity : AppCompatActivity() {
         // This enable tests,
         // main activity triggers the methods that create the firebase instances
         viewModel.initialize()
+        checkIsUserSignedIn()
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
@@ -135,18 +137,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun login() {
-        var providers = arrayListOf(
-                AuthUI.IdpConfig.EmailBuilder().build()
-        )
-        startActivityForResult(
-                AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setAvailableProviders(providers)
-                        .setTheme(R.style.Theme_ShoppingSidekick)
-                        .build(), AUTH_REQUEST_CODE
-        )
-    }
+        if(isUserSignedIn == false){
+            var providers = arrayListOf(
+                    AuthUI.IdpConfig.EmailBuilder().build()
+            )
+            startActivityForResult(
+                    AuthUI.getInstance()
+                            .createSignInIntentBuilder()
+                            .setAvailableProviders(providers)
+                            .setTheme(R.style.Theme_ShoppingSidekick)
+                            .build(), AUTH_REQUEST_CODE
+            )
+        } else{
+            isUserSignedIn = false
+            FirebaseAuth.getInstance().signOut()
+            viewModel.getUserCartOnLogin()
 
+            replaceFragment(mainFragment)
+        }
+    }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -154,9 +163,19 @@ class MainActivity : AppCompatActivity() {
         if (resultCode == RESULT_OK) {
             if (requestCode == AUTH_REQUEST_CODE) {
                 user = FirebaseAuth.getInstance().currentUser
+                isUserSignedIn = true
+                viewModel.getUserCartOnLogin()
+
+                replaceFragment(mainFragment)
             }
         }
     }
 
+    private fun checkIsUserSignedIn(){
+        var firebaseAuth = FirebaseAuth.getInstance()
+        if (firebaseAuth != null && firebaseAuth.currentUser != null){
+            isUserSignedIn = true
+        }
+    }
 
 }
