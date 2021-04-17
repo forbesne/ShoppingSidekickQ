@@ -48,7 +48,7 @@ class MainFragment : Fragment() {
         recyclerView.layoutManager = GridLayoutManager(this.context, 3)
 
         viewModel.fetchAllProducts()
-        viewModel.products.observe(this, Observer { products ->
+        viewModel.products.observeForever {products ->
             /*actProductName.setAdapter(
                     ArrayAdapter(
                             context!!,
@@ -60,7 +60,7 @@ class MainFragment : Fragment() {
                     viewModel.products.value!!, viewModel
             )
             recyclerView.adapter = adapter
-        })
+        }
 
         btnFindCheapestMarket.setOnClickListener{
             (activity as MainActivity).displayMarketFragment()

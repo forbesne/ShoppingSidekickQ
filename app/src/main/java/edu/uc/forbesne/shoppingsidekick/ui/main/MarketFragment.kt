@@ -39,7 +39,7 @@ class MarketFragment : Fragment() {
         recyclerView.layoutManager =  GridLayoutManager(this.context, 1)
         var sortedByPriceMarketList: ArrayList<Market> = ArrayList<Market>()
 
-        viewModel.markets?.observe(this, Observer { markets ->
+        viewModel.markets?.observeForever{ markets ->
 
             sortedByPriceMarketList = markets
 
@@ -51,7 +51,7 @@ class MarketFragment : Fragment() {
                 (activity as MainActivity)::displayMapsFragment
             )
             recyclerView.adapter = adapter
-        })
+        }
 /*        txtName.setOnClickListener() {
             (activity as MainActivity).displayStoreFragment()
         }*/

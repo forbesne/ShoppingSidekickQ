@@ -72,10 +72,10 @@ class MapsFragment(store: Market) : Fragment() {
     internal fun requestLocationUpdates() {
         appViewModel = ViewModelProviders.of(this).get(AppViewModel::class.java)
 
-        appViewModel.getLocationLiveData().observe(this, Observer {
+        appViewModel.getLocationLiveData().observeForever{
             locationDetails = it
             updateMap()
-        })
+        }
     }
 
     private fun updateMap() {

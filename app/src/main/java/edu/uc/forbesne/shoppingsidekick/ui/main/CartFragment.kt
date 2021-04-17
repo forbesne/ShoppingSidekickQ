@@ -51,12 +51,14 @@ class CartFragment : Fragment() {
         cartListView.itemAnimator = DefaultItemAnimator()
         cartListView.adapter = CartAdapter(_cartItems, R.layout.cart_fragment_row)
 
-        viewModel.cartItem.observe(this, Observer{
+        viewModel.cartItem.observeForever{
             cartItem ->
             _cartItems.removeAll(_cartItems)
             _cartItems.addAll(cartItem)
-            cartListView.adapter!!.notifyDataSetChanged()
-        })
+            if(cartListView!=null){
+                cartListView.adapter!!.notifyDataSetChanged()
+            }
+        }
 
        btnClearCart.setOnClickListener() {
             viewModel.emptyCart()

@@ -68,7 +68,7 @@ class StoreFragment2(store:Market) : Fragment(), OnMapReadyCallback {
         recyclerView.layoutManager =  GridLayoutManager(this.context, 1)
         var storeCartItems: ArrayList<CartItem> = ArrayList<CartItem>()
 
-        viewModel.markets?.observe(this, Observer {
+        viewModel.markets?.observeForever(){
             shops ->
             shops.forEach { shop ->
                 if (shop.name == store.name) {
@@ -80,7 +80,7 @@ class StoreFragment2(store:Market) : Fragment(), OnMapReadyCallback {
                 }
             }
 
-        })
+        }
 
 
         /*viewModel.markets?.observe(this, Observer { markets ->
