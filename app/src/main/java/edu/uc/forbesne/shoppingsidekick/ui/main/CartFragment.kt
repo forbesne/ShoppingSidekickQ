@@ -134,12 +134,11 @@ class CartFragment : Fragment() {
             btnDecrease.setOnClickListener {
                 var strQuantity = lblQuantity.text.toString()
                 var quantity = strQuantity.toInt()
-                if (quantity > 1)  quantity -= 1
-                else quantity = 1
-
-                lblQuantity.text = quantity.toString()
-
-                viewModel.firebaseService.adjustCartItemQuantityInFirebase(cartItem, -1)
+                if (quantity > 1)  {
+                    quantity -= 1
+                    lblQuantity.text = quantity.toString()
+                    viewModel.firebaseService.adjustCartItemQuantityInFirebase(cartItem, -1)
+                }
             }
 
             btnRemove.setOnClickListener {
