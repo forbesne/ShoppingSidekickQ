@@ -24,12 +24,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var marketFragment: MarketFragment
     private lateinit var activeFragment: Fragment
     private lateinit var cartFragment: CartFragment
-    private lateinit var storeFragment: StoreFragment
     private lateinit var storeFragment2: StoreFragment2
     private lateinit var mapsFragment: MapsFragment
 
     private lateinit var viewModel: MainViewModel
     var isUserSignedIn = false
+
+    // For testing - only create firebaseAuth instances from inside a function
+    var isFirstTimeUserClickedLogin = true
 
     private val AUTH_REQUEST_CODE = 1701
 
@@ -48,7 +50,6 @@ class MainActivity : AppCompatActivity() {
         // This enable tests,
         // main activity triggers the methods that create the firebase instances
         viewModel.initialize()
-        checkIsUserSignedIn()
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
@@ -132,11 +133,15 @@ class MainActivity : AppCompatActivity() {
             val transaction = supportFragmentManager.beginTransaction()
             transaction.replace(R.id.container, fragment)
             transaction.commit()
-
         }
     }
 
     private fun login() {
+        if(isFirstTimeUserClickedLogin == true){
+            isFirstTimeUserClickedLogin = false
+            checkIsUserSignedIn()
+        }
+
         if(isUserSignedIn == false){
             var providers = arrayListOf(
                     AuthUI.IdpConfig.EmailBuilder().build()
