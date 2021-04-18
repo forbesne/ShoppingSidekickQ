@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -61,6 +62,7 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+
         bottom_nav.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.home -> {
@@ -89,7 +91,7 @@ class MainActivity : AppCompatActivity() {
 
     fun displayMarketFragment(){
         if (activeFragment == mainFragment) {
-
+            bottom_nav.selectedItemId = R.id.history
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, marketFragment)
                 .commitNow()
@@ -100,6 +102,7 @@ class MainActivity : AppCompatActivity() {
 
     fun displayCartFragment() {
         if (activeFragment != cartFragment) {
+            bottom_nav.selectedItemId = R.id.cart
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, cartFragment)
                 .commitNow()
@@ -129,7 +132,7 @@ class MainActivity : AppCompatActivity() {
 
     fun replaceFragment(fragment: Fragment){
         if (fragment != null) {
-
+            activeFragment = fragment
             val transaction = supportFragmentManager.beginTransaction()
             transaction.replace(R.id.container, fragment)
             transaction.commit()
@@ -157,8 +160,13 @@ class MainActivity : AppCompatActivity() {
             isUserSignedIn = false
             FirebaseAuth.getInstance().signOut()
             viewModel.getUserCartOnLogin()
+            if(activeFragment != mainFragment){
+                replaceFragment(mainFragment)
+            }
+            bottom_nav.selectedItemId = R.id.home
+            Toast.makeText(this, "You have logged out successfully.", Toast.LENGTH_LONG).show()
+            bottom_nav.menu[3].title = "Login"
 
-            replaceFragment(mainFragment)
         }
     }
 
@@ -170,8 +178,12 @@ class MainActivity : AppCompatActivity() {
                 user = FirebaseAuth.getInstance().currentUser
                 isUserSignedIn = true
                 viewModel.getUserCartOnLogin()
-
-                replaceFragment(mainFragment)
+                if(activeFragment != mainFragment){
+                    replaceFragment(mainFragment)
+                }
+                bottom_nav.selectedItemId = R.id.home
+                Toast.makeText(this, "You have logged in successfully.", Toast.LENGTH_LONG).show()
+                bottom_nav.menu[3].title = "Logout"
             }
         }
     }
