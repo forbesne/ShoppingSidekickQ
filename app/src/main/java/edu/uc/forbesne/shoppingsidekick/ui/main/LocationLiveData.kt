@@ -24,7 +24,7 @@ class LocationLiveData(context: Context) : LiveData<LocationDetails>() {
         super.onActive()
 
         fusedLocationClient.lastLocation.addOnSuccessListener {
-                location: Location -> location.also {
+                location: Location -> location?.also {
                 setLocationData(it)
             }
         }
@@ -44,7 +44,9 @@ class LocationLiveData(context: Context) : LiveData<LocationDetails>() {
             locationResult ?: return
 
             for (location in locationResult.locations) {
-                setLocationData(location)
+                location?.also{
+                    setLocationData(it)
+                }
             }
         }
     }
