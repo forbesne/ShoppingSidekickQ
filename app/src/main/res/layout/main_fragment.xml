@@ -22,15 +22,14 @@
         app:layout_constraintVertical_bias="0.889"
         tools:layout_editor_absoluteX="0dp" />
 
-    <AutoCompleteTextView
+    <!--<AutoCompleteTextView
         android:id="@+id/actProductName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Product Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toTopOf="parent" />-->
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -39,11 +38,27 @@
         android:layout_height="430dp"
 
 
+        android:layout_gravity="bottom|center"
         android:scrollbarFadeDuration="@integer/google_play_services_version"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/actProductName"
+        app:layout_constraintStart_toStartOf="parent"
 
-        android:layout_gravity="bottom|center" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/searchProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Search Product..."
+            android:drawableLeft="@drawable/ic_search"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

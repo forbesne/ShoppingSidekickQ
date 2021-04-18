@@ -13,14 +13,18 @@ import edu.uc.forbesne.shoppingsidekick.dto.Market
 import kotlin.reflect.KFunction1
 
 
-class MarketListAdapter(private val marketList: ArrayList<Market>, mainViewModel: MainViewModel,
-                        callback: KFunction1<@ParameterName(name = "store") Market, Unit>
+class MarketListAdapter(
+    private val marketList: ArrayList<Market>,
+    mainViewModel: MainViewModel,
+    callbackOpenStore: KFunction1<@ParameterName(name = "store") Market, Unit>,
+    callbackOpenMaps: KFunction1<@ParameterName(name = "store") Market, Unit>
 )
 
     :RecyclerView.Adapter<MarketListAdapter.ViewHolder>(){
 
     var mvm = mainViewModel
-    var callback = callback
+    var callbackOpenStore = callbackOpenStore
+    var callbackOpenMaps = callbackOpenMaps
 
     override fun onCreateViewHolder(
             viewGroup: ViewGroup,
@@ -57,7 +61,7 @@ class MarketListAdapter(private val marketList: ArrayList<Market>, mainViewModel
             var market: Market = Market(holder.name.text.toString(),holder.distance.text.toString().toFloat(),
                     holder.floatPrice.text.toString().toFloat(), holder.latitude.text.toString(),holder.longitude.text.toString(),
                     ArrayList<CartItem>(),holder.address.text.toString())
-            callback(market)
+            callbackOpenStore(market)
         }
 
 
@@ -67,8 +71,14 @@ class MarketListAdapter(private val marketList: ArrayList<Market>, mainViewModel
         }*/
 
         holder.mapIcon.setOnClickListener{
+            var market: Market = Market(holder.name.text.toString(),holder.distance.text.toString().toFloat(),
+                holder.floatPrice.text.toString().toFloat(), holder.latitude.text.toString(),holder.longitude.text.toString(),
+                ArrayList<CartItem>(),holder.address.text.toString())
+            callbackOpenMaps(market)
+/*
             val intent = Intent(holder.marketCard.context, MapsActivity::class.java)
             holder.marketCard.context.startActivity(intent)
+*/
         }
     }
 

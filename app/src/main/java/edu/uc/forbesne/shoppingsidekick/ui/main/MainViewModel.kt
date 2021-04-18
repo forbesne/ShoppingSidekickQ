@@ -63,6 +63,10 @@ open class MainViewModel : ViewModel() {
         firebaseService.initialize()
     }
 
+    fun getUserCartOnLogin(){
+        firebaseService.initialize()
+    }
+
     private fun createInitialProductPriceList(): ProductPriceList {
         var initialProductPriceList: ProductPriceList = ProductPriceList(3)
         initialProductPriceList.list[0].shopName = "Shop1"
@@ -210,7 +214,7 @@ open class MainViewModel : ViewModel() {
     }
 
     // Called before providing the '_markets' (to the MarketFragment)
-    private fun updateMarketsTotals() {
+    fun updateMarketsTotals() {
         var itemQuantity = 0
         var itemUPC = ""
         var productPricesList = ProductPriceList(3)

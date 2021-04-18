@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.CartItem
+import kotlinx.android.synthetic.main.cart_fragment.*
 import kotlinx.android.synthetic.main.store_fragment.*
 
 class StoreFragment : Fragment() {
@@ -48,12 +49,14 @@ class StoreFragment : Fragment() {
         storeView.itemAnimator = DefaultItemAnimator()
         storeView.adapter = StoreAdapter(_cartItems, R.layout.store_fragment_row)
 
-        viewModel.cartItem.observe(this, Observer{
+        viewModel.cartItem.observeForever{
             cartItem ->
             _cartItems.removeAll(_cartItems)
             _cartItems.addAll(cartItem)
-            storeView.adapter!!.notifyDataSetChanged()
-        })
+            if(storeView!=null){
+                storeView.adapter!!.notifyDataSetChanged()
+            }
+        }
     }
 
     inner class StoreAdapter(val cartItems: List<CartItem>, val itemLayout: Int) : RecyclerView.Adapter<StoreFragment.StoreViewHolder>() {

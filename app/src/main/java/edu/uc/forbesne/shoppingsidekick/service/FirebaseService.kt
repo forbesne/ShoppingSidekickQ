@@ -3,7 +3,10 @@ package edu.uc.forbesne.shoppingsidekick.service
 import android.content.ContentValues
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import edu.uc.forbesne.shoppingsidekick.dto.Cart
 import edu.uc.forbesne.shoppingsidekick.dto.CartItem
 import kotlin.reflect.KFunction0
@@ -28,8 +31,18 @@ class FirebaseService {
 
     fun getCartFromFirebase() {
         val db = FirebaseFirestore.getInstance()
-
-        db.collection("cart").addSnapshotListener { snapshot, e ->
+        var authInstance = FirebaseAuth.getInstance()
+        var user = ""
+        if(authInstance!=null) {
+            var firbaseUser = authInstance.currentUser
+            if(firbaseUser!=null) {
+                user = firbaseUser.uid
+            }
+        }
+        if(user==""){
+            user = "cart"
+        }
+        db.collection(user).addSnapshotListener { snapshot, e ->
             // if there is an exception we want to skip.
             if (e != null) {
                 Log.w(ContentValues.TAG, "Listen Failed", e)
@@ -56,19 +69,30 @@ class FirebaseService {
     }
 
     fun addCartItemToFirebase(cartItem: CartItem): String {
-        val db = FirebaseFirestore.getInstance()
 
-        val document = db.collection("cart").document()
+        val db = FirebaseFirestore.getInstance()
+        var authInstance = FirebaseAuth.getInstance()
+        var user = ""
+        if(authInstance!=null) {
+            var firbaseUser = authInstance.currentUser
+            if(firbaseUser!=null) {
+                user = firbaseUser.uid
+            }
+        }
+        if(user==""){
+            user = "cart"
+        }
+        val document = db.collection(user).document()
         val cartItemId = document.id
         cartItem.id = cartItemId
 
         document.set(cartItem)
-            .addOnSuccessListener {
-                Log.d("Firebase", "document saved")
-            }
-            .addOnFailureListener {
-                Log.d("Firebase", "Save Failed")
-            }
+                .addOnSuccessListener {
+                    Log.d("Firebase", "document saved")
+                }
+                .addOnFailureListener {
+                    Log.d("Firebase", "Save Failed")
+                }
 
         return cartItemId
     }
@@ -76,25 +100,45 @@ class FirebaseService {
     fun adjustCartItemQuantityInFirebase(existingCartItem: CartItem, quantityToAdd: Int) {
         val db = FirebaseFirestore.getInstance()
         existingCartItem.quantity += quantityToAdd
-
-        db.collection("cart")
-            .document(existingCartItem.id)
-            .set(existingCartItem)
-            .addOnSuccessListener {
-                Log.d("Firebase", "document saved")
+        var authInstance = FirebaseAuth.getInstance()
+        var user = ""
+        if(authInstance!=null) {
+            var firbaseUser = authInstance.currentUser
+            if(firbaseUser!=null) {
+                user = firbaseUser.uid
             }
-            .addOnFailureListener {
-                Log.d("Firebase", "Save Failed")
-            }
+        }
+        if(user==""){
+            user = "cart"
+        }
+        db.collection(user)
+                .document(existingCartItem.id)
+                .set(existingCartItem)
+                .addOnSuccessListener {
+                    Log.d("Firebase", "document saved")
+                }
+                .addOnFailureListener {
+                    Log.d("Firebase", "Save Failed")
+                }
     }
 
     fun emptyCart(){
 
         val firestore = FirebaseFirestore.getInstance()
-
-        firestore.collection("cart").get().addOnSuccessListener { querySnapshot ->
+        var authInstance = FirebaseAuth.getInstance()
+        var user = ""
+        if(authInstance!=null) {
+            var firbaseUser = authInstance.currentUser
+            if(firbaseUser!=null) {
+                user = firbaseUser.uid
+            }
+        }
+        if(user==""){
+            user = "cart"
+        }
+        firestore.collection(user).get().addOnSuccessListener { querySnapshot ->
             for (documentSnapshot in querySnapshot) {
-                firestore.collection("cart").document(documentSnapshot.id)
+                firestore.collection(user).document(documentSnapshot.id)
                         .delete()
                         .addOnSuccessListener {
                             Log.d(
@@ -109,7 +153,18 @@ class FirebaseService {
 
     fun removeItemFromCart(cartItem: CartItem, callback: KFunction0<Unit>){
         val firestore = FirebaseFirestore.getInstance()
-        firestore.collection("cart").document(cartItem.id)
+        var authInstance = FirebaseAuth.getInstance()
+        var user = ""
+        if(authInstance!=null) {
+            var firbaseUser = authInstance.currentUser
+            if(firbaseUser!=null) {
+                user = firbaseUser.uid
+            }
+        }
+        if(user==""){
+            user = "cart"
+        }
+        firestore.collection(user).document(cartItem.id)
                 .delete()
                 .addOnSuccessListener {
                     callback()
@@ -124,11 +179,22 @@ class FirebaseService {
     // Moved here from CartViewModel -2 (last)
     internal fun fetchCartItem(cartItem: MutableLiveData<List<CartItem>>) {
         val firestore = FirebaseFirestore.getInstance()
-
-        var cartCollection = firestore.collection("cart")
+        var authInstance = FirebaseAuth.getInstance()
+        var user = ""
+        if(authInstance!=null) {
+            var firbaseUser = authInstance.currentUser
+            if(firbaseUser!=null) {
+                user = firbaseUser.uid
+            }
+        }
+        if(user==""){
+            user = "cart"
+        }
+        var cartCollection = firestore.collection(user)
         cartCollection.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
             var innerCartItems = querySnapshot?.toObjects(CartItem::class.java)
             cartItem.postValue(innerCartItems!!)
         }
     }
+
 }
