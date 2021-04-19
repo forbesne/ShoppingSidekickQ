@@ -2,6 +2,7 @@ package edu.uc.forbesne.shoppingsidekick.ui.main
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.location.Location
 import androidx.fragment.app.Fragment
 
 import android.os.Bundle
@@ -25,6 +26,8 @@ import com.google.android.gms.maps.model.MarkerOptions
 import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.LocationDetails
 import edu.uc.forbesne.shoppingsidekick.dto.Market
+import kotlinx.android.synthetic.main.fragment_maps.*
+import java.math.RoundingMode
 
 class MapsFragment(store: Market) : Fragment() {
 
@@ -105,9 +108,23 @@ class MapsFragment(store: Market) : Fragment() {
                     var mapBoundary = LatLngBounds(LatLng(bottomBoundary, leftBoundary), LatLng(topBoundary, rightBoundary))
                     mMap.addMarker(MarkerOptions().position(marker).title("Your location"))
                     mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(mapBoundary, 0))
+
+                    val milesDistance = getDistanceInMiles(latitude.toDouble(), longitude.toDouble(), currLatitude, currLongitude)
+                    txtDistance.text = "Distance: " + milesDistance.toString() + " miles"
+
                 }
 
             }
+    }
+
+    private fun getDistanceInMiles(firstLatitude: Double, firstLongitude: Double,
+                                   secondLatitude: Double, secondLongitude: Double): Double {
+        val resultMeters = FloatArray(1)
+        Location.distanceBetween(firstLatitude, firstLongitude,
+                secondLatitude, secondLongitude, resultMeters)
+        val resultMiles = resultMeters[0]*0.000621371192
+        val distanceMiles = (resultMiles).toBigDecimal().setScale(1, RoundingMode.UP).toDouble()
+        return distanceMiles
     }
 
     private fun prepRequestLocationUpdates() {
