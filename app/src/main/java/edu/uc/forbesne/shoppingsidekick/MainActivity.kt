@@ -18,7 +18,9 @@ import edu.uc.forbesne.shoppingsidekick.dto.Market
 import edu.uc.forbesne.shoppingsidekick.ui.main.*
 import kotlinx.android.synthetic.main.main_activity.*
 
-
+/**
+ *  Program starts here. Manages the fragments
+ */
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mainFragment: MainFragment
@@ -40,14 +42,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //var storeName ="Shoprite"
         setContentView(R.layout.main_activity)
         mainFragment = MainFragment.newInstance()
         marketFragment = MarketFragment.newInstance()
         cartFragment = CartFragment.newInstance()
-        //storeFragment = StoreFragment.newInstance()
-
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
         // This enable tests,
         // main activity triggers the methods that create the firebase instances
         viewModel.initialize()
@@ -58,10 +58,7 @@ class MainActivity : AppCompatActivity() {
                 .commitNow()
 
             activeFragment = mainFragment
-
         }
-
-
 
         bottom_nav.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -84,10 +81,7 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-
-
     }
-
 
     fun displayMarketFragment(){
         if (activeFragment == mainFragment) {
@@ -96,7 +90,6 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.container, marketFragment)
                 .commitNow()
             activeFragment = marketFragment
-
         }
     }
 
@@ -166,10 +159,8 @@ class MainActivity : AppCompatActivity() {
             bottom_nav.selectedItemId = R.id.home
             Toast.makeText(this, "You have logged out successfully.", Toast.LENGTH_LONG).show()
             bottom_nav.menu[3].title = "Login"
-
         }
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -194,5 +185,4 @@ class MainActivity : AppCompatActivity() {
             isUserSignedIn = true
         }
     }
-
 }

@@ -4,7 +4,7 @@ package edu.uc.forbesne.shoppingsidekick.dto
 /**
  * Data class that represents a Cart Item
  *
- * @param UPC The UPC of the product
+ * @param UPC The Universal Product Code of the product
  * @param quantity number of particular cart items in the cart
  * @param imageURL The image url to fetch from api
  * @param description The description of the product
@@ -12,8 +12,9 @@ package edu.uc.forbesne.shoppingsidekick.dto
  * @param measurementUnit unit of measurement for the product (eg: litres, kgs, etc)
  * @param id The product id for api reference
  */
-data class CartItem (var UPC : String ="", var quantity: Int = 0, var imageURL : String ="", var description : String ="",
-                      var productBrand: String = "", var measurementUnit: String = "", var price: Float = 0f, var id:String = "" ) {
+data class CartItem (var UPC : String ="", var quantity: Int = 0, var imageURL : String ="",
+                     var description : String ="",var productBrand: String = "",
+                     var measurementUnit: String = "", var price: Float = 0f, var id:String = "" ) {
 
     override fun toString(): String {
         return "$description $productBrand $quantity $measurementUnit"

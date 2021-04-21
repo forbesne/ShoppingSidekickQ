@@ -17,7 +17,7 @@ import org.junit.rules.TestRule
 import java.lang.Thread.sleep
 
 /**
- * Integration test, verifies MainViewModel fetchAllProducts successful
+ * Integration test, verifies market API call and some cart capabilities
  *
  */
 class ProductDataIntegrationTest {

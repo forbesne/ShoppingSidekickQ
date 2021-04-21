@@ -3,7 +3,7 @@ package edu.uc.forbesne.shoppingsidekick.dto
 /**
  * A data class that stores Cart data in a HashMap
  *
- * @param size The cart size
+ * @param size the cart size
  */
 data class Cart (var size :Int =0) {
 
@@ -48,7 +48,6 @@ data class Cart (var size :Int =0) {
         if (existingItemInCart == null) return 0
         return existingItemInCart.quantity
     }
-
 
     fun emptyCart(){
         itemQuantityMap.clear()

@@ -11,7 +11,7 @@ package edu.uc.forbesne.shoppingsidekick.dto
  * @param category The category of the product
  * @param imageUrl The image url to fetch from api
  * @param description The description of the product
- * @param id The product id for api reference
+ * @param id The product id
  */
 data class Product ( var UPC : String, var price :Float = 0f, var price_type:String = "",
                      var brand : String = "", var category : String="",

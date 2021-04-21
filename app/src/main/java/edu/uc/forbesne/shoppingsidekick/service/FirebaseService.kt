@@ -11,11 +11,18 @@ import edu.uc.forbesne.shoppingsidekick.dto.Cart
 import edu.uc.forbesne.shoppingsidekick.dto.CartItem
 import kotlin.reflect.KFunction0
 
+/**
+ * Service class that deals with Firebase calls, and provides firebase instances to callers.
+ * This class idea was taken from @atharva106 Code Review 2 and the Top Ten Project
+ *
+ * @param cart  user cart from firbase.
+ */
 class FirebaseService {
     private val cart: Cart = Cart()
 
     // To enable testing
-    // removed firebase instances from being created automatically when class object is created
+    // removes firebase instances from being created at class level automatically
+    // when class object is created into functions that get called
     fun initialize(){
         getCartFromFirebase()
     }
@@ -122,6 +129,7 @@ class FirebaseService {
                 }
     }
 
+    // This function is based on the @atharva106 Code Review 2
     fun emptyCart(){
 
         val firestore = FirebaseFirestore.getInstance()
@@ -196,5 +204,4 @@ class FirebaseService {
             cartItem.postValue(innerCartItems!!)
         }
     }
-
 }
