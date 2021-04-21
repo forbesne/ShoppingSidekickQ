@@ -97,28 +97,28 @@ User can click on the market's map icon-> Goes to MapFragment.<br/>
 **MapsFragment:** Displays distance and directions from user location to market address. Incorporates Google's Maps.<br/>
 
 
-**MarketListAdapter:** Populates the MarketFragment's recycler view with a list of markets.
-**ProductListAdapter:** Populates the MainFragment's recycler view with a list of products.
-**StoreListAdapter:** Populates the StoreFragment's recycler view with a list of markets.
+**MarketListAdapter:** Populates the MarketFragment's recycler view with a list of markets.<br/>
+**ProductListAdapter:** Populates the MainFragment's recycler view with a list of products.<br/>
+**StoreListAdapter:** Populates the StoreFragment's recycler view with a list of markets.<br/>
 
-**MainViewModel:** Responsible for providing data to MainActivity from the market APIs and Firebase.
-**AppViewModel:** Helps to incorporate location data.
+**MainViewModel:** Responsible for providing data to MainActivity from the market APIs and Firebase.<br/>
+**AppViewModel:** Helps to incorporate location data.<br/>
 
-**RetrofitClientInstance:** Used to easily manage HTTP requests and responses.
-**LocationLiveData:** Helps to incorporate location live data.
-**LocationDetails:** Data class that represents the user's location. 
-**IProductDAO:** An implementation of this interface will be used by the RetrofitClientInstance to make HTTP requests that retrieve entire data from markets' APIs.
+**RetrofitClientInstance:** Used to easily manage HTTP requests and responses.<br/>
+**LocationLiveData:** Helps to incorporate location live data.<br/>
+**LocationDetails:** Data class that represents the user's location. <br/>
+**IProductDAO:** An implementation of this interface will be used by the RetrofitClientInstance to make HTTP requests that retrieve entire data from markets' APIs.<br/>
 
-**FirebaseService:** A class that manages the firebase logic.
-**Cart:** Data class that represents a user cart.
-**CartItem:** Data class that represents a user's cart item in firebase. 
+**FirebaseService:** A class that manages the firebase logic.<br/>
+**Cart:** Data class that represents a user cart.<br/>
+**CartItem:** Data class that represents a user's cart item in firebase.<br/>
 
-**MarketAPIService:** A class that manages the connection to the market APIs.
-**MarketApiObject:** Data class that represents the entire data retrieved from the market API. This includes market metadata and product list.
-**Market:** Data class that represents a market's metadata retrieved from the market API.
-**Product:** Data class that represents a market's single product data retrieved from a market API.
-**ProductPriceList:** Data class represents a list of MarketProductPrice.
-**MarketProductPrice:** Data class represents a market's single product's price.
+**MarketAPIService:** A class that manages the connection to the market APIs.<br/>
+**MarketApiObject:** Data class that represents the entire data retrieved from the market API. This includes market metadata and product list.<br/>
+**Market:** Data class that represents a market's metadata retrieved from the market API.<br/>
+**Product:** Data class that represents a market's single product data retrieved from a market API.<br/>
+**ProductPriceList:** Data class represents a list of MarketProductPrice.<br/>
+**MarketProductPrice:** Data class represents a market's single product's price.<br/>
 
 ## Scrum Roles
 
