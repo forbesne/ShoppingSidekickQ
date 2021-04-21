@@ -46,8 +46,9 @@ class MarketFragment : Fragment() {
 
         viewModel.markets?.observeForever{ markets ->
 
-            sortedByPriceMarketList = markets
-
+            markets.forEach{
+                sortedByPriceMarketList.add(it.copy())
+            }
             // Cheapest market 1st
             sortedByPriceMarketList.sortBy { it.cartPrice }
 
