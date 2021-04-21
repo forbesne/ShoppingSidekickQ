@@ -82,7 +82,7 @@ access to cloud
 **Then** I can select items from my previous list
 
 ## Class Diagram
-![ClassDiagram](https://user-images.githubusercontent.com/54749949/115595415-e4174a80-a2a4-11eb-89ba-bfc000246f0d.png)
+![ClassDiagram](https://user-images.githubusercontent.com/54749949/115595602-1cb72400-a2a5-11eb-87cd-7f01c686e6d2.png)
 
 ## Class Diagram Description
 **MainActivity:** Landing page where the user adds products to their cart. 
