@@ -11,7 +11,7 @@ import retrofit2.http.Query
  * Used by Retrofit instance to get make http requests
  *
  */
-interface IProductDAO {
+interface IMarketApiObjectDAO {
 
     @GET("market_1.php")
     fun getMarketApi1(): Call<MarketApiObject>
