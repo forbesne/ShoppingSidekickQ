@@ -85,37 +85,41 @@ access to cloud
 ![ClassDiagram](https://user-images.githubusercontent.com/54749949/115595602-1cb72400-a2a5-11eb-87cd-7f01c686e6d2.png)
 
 ## Class Diagram Description
-**MainActivity:** Landing page where the user adds products to their cart. 
+**MainActivity:** The program starts running here. Manages the different fragments.
+**MapsActivity:** Helps to incorporate Google's maps.
 
-**MarketsActivity:** Displays a list of all markets sorted in descending order based on the total cart price. 
+**MainFragment:** Landing page. Displays the products retrieved from the market API and enables the user to add products as CartItem to his cart.
+**CartFragment:** Display the user cart items and enables the user can change quantity.
+**MarketFragment:** Displays the list of markets from the one with the cheapest cart total to the most expensive one. 
+User can click on the market's name -> Goes to StoreFragment.
+User can click on the market's map icon-> Goes to MapFragment.
+**StoreFragment:** Displays the market details and a list of user cart items with the market's price.
+**MapsFragment:** Displays distance and directions from user location to market address. Incorporates Google's Maps.
 
-**CartsActivity:** Displays a list of all previous carts that the user has created or stored. 
 
-**MainViewModel, MarketsViewModel, CartsViewModel:** Responsible for the logic for, and provide data to their corresponding activity. 
+**MarketListAdapter:** Populates the MarketFragment's recycler view with a list of markets.
+**ProductListAdapter:** Populates the MainFragment's recycler view with a list of products.
+**StoreListAdapter:** Populates the StoreFragment's recycler view with a list of markets.
 
-**RetrofitClientInstance:** Used to easily manage HTTP requests and responses. 
+**MainViewModel:** Responsible for providing data to MainActivity from the market APIs and Firebase.
+**AppViewModel:** Helps to incorporate location data.
 
-**ContextAwareViewModel:** Will be set to provide the app with the user's location information. 
+**RetrofitClientInstance:** Used to easily manage HTTP requests and responses.
+**LocationLiveData:** Helps to incorporate location live data.
+**LocationDetails:** Data class that represents the user's location.
+**IProductDAO:** An implementation of this interface will be used by the RetrofitClientInstance to make HTTP requests that retrieve entire data from markets' APIs.
 
-**User:** An instance of this class will represent a user. 
+**FirebaseService:** A class that manages the firebase logic.
+**Cart:** Data class that represents a user cart.
+**CartItem:** Data class that represents a user's cart item in firebase. 
 
-**Product:** An instance of this class will represent a product. 
+**MarketAPIService:** A class that manages the connection to the market APIs.
+**MarketApiObject:** Data class that represents the entire data retrieved from the market API. This includes market metadata and product list.
+**Market:** Data class that represents a market's metadata retrieved from the market API.
+**Product:** Data class that represents a market's single product data retrieved from a market API.
+**ProductPriceList:** Data class represents a list of MarketProductPrice.
+**MarketProductPrice:** Data class represents a market's single product's price.
 
-**Cart:** An instance of this class will represent a cart. 
-
-**Market:** An instance of this class will represent a market. 
-
-**IProductDAO:** An implementation of this interface will be used to get a connection to, query, and managed the data stored in the Product table in the database. 
-
-**IUserDAO:** An implementation of this interface will be used to get a connection to, query, and managed the data stored in the User table in the database. 
-
-**ICartDAO:** An implementation of this interface will be used to get a connection to, query, and managed the data stored in the Cart table in the database. 
-
-**IMarketDAO:** An implementation of this interface will be used to manage the connection to and the state of the Market table in the database. 
-
-**RoomDatabase:** A provided class representing the local Room database. 
-
-**AppDatabase:** A subclass of RoomDatabase used to connect to, query, and manage the data stored in the local Room database. 
 ## Scrum Roles
 
 -	DevOps/Product Owner/Scrum Master: Natalie Forbes
