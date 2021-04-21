@@ -19,13 +19,13 @@ import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.CartItem
 import edu.uc.forbesne.shoppingsidekick.dto.Market
 
-class StoreFragment2(store:Market) : Fragment(), OnMapReadyCallback {
+class StoreFragment(store:Market) : Fragment(), OnMapReadyCallback {
 
     var store = store
     var latitude = store.latitude
     var longitude = store.longitude
     companion object {
-        fun newInstance(store: Market) = StoreFragment2(store)
+        fun newInstance(store: Market) = StoreFragment(store)
         private const val MAPVIEW_BUNDLE_KEY = "MapViewBundleKey"
     }
 

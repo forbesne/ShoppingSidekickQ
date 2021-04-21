@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var marketFragment: MarketFragment
     private lateinit var activeFragment: Fragment
     private lateinit var cartFragment: CartFragment
-    private lateinit var storeFragment2: StoreFragment2
+    private lateinit var storeFragment: StoreFragment
     private lateinit var mapsFragment: MapsFragment
 
     private lateinit var viewModel: MainViewModel
@@ -68,8 +68,6 @@ class MainActivity : AppCompatActivity() {
                     replaceFragment(cartFragment)
                 }
                 R.id.more -> {
-                    //replaceFragment(storeFragment)
-                    //replaceFragment(storeFragment2)
                 }
                 R.id.profile -> {
                     login()
@@ -100,12 +98,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun displayStoreFragment(store: Market) {
-        storeFragment2 = StoreFragment2.newInstance(store)
-        if (activeFragment != storeFragment2) {
+        storeFragment = StoreFragment.newInstance(store)
+        if (activeFragment != storeFragment) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, storeFragment2)
+                .replace(R.id.container, storeFragment)
                 .commitNow()
-            activeFragment = storeFragment2
+            activeFragment = storeFragment
         }
     }
 
