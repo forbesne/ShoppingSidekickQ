@@ -107,7 +107,7 @@ User can click on the market's map icon-> Goes to MapFragment.<br/>
 **RetrofitClientInstance:** Used to easily manage HTTP requests and responses.<br/>
 **LocationLiveData:** Helps to incorporate location live data.<br/>
 **LocationDetails:** Data class that represents the user's location. <br/>
-**IProductDAO:** An implementation of this interface will be used by the RetrofitClientInstance to make HTTP requests that retrieve entire data from markets' APIs.<br/>
+**IMarketApiObjectDAO:** An implementation of this interface will be used by the RetrofitClientInstance to make HTTP requests that retrieve entire data from markets' APIs.<br/>
 
 **FirebaseService:** A class that manages the firebase logic.<br/>
 **Cart:** Data class that represents a user cart.<br/>
