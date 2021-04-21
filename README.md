@@ -83,6 +83,8 @@ access to cloud
 
 ## Class Diagram
 ![ClassDiagram](https://user-images.githubusercontent.com/64596547/106208442-6229f080-6191-11eb-8ae0-6560272eb416.png)
+![image](https://user-images.githubusercontent.com/54749949/115595415-e4174a80-a2a4-11eb-89ba-bfc000246f0d.png)
+
 ## Class Diagram Description
 **MainActivity:** Landing page where the user adds products to their cart. 
 
