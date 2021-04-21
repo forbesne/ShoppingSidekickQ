@@ -26,6 +26,12 @@ import edu.uc.forbesne.shoppingsidekick.dto.Market
 import kotlinx.android.synthetic.main.fragment_maps.*
 import java.math.RoundingMode
 
+/**
+ * Displays Directions to that market are displayed on a Map
+ * Displayed when user clicks
+ * on the market's map icon of his choice of market from the list displayed in the MarketFragment,
+ *
+ */
 class MapsFragment(store: Market) : Fragment() {
 
     var store = store

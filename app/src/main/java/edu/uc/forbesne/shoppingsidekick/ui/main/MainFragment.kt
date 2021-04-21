@@ -22,6 +22,10 @@ import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.Product
 import kotlinx.android.synthetic.main.main_fragment.*
 
+/**
+ * Displays the home page - a product list coming from a market api call
+ *
+ */
 class MainFragment : Fragment() {
     private lateinit var viewModel: MainViewModel
     private lateinit var adapter : ProductListAdapter

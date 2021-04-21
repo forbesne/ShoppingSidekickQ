@@ -19,6 +19,13 @@ import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.CartItem
 import edu.uc.forbesne.shoppingsidekick.dto.Market
 
+/**
+ * Displays detail of that market/store, a map,
+ * and a list of the items in user's cart with the prices for each item.
+ * Displayed when user clicks on the market's name of his choice.
+ * For example he chooses the cheapest one from the list of markets displayed in MarketFragment.
+ *
+ */
 class StoreFragment(store:Market) : Fragment(), OnMapReadyCallback {
 
     var store = store

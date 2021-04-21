@@ -12,6 +12,12 @@ import edu.uc.forbesne.shoppingsidekick.MainActivity
 import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.Market
 
+/**
+ * Displays all markets with there cart totals.
+ * Displayed when user click on Find Cheapest Market btn
+ * or when user clicks on shopping bag icon
+ *
+ */
 class MarketFragment : Fragment() {
 
     companion object {

@@ -17,6 +17,10 @@ import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.CartItem
 import kotlinx.android.synthetic.main.cart_fragment.*
 
+/**
+ * Displays all cart items in firebase cart and allows user to change quantity
+ *
+ */
 class CartFragment : Fragment() {
 
     companion object {
