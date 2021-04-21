@@ -21,12 +21,13 @@ open class MainViewModel : ViewModel() {
         MutableLiveData<ArrayList<Product>>()
 
     // Holds actual data fetched from APIs wrapped as live data.
-    // Incoming data will be exactly like this{market: {name:'', distance:''}, products: [...] }
+    // Incoming data will be exactly like this:
+    // {market: {name:'', distance:'', address:'', latitude:'', longitude:'' }, products: [...] }
     var marketApiObject1: MutableLiveData<MarketApiObject> = MutableLiveData<MarketApiObject>()
     var marketApiObject2: MutableLiveData<MarketApiObject> = MutableLiveData<MarketApiObject>()
     var marketApiObject3: MutableLiveData<MarketApiObject> = MutableLiveData<MarketApiObject>()
 
-    // Used to hold a list of market part of the incoming data from APis {market: {name:'', distance: '''}, ...}
+    // Used to hold a list of the market part of the incoming data from APis {market: {name:'', distance:''...}}
     private var _markets: MutableLiveData<ArrayList<Market>> = MutableLiveData<ArrayList<Market>>()
     var markets: MutableLiveData<ArrayList<Market>>? = null
         get() {
