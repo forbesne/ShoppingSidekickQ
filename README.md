@@ -85,16 +85,16 @@ access to cloud
 ![ClassDiagram](https://user-images.githubusercontent.com/54749949/115595602-1cb72400-a2a5-11eb-87cd-7f01c686e6d2.png)
 
 ## Class Diagram Description
-**MainActivity:** The program starts running here. Manages the different fragments.__
-**MapsActivity:** Helps to incorporate Google's maps.__
+**MainActivity:** The program starts running here. Manages the different fragments.<br/>
+**MapsActivity:** Helps to incorporate Google's maps.<br/>
 
-**MainFragment:** Landing page. Displays the products retrieved from the market API and enables the user to add products as CartItem to his cart.__
-**CartFragment:** Display the user cart items and enables the user can change quantity.__
-**MarketFragment:** Displays the list of markets from the one with the cheapest cart total to the most expensive one.__ 
-User can click on the market's name -> Goes to StoreFragment.__
-User can click on the market's map icon-> Goes to MapFragment.__
-**StoreFragment:** Displays the market details and a list of user cart items with the market's price.__
-**MapsFragment:** Displays distance and directions from user location to market address. Incorporates Google's Maps.__
+**MainFragment:** Landing page. Displays the products retrieved from the market API and enables the user to add products as CartItem to his cart.<br/>
+**CartFragment:** Display the user cart items and enables the user can change quantity.<br/>
+**MarketFragment:** Displays the list of markets from the one with the cheapest cart total to the most expensive one.<br/>
+User can click on the market's name -> Goes to StoreFragment.<br/>
+User can click on the market's map icon-> Goes to MapFragment.<br/>
+**StoreFragment:** Displays the market details and a list of user cart items with the market's price.<br/>
+**MapsFragment:** Displays distance and directions from user location to market address. Incorporates Google's Maps.<br/>
 
 
 **MarketListAdapter:** Populates the MarketFragment's recycler view with a list of markets.
