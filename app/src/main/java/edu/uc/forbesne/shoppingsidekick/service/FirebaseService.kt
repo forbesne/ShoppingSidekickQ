@@ -11,7 +11,7 @@ import kotlin.reflect.KFunction0
 
 /**
  * Service class that deals with Firebase calls, and provides firebase instances to callers.
- * This class idea was taken from @atharva106 Code Review 2 and the Top Ten Project
+ * This class idea was a result of a merge with @atharva106 Code Review 2
  *
  * @param cart  user cart from firbase.
  */
@@ -127,7 +127,7 @@ class FirebaseService {
                 }
     }
 
-    // This function is based on the @atharva106 Code Review 2
+    // This function is based on the @Hamilsu code review2
     fun emptyCart(){
 
         val firestore = FirebaseFirestore.getInstance()
