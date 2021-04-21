@@ -82,7 +82,7 @@ access to cloud
 **Then** I can select items from my previous list
 
 ## Class Diagram
-![ClassDiagram](https://user-images.githubusercontent.com/54749949/115595602-1cb72400-a2a5-11eb-87cd-7f01c686e6d2.png)
+![ClassDiagram](https://user-images.githubusercontent.com/54749949/115615604-2e0c2a80-a2bd-11eb-969d-e73d6cf438c7.png)
 
 ## Class Diagram Description
 **MainActivity:** The program starts running here. Manages the different fragments.<br/>
