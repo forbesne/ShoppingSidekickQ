@@ -12,7 +12,6 @@ import edu.uc.forbesne.shoppingsidekick.dto.CartItem
 import edu.uc.forbesne.shoppingsidekick.dto.Market
 import kotlin.reflect.KFunction1
 
-
 class MarketListAdapter(
     private val marketList: ArrayList<Market>,
     mainViewModel: MainViewModel,
@@ -55,8 +54,6 @@ class MarketListAdapter(
         holder.longitude.text = "${marketList[position].longitude}"
         holder.address.text = "${marketList[position].address}"
 
-        //holder.distance.text = "Distance: ${"%.2f".format(marketList[position].distance).toString()} Miles"
-
         holder.name.setOnClickListener(){
             var market: Market = Market(holder.name.text.toString(),holder.distance.text.toString().toFloat(),
                     holder.floatPrice.text.toString().toFloat(), holder.latitude.text.toString(),holder.longitude.text.toString(),
@@ -64,21 +61,11 @@ class MarketListAdapter(
             callbackOpenStore(market)
         }
 
-
-
-
-/*        btnName.setOnClickListener{
-        }*/
-
         holder.mapIcon.setOnClickListener{
             var market: Market = Market(holder.name.text.toString(),holder.distance.text.toString().toFloat(),
                 holder.floatPrice.text.toString().toFloat(), holder.latitude.text.toString(),holder.longitude.text.toString(),
                 ArrayList<CartItem>(),holder.address.text.toString())
             callbackOpenMaps(market)
-/*
-            val intent = Intent(holder.marketCard.context, MapsActivity::class.java)
-            holder.marketCard.context.startActivity(intent)
-*/
         }
     }
 

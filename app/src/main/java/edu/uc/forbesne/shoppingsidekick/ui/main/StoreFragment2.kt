@@ -6,9 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.TextView
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -17,12 +15,9 @@ import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import edu.uc.forbesne.shoppingsidekick.MainActivity
 import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.CartItem
 import edu.uc.forbesne.shoppingsidekick.dto.Market
-import kotlinx.android.synthetic.main.market_fragment_row.*
-import kotlinx.android.synthetic.main.store_fragment.*
 
 class StoreFragment2(store:Market) : Fragment(), OnMapReadyCallback {
 
@@ -79,25 +74,7 @@ class StoreFragment2(store:Market) : Fragment(), OnMapReadyCallback {
                     recyclerView.adapter = adapter
                 }
             }
-
         }
-
-
-        /*viewModel.markets?.observe(this, Observer { markets ->
-
-            sortedByPriceMarketList = markets
-
-            // Cheapest market 1st
-            sortedByPriceMarketList.sortBy { it.cartPrice }
-
-            adapter = MarketListAdapter(
-                    sortedByPriceMarketList, viewModel
-            )
-            recyclerView.adapter = adapter
-        })
-        txtName.setOnClickListener() {
-            (activity as MainActivity).displayStoreFragment()
-        }*/
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -144,5 +121,4 @@ class StoreFragment2(store:Market) : Fragment(), OnMapReadyCallback {
         super.onLowMemory()
         mapView.onLowMemory()
     }
-
 }

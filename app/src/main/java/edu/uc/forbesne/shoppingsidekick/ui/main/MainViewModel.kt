@@ -56,7 +56,6 @@ open class MainViewModel : ViewModel() {
         createObservablesFromApisData()
     }
 
-
     //Since these methods create Firebase instances, for enabling testing we need this to be called from outside the class
     fun initialize(){
         cart = firebaseService.getCart()

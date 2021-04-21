@@ -24,7 +24,6 @@ class StoreFragment : Fragment() {
         fun newInstance() = StoreFragment()
     }
 
-//    private lateinit var viewModel: StoreViewModel
     private lateinit var viewModel: MainViewModel
     private var _cartItems = java.util.ArrayList<CartItem>()
 
@@ -40,8 +39,6 @@ class StoreFragment : Fragment() {
         activity.let {
             viewModel = ViewModelProvider(it!!).get(MainViewModel::class.java)
         }
-        //viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        // TODO: Use the ViewModel
 
         viewModel.fetchCartItem()
         storeView.hasFixedSize()
@@ -78,21 +75,16 @@ class StoreFragment : Fragment() {
 
     inner class StoreViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         private var storeImage : ImageView = itemView.findViewById(R.id.imageView)
-        //        private var lblUPC :t TextView = itemView.findViewById(R.id.lblUPC)
         private var productName : TextView = itemView.findViewById(R.id.productname)
         private var brandName : TextView = itemView.findViewById(R.id.brandname)
         private var lblQuantity : TextView = itemView.findViewById(R.id.lblquantity)
         private var unitLbl : TextView = itemView.findViewById(R.id.unitlbl)
 
-
         fun updateStore (cartItem : CartItem) {
             if (cartItem.imageURL != null && cartItem.imageURL != "null" && cartItem.imageURL != "") {
                 Picasso.get().load(cartItem.imageURL).into(storeImage);
-                /*val source = ImageDecoder.createSource(activity!!.contentResolver, Uri.parse(cartItem.imageURL))
-                val bitmap = ImageDecoder.decodeBitmap(source)
-                cartProductImage.setImageBitmap(bitmap)*/
             }
-//            lblUPC.text = cartItem.toString()
+
             productName.text = cartItem.description
             brandName.text = cartItem.productBrand
             lblQuantity.text = cartItem.quantity.toString()

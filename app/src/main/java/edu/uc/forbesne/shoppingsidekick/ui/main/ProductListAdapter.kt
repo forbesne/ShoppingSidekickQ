@@ -9,11 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.common.data.DataHolder
 import com.squareup.picasso.Picasso
 import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.Product
-
 
 class ProductListAdapter(private var productList: ArrayList<Product>, mainViewModel: MainViewModel)
     :RecyclerView.Adapter<ProductListAdapter.ViewHolder>() {
