@@ -1,15 +1,11 @@
 package edu.uc.forbesne.shoppingsidekick
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
@@ -18,14 +14,16 @@ import edu.uc.forbesne.shoppingsidekick.dto.Market
 import edu.uc.forbesne.shoppingsidekick.ui.main.*
 import kotlinx.android.synthetic.main.main_activity.*
 
-
+/**
+ *  Program starts here. Manages the fragments
+ */
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mainFragment: MainFragment
     private lateinit var marketFragment: MarketFragment
     private lateinit var activeFragment: Fragment
     private lateinit var cartFragment: CartFragment
-    private lateinit var storeFragment2: StoreFragment2
+    private lateinit var storeFragment: StoreFragment
     private lateinit var mapsFragment: MapsFragment
 
     private lateinit var viewModel: MainViewModel
@@ -40,14 +38,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //var storeName ="Shoprite"
         setContentView(R.layout.main_activity)
         mainFragment = MainFragment.newInstance()
         marketFragment = MarketFragment.newInstance()
         cartFragment = CartFragment.newInstance()
-        //storeFragment = StoreFragment.newInstance()
-
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
         // This enable tests,
         // main activity triggers the methods that create the firebase instances
         viewModel.initialize()
@@ -58,10 +54,7 @@ class MainActivity : AppCompatActivity() {
                 .commitNow()
 
             activeFragment = mainFragment
-
         }
-
-
 
         bottom_nav.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -75,8 +68,6 @@ class MainActivity : AppCompatActivity() {
                     replaceFragment(cartFragment)
                 }
                 R.id.more -> {
-                    //replaceFragment(storeFragment)
-                    //replaceFragment(storeFragment2)
                 }
                 R.id.profile -> {
                     login()
@@ -84,10 +75,7 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-
-
     }
-
 
     fun displayMarketFragment(){
         if (activeFragment == mainFragment) {
@@ -96,7 +84,6 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.container, marketFragment)
                 .commitNow()
             activeFragment = marketFragment
-
         }
     }
 
@@ -111,12 +98,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun displayStoreFragment(store: Market) {
-        storeFragment2 = StoreFragment2.newInstance(store)
-        if (activeFragment != storeFragment2) {
+        storeFragment = StoreFragment.newInstance(store)
+        if (activeFragment != storeFragment) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, storeFragment2)
+                .replace(R.id.container, storeFragment)
                 .commitNow()
-            activeFragment = storeFragment2
+            activeFragment = storeFragment
         }
     }
 
@@ -166,10 +153,8 @@ class MainActivity : AppCompatActivity() {
             bottom_nav.selectedItemId = R.id.home
             Toast.makeText(this, "You have logged out successfully.", Toast.LENGTH_LONG).show()
             bottom_nav.menu[3].title = "Login"
-
         }
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -194,5 +179,4 @@ class MainActivity : AppCompatActivity() {
             isUserSignedIn = true
         }
     }
-
 }

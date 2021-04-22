@@ -1,5 +1,5 @@
 package edu.uc.forbesne.shoppingsidekick.dao
-// based onp professor's code - https://github.com/discospiff/MyPlantDiaryQ
+// based on professor's code - https://github.com/discospiff/MyPlantDiaryQ
 
 import edu.uc.forbesne.shoppingsidekick.dto.MarketApiObject
 import edu.uc.forbesne.shoppingsidekick.dto.Product
@@ -11,7 +11,7 @@ import retrofit2.http.Query
  * Used by Retrofit instance to get make http requests
  *
  */
-interface IProductDAO {
+interface IMarketApiObjectDAO {
 
     @GET("market_1.php")
     fun getMarketApi1(): Call<MarketApiObject>
@@ -22,6 +22,4 @@ interface IProductDAO {
     @GET("market_3.php")
     fun getMarketApi3(): Call<MarketApiObject>
 
-/*    @GET()
-    fun getProductsFromOneStore(@Query(")) : Call<ArrayList<Product>>*/
 }

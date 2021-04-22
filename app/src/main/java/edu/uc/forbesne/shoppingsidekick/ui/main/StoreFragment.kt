@@ -6,32 +6,44 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.CartItem
-import kotlinx.android.synthetic.main.cart_fragment.*
-import kotlinx.android.synthetic.main.store_fragment.*
+import edu.uc.forbesne.shoppingsidekick.dto.Market
 
-class StoreFragment : Fragment() {
+/**
+ * Displays detail of that market/store, a map,
+ * and a list of the items in user's cart with the prices for each item.
+ * Displayed when user clicks on the market's name of his choice.
+ * For example he chooses the cheapest one from the list of markets displayed in MarketFragment.
+ *
+ */
+class StoreFragment(store:Market) : Fragment(), OnMapReadyCallback {
 
+    var store = store
+    var latitude = store.latitude
+    var longitude = store.longitude
     companion object {
-        fun newInstance() = StoreFragment()
+        fun newInstance(store: Market) = StoreFragment(store)
+        private const val MAPVIEW_BUNDLE_KEY = "MapViewBundleKey"
     }
 
-//    private lateinit var viewModel: StoreViewModel
     private lateinit var viewModel: MainViewModel
-    private var _cartItems = java.util.ArrayList<CartItem>()
+    private lateinit var adapter : StoreListAdapter
+    private lateinit var mapView: MapView
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+
+
         return inflater.inflate(R.layout.store_fragment, container, false)
     }
 
@@ -40,63 +52,80 @@ class StoreFragment : Fragment() {
         activity.let {
             viewModel = ViewModelProvider(it!!).get(MainViewModel::class.java)
         }
-        //viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        // TODO: Use the ViewModel
 
-        viewModel.fetchCartItem()
-        storeView.hasFixedSize()
-        storeView.layoutManager = LinearLayoutManager(context)
-        storeView.itemAnimator = DefaultItemAnimator()
-        storeView.adapter = StoreAdapter(_cartItems, R.layout.store_fragment_row)
+        var storeName = view!!.findViewById<TextView>(R.id.txtStore)
+        storeName.text = store.name
+        var storeAddress = view!!.findViewById<TextView>(R.id.txtAddress)
+        storeAddress.text = store.address.replace(',', '\n')
+        var storeTotal = view!!.findViewById<TextView>(R.id.txtTotal)
+        storeTotal.text = "Total: $ ${"%.2f".format(store.cartPrice).toString()}"
 
-        viewModel.cartItem.observeForever{
-            cartItem ->
-            _cartItems.removeAll(_cartItems)
-            _cartItems.addAll(cartItem)
-            if(storeView!=null){
-                storeView.adapter!!.notifyDataSetChanged()
+        mapView = view!!.findViewById(R.id.mapView3)
+        val mapViewBundle = savedInstanceState?.getBundle(MAPVIEW_BUNDLE_KEY)
+
+        mapView.onCreate(mapViewBundle)
+        mapView.getMapAsync(this)
+
+        var recyclerView = view!!.findViewById<RecyclerView>(R.id.storeView)
+        recyclerView.layoutManager =  GridLayoutManager(this.context, 1)
+        var storeCartItems: ArrayList<CartItem> = ArrayList<CartItem>()
+
+        viewModel.markets?.observeForever(){
+            shops ->
+            shops.forEach { shop ->
+                if (shop.name == store.name) {
+
+                    adapter = StoreListAdapter(
+                            shop.cartItems, viewModel
+                    )
+                    recyclerView.adapter = adapter
+                }
             }
         }
     }
 
-    inner class StoreAdapter(val cartItems: List<CartItem>, val itemLayout: Int) : RecyclerView.Adapter<StoreFragment.StoreViewHolder>() {
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoreFragment.StoreViewHolder {
-            val view = LayoutInflater.from(parent.context).inflate(itemLayout, parent, false)
-            return StoreViewHolder(view)
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        val mapViewBundle = outState.getBundle(MAPVIEW_BUNDLE_KEY) ?: Bundle().also {
+            outState.putBundle(MAPVIEW_BUNDLE_KEY, it)
         }
-
-        override fun getItemCount(): Int {
-            return cartItems.size
-        }
-
-        override fun onBindViewHolder(holder: StoreFragment.StoreViewHolder, position: Int) {
-            val cartItem = cartItems.get(position)
-            holder.updateStore(cartItem)
-        }
-
+        mapView.onSaveInstanceState(mapViewBundle)
     }
 
-    inner class StoreViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-        private var storeImage : ImageView = itemView.findViewById(R.id.imageView)
-        //        private var lblUPC :t TextView = itemView.findViewById(R.id.lblUPC)
-        private var productName : TextView = itemView.findViewById(R.id.productname)
-        private var brandName : TextView = itemView.findViewById(R.id.brandname)
-        private var lblQuantity : TextView = itemView.findViewById(R.id.lblquantity)
-        private var unitLbl : TextView = itemView.findViewById(R.id.unitlbl)
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+    }
 
+    override fun onStart() {
+        super.onStart()
+        mapView.onStart()
+    }
 
-        fun updateStore (cartItem : CartItem) {
-            if (cartItem.imageURL != null && cartItem.imageURL != "null" && cartItem.imageURL != "") {
-                Picasso.get().load(cartItem.imageURL).into(storeImage);
-                /*val source = ImageDecoder.createSource(activity!!.contentResolver, Uri.parse(cartItem.imageURL))
-                val bitmap = ImageDecoder.decodeBitmap(source)
-                cartProductImage.setImageBitmap(bitmap)*/
-            }
-//            lblUPC.text = cartItem.toString()
-            productName.text = cartItem.description
-            brandName.text = cartItem.productBrand
-            lblQuantity.text = cartItem.quantity.toString()
-            unitLbl.text = cartItem.measurementUnit
-        }
+    override fun onStop() {
+        super.onStop()
+        mapView.onStop()
+    }
+
+    override fun onMapReady(map: GoogleMap) {
+        val marker = LatLng(latitude.toDouble(), longitude.toDouble())
+        map.addMarker(MarkerOptions().position(marker).title(store.name))
+        map.moveCamera(CameraUpdateFactory.newLatLng(marker))
+        map.moveCamera(CameraUpdateFactory.zoomTo(10F))
+    }
+
+    override fun onPause() {
+        mapView.onPause()
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        mapView.onDestroy()
+        super.onDestroy()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView.onLowMemory()
     }
 }

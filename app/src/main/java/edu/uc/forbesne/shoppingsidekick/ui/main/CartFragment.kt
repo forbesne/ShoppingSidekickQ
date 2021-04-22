@@ -1,7 +1,5 @@
 package edu.uc.forbesne.shoppingsidekick.ui.main
 
-import android.graphics.ImageDecoder
-import android.net.Uri
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +17,10 @@ import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.CartItem
 import kotlinx.android.synthetic.main.cart_fragment.*
 
+/**
+ * Displays all cart items in firebase cart and allows user to change quantity
+ *
+ */
 class CartFragment : Fragment() {
 
     companion object {
@@ -34,17 +35,12 @@ class CartFragment : Fragment() {
         return inflater.inflate(R.layout.cart_fragment, container, false)
     }
 
-//    Most things below will need to be changed in accordance with the layout for the cart
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         activity.let {
             viewModel = ViewModelProvider(it!!).get(MainViewModel::class.java)
         }
-        //viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        // TODO: Use the ViewModel
 
-//        These have been commented out to allow the project to compile
         viewModel.fetchCartItem()
         cartListView.hasFixedSize()
         cartListView.layoutManager = LinearLayoutManager(context)
@@ -65,24 +61,6 @@ class CartFragment : Fragment() {
         }
     }
 
-//    saveCart might not be needed, adding it just in case as that's what the professor had in his video.
-
-    private fun saveCart() {
-        var cartItem = CartItem()
-        with (cartItem) {
-            /*productBrand = actproductBrand.text.toString()
-            description = edtDescription.text.toString
-            var quantityString = edtQuantity.text.toString();
-            if (quantityString.length > 0) {
-                quantity = quantityString.toDouble()
-            }
-            measurementUnit = actMeasurementUnit.text.toString()*/
-        }
-        /*viewModel.product.cartItems.add(cartItem)
-        clearAll()
-        rcyCartItems.adapter?.notifyDataSetChanged()*/
-    }
-
     inner class CartAdapter(val cartItems: List<CartItem>, val itemLayout: Int) : RecyclerView.Adapter<CartFragment.CartViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(itemLayout, parent, false)
@@ -97,12 +75,10 @@ class CartFragment : Fragment() {
             val cartItem = cartItems.get(position)
             holder.updateCart(cartItem)
         }
-
     }
 
     inner class CartViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         private var cartProductImage : ImageView = itemView.findViewById(R.id.cartProductImage)
-//        private var lblUPC :t TextView = itemView.findViewById(R.id.lblUPC)
         private var productName : TextView = itemView.findViewById(R.id.productName)
         private var productBrand : TextView = itemView.findViewById(R.id.productBrand)
         private var lblQuantity : TextView = itemView.findViewById(R.id.lblQuantity)
@@ -119,7 +95,7 @@ class CartFragment : Fragment() {
                 val bitmap = ImageDecoder.decodeBitmap(source)
                 cartProductImage.setImageBitmap(bitmap)*/
             }
-//            lblUPC.text = cartItem.toString()
+
             productName.text = cartItem.description
             productBrand.text = cartItem.productBrand
             lblQuantity.text = cartItem.quantity.toString()
@@ -148,5 +124,4 @@ class CartFragment : Fragment() {
             }
         }
     }
-
 }

@@ -6,13 +6,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.uc.forbesne.shoppingsidekick.MainActivity
 import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.Market
 
+/**
+ * Displays all markets with there cart totals.
+ * Displayed when user click on Locate Cheapest Market btn
+ * or when user clicks on shopping bag icon
+ *
+ */
 class MarketFragment : Fragment() {
 
     companion object {
@@ -41,8 +46,9 @@ class MarketFragment : Fragment() {
 
         viewModel.markets?.observeForever{ markets ->
 
-            sortedByPriceMarketList = markets
-
+            markets.forEach{
+                sortedByPriceMarketList.add(it.copy())
+            }
             // Cheapest market 1st
             sortedByPriceMarketList.sortBy { it.cartPrice }
 
@@ -52,8 +58,5 @@ class MarketFragment : Fragment() {
             )
             recyclerView.adapter = adapter
         }
-/*        txtName.setOnClickListener() {
-            (activity as MainActivity).displayStoreFragment()
-        }*/
     }
 }

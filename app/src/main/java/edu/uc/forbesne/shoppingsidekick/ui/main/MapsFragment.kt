@@ -11,15 +11,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.observe
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
@@ -29,6 +26,12 @@ import edu.uc.forbesne.shoppingsidekick.dto.Market
 import kotlinx.android.synthetic.main.fragment_maps.*
 import java.math.RoundingMode
 
+/**
+ * Displays Directions to that market are displayed on a Map
+ * Displayed when user clicks
+ * on the market's map icon of his choice of market from the list displayed in the MarketFragment,
+ *
+ */
 class MapsFragment(store: Market) : Fragment() {
 
     var store = store
@@ -83,38 +86,36 @@ class MapsFragment(store: Market) : Fragment() {
 
     private fun updateMap() {
         if (mapReady && locationDetails != null) {
-                if (!locationDetails.longitude.isEmpty() && !locationDetails.latitude.isEmpty()) {
-                    var currLatitude = locationDetails.latitude.toDouble()
-                    var currLongitude = locationDetails.longitude.toDouble()
-                    val marker = LatLng(currLatitude, currLongitude)
-                    var bottomBoundary = latitude.toDouble() - .005
-                    var leftBoundary = longitude.toDouble() - .005
-                    var topBoundary = latitude.toDouble() + .005
-                    var rightBoundary = longitude.toDouble() + .005
-                    if (currLongitude > longitude.toDouble()) {
-                        rightBoundary = currLongitude + .005
-                    }
-                    else {
-                        leftBoundary = currLongitude - .005
-                    }
-                    if (currLatitude > latitude.toDouble()) {
-                        topBoundary = currLatitude + .005
-                    }
-                    else {
-                        bottomBoundary = currLatitude - .005
-                    }
-
-
-                    var mapBoundary = LatLngBounds(LatLng(bottomBoundary, leftBoundary), LatLng(topBoundary, rightBoundary))
-                    mMap.addMarker(MarkerOptions().position(marker).title("Your location"))
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(mapBoundary, 0))
-
-                    val milesDistance = getDistanceInMiles(latitude.toDouble(), longitude.toDouble(), currLatitude, currLongitude)
-                    txtDistance.text = "Distance: " + milesDistance.toString() + " miles"
-
+            if (!locationDetails.longitude.isEmpty() && !locationDetails.latitude.isEmpty()) {
+                var currLatitude = locationDetails.latitude.toDouble()
+                var currLongitude = locationDetails.longitude.toDouble()
+                val marker = LatLng(currLatitude, currLongitude)
+                var bottomBoundary = latitude.toDouble() - .005
+                var leftBoundary = longitude.toDouble() - .005
+                var topBoundary = latitude.toDouble() + .005
+                var rightBoundary = longitude.toDouble() + .005
+                if (currLongitude > longitude.toDouble()) {
+                    rightBoundary = currLongitude + .005
+                }
+                else {
+                    leftBoundary = currLongitude - .005
+                }
+                if (currLatitude > latitude.toDouble()) {
+                    topBoundary = currLatitude + .005
+                }
+                else {
+                    bottomBoundary = currLatitude - .005
                 }
 
+
+                var mapBoundary = LatLngBounds(LatLng(bottomBoundary, leftBoundary), LatLng(topBoundary, rightBoundary))
+                mMap.addMarker(MarkerOptions().position(marker).title("Your location"))
+                mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(mapBoundary, 0))
+
+                val milesDistance = getDistanceInMiles(latitude.toDouble(), longitude.toDouble(), currLatitude, currLongitude)
+                txtDistance.text = "Distance: " + milesDistance.toString() + " miles"
             }
+        }
     }
 
     private fun getDistanceInMiles(firstLatitude: Double, firstLongitude: Double,

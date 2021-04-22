@@ -9,10 +9,8 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,9 +21,11 @@ import edu.uc.forbesne.shoppingsidekick.MainActivity
 import edu.uc.forbesne.shoppingsidekick.R
 import edu.uc.forbesne.shoppingsidekick.dto.Product
 import kotlinx.android.synthetic.main.main_fragment.*
-import kotlinx.android.synthetic.main.market_fragment_row.*
 
-
+/**
+ * Displays the home page - a product list coming from a market api call
+ *
+ */
 class MainFragment : Fragment() {
     private lateinit var viewModel: MainViewModel
     private lateinit var adapter : ProductListAdapter
@@ -49,13 +49,6 @@ class MainFragment : Fragment() {
 
         viewModel.fetchAllProducts()
         viewModel.products.observeForever {products ->
-            /*actProductName.setAdapter(
-                    ArrayAdapter(
-                            context!!,
-                            android.R.layout.simple_spinner_dropdown_item,
-                            products
-                    )
-            )*/
             adapter = ProductListAdapter(
                     viewModel.products.value!!, viewModel
             )
@@ -68,32 +61,17 @@ class MainFragment : Fragment() {
 
         searchProduct.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-
             }
 
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-
             }
 
             override fun afterTextChanged(s: Editable) {
-
                 filter(s.toString())
             }
         })
-
-        /*btnLogin.setOnClickListener {
-            login()
-        }
-
-        btnSave.setOnClickListener{
-            (activity as MainActivity).displayCartFragment()
-        }
-
-        btnTakePhoto.setOnClickListener{
-            val intent = Intent(context, MapsActivity::class.java)
-            startActivity(intent)
-        }*/
     }
+
     fun filter(text: String) {
         val temp: ArrayList<Product> = ArrayList()
         for (d in viewModel.products.value!!) {
@@ -103,6 +81,7 @@ class MainFragment : Fragment() {
         }
         adapter.updateProductList(temp)
     }
+
     private fun login() {
         var providers = arrayListOf(
                 AuthUI.IdpConfig.EmailBuilder().build()

@@ -2,7 +2,7 @@ package edu.uc.forbesne.shoppingsidekick.service
 // based onp professor's code - https://github.com/discospiff/MyPlantDiaryQ
 
 import androidx.lifecycle.MutableLiveData
-import edu.uc.forbesne.shoppingsidekick.dao.IProductDAO
+import edu.uc.forbesne.shoppingsidekick.dao.IMarketApiObjectDAO
 import edu.uc.forbesne.shoppingsidekick.dto.MarketApiObject
 import edu.uc.forbesne.shoppingsidekick.dto.Product
 import retrofit2.Call
@@ -22,7 +22,7 @@ class MarketAPIService {
 
     fun fetchAllDataFromMarket1() : MutableLiveData<MarketApiObject> {
         var _marketApiObject: MutableLiveData<MarketApiObject> = MutableLiveData<MarketApiObject>()
-        val service = RetrofitClientInstance.retrofitInstance?.create(IProductDAO::class.java)
+        val service = RetrofitClientInstance.retrofitInstance?.create(IMarketApiObjectDAO::class.java)
         val call = service?.getMarketApi1()
         call?.enqueue(object : Callback<MarketApiObject> {
             /**
@@ -53,7 +53,7 @@ class MarketAPIService {
 
     fun fetchAllDataFromMarket2() : MutableLiveData<MarketApiObject> {
         var _marketApiObject = MutableLiveData<MarketApiObject>()
-        val service = RetrofitClientInstance.retrofitInstance?.create(IProductDAO::class.java)
+        val service = RetrofitClientInstance.retrofitInstance?.create(IMarketApiObjectDAO::class.java)
         val call = service?.getMarketApi2()
         call?.enqueue(object : Callback<MarketApiObject> {
             /**
@@ -84,7 +84,7 @@ class MarketAPIService {
 
     fun fetchAllDataFromMarket3() : MutableLiveData<MarketApiObject> {
         var _marketApiObject = MutableLiveData<MarketApiObject>()
-        val service = RetrofitClientInstance.retrofitInstance?.create(IProductDAO::class.java)
+        val service = RetrofitClientInstance.retrofitInstance?.create(IMarketApiObjectDAO::class.java)
         val call = service?.getMarketApi3()
         call?.enqueue(object : Callback<MarketApiObject> {
             /**
